@@ -1,0 +1,179 @@
+---
+import { planetsData } from '../data/planets';
+import Sun from './Sun.astro';
+import Planet from './Planet.astro';
+---
+
+<div class="solar-system-container w-full h-screen flex items-center justify-center relative overflow-hidden">
+  <!-- Solar System -->
+  <div class="solar-system relative" style="width: 1000px; height: 1000px;">
+    
+    <!-- Orbit lines (visible) -->
+    {planetsData.map((planet) => (
+      <div 
+        class="orbit-line absolute rounded-full border border-gray-500 border-opacity-20"
+        style={`
+          width: ${planet.orbitRadius * 2}px;
+          height: ${planet.orbitRadius * 2}px;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        `}
+      ></div>
+    ))}
+    
+    <!-- Central Sun -->
+    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 group">
+      <Sun />
+    </div>
+    
+    <!-- Planets with orbits -->
+    {planetsData.map((planet, index) => (
+      <Planet planet={planet} index={index} />
+    ))}
+    
+  </div>
+  
+  <!-- Navigation Panel -->
+  <div class="navigation-panel fixed top-6 left-6 glass-effect rounded-xl p-4 z-40">
+    <h2 class="font-space font-bold text-star text-lg mb-3">Sistema Solar</h2>
+    <div class="space-y-2">
+      {planetsData.map((planet) => (
+        <a 
+          href={`/planets/${planet.id}`}
+          class="block text-sm text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white hover:bg-opacity-10 rounded px-2 py-1"
+        >
+          <span class="inline-block w-3 h-3 rounded-full mr-2" style={`background: ${planet.color};`}></span>
+          {planet.name}
+        </a>
+      ))}
+    </div>
+  </div>
+  
+  <!-- Info Panel -->
+  <div class="info-panel fixed bottom-6 right-6 glass-effect rounded-xl p-4 z-40 max-w-xs">
+    <h3 class="font-space font-bold text-star text-base mb-2">Exploración Interactiva</h3>
+    <p class="text-sm text-gray-300 mb-3">
+      Haz clic en cualquier planeta para explorar sus características únicas y datos fascinantes.
+    </p>
+    <div class="flex items-center text-xs text-gray-400">
+      <div class="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse"></div>
+      Los planetas orbitan en tiempo real
+    </div>
+  </div>
+  
+  <!-- Mobile controls -->
+  <div class="mobile-controls fixed bottom-4 left-1/2 transform -translate-x-1/2 md:hidden z-40">
+    <button 
+      id="planetListToggle"
+      class="glass-effect rounded-full p-3 text-white hover:bg-white hover:bg-opacity-20 transition-all duration-200"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Mobile planet list -->
+  <div id="mobilePlanetList" class="mobile-planet-list fixed inset-x-4 bottom-20 glass-effect rounded-xl p-4 z-50 hidden">
+    <h3 class="font-space font-bold text-star text-base mb-3">Planetas</h3>
+    <div class="grid grid-cols-2 gap-2">
+      {planetsData.map((planet) => (
+        <a 
+          href={`/planets/${planet.id}`}
+          class="block text-sm text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white hover:bg-opacity-10 rounded px-3 py-2 text-center"
+        >
+          <div class="w-4 h-4 rounded-full mx-auto mb-1" style={`background: ${planet.color};`}></div>
+          {planet.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile menu toggle
+  const toggleButton = document.getElementById('planetListToggle');
+  const mobileList = document.getElementById('mobilePlanetList');
+  
+  if (toggleButton && mobileList) {
+    toggleButton.addEventListener('click', () => {
+      mobileList.classList.toggle('hidden');
+    });
+    
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!toggleButton.contains(e.target as Node) && !mobileList.contains(e.target as Node)) {
+        mobileList.classList.add('hidden');
+      }
+    });
+  }
+</script>
+
+<style>
+  .solar-system-container {
+    perspective: 1000px;
+  }
+  
+  .solar-system {
+    transform-style: preserve-3d;
+  }
+  
+  .navigation-panel {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .info-panel {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .mobile-planet-list {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .solar-system {
+      width: 800px;
+      height: 800px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .solar-system {
+      width: 600px;
+      height: 600px;
+    }
+    
+    .navigation-panel {
+      display: none;
+    }
+    
+    .info-panel {
+      position: relative;
+      bottom: auto;
+      right: auto;
+      margin: 1rem;
+      max-width: none;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .solar-system {
+      width: 400px;
+      height: 400px;
+    }
+    
+    .info-panel {
+      display: none;
+    }
+  }
+</style>

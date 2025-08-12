@@ -1,0 +1,70 @@
+---
+import { sunData } from '../data/planets';
+---
+
+<div class="sun-container relative flex items-center justify-center group">
+  <!-- Sun -->
+  <div 
+    class="sun relative rounded-full sun-glow cursor-pointer transition-all duration-300 hover:scale-110"
+    style="
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ff4500 100%);
+      box-shadow: 
+        0 0 60px rgba(255, 215, 0, 0.6),
+        inset 0 0 20px rgba(255, 69, 0, 0.3);
+    "
+  >
+    <!-- Sun surface texture -->
+    <div class="absolute inset-0 rounded-full opacity-30">
+      <div class="w-full h-full rounded-full bg-gradient-to-br from-transparent via-orange-300 to-transparent"></div>
+    </div>
+    
+    <!-- Solar flares -->
+    <div class="absolute inset-0 rounded-full animate-spin" style="animation-duration: 20s;">
+      <div class="absolute w-2 h-2 bg-yellow-300 rounded-full top-0 left-1/2 transform -translate-x-1/2 -translate-y-1"></div>
+      <div class="absolute w-1 h-1 bg-orange-400 rounded-full top-1/4 right-0 transform translate-x-1"></div>
+      <div class="absolute w-1.5 h-1.5 bg-red-400 rounded-full bottom-1/4 left-0 transform -translate-x-1"></div>
+    </div>
+  </div>
+  
+  <!-- Sun info tooltip -->
+  <div class="sun-info absolute top-full mt-4 glass-effect rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none">
+    <h3 class="font-space font-bold text-star text-sm mb-1">{sunData.name}</h3>
+    <p class="text-xs text-gray-300">Estrella - Tipo G</p>
+    <p class="text-xs text-gray-400">Temp: {sunData.temperatureFormatted}</p>
+  </div>
+</div>
+
+<style>
+  .sun-container {
+    z-index: 20;
+  }
+  
+  .sun:hover {
+    box-shadow: 
+      0 0 80px rgba(255, 215, 0, 0.8),
+      inset 0 0 30px rgba(255, 69, 0, 0.4);
+  }
+  
+  .sun-info {
+    min-width: 120px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .sun {
+      width: 60px !important;
+      height: 60px !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .sun {
+      width: 50px !important;
+      height: 50px !important;
+    }
+  }
+</style>
