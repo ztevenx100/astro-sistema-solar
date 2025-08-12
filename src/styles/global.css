@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* Custom color palette for space theme */
+:root {
+  --space-dark: #0a0a0f;
+  --space-blue: #1a1a3a;
+  --space-purple: #2d1b69;
+  --nebula-pink: #ff6b9d;
+  --star-yellow: #ffd700;
+  --planet-blue: #4f8ff7;
+  --cosmic-purple: #7c3aed;
+  --galaxy-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Custom Tailwind colors */
+@layer base {
+  .bg-space-dark {
+    background-color: var(--space-dark);
+    background-image: 
+      radial-gradient(circle at 25% 25%, var(--space-purple) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, var(--space-blue) 0%, transparent 50%);
+  }
+  
+  .text-star {
+    color: var(--star-yellow);
+  }
+  
+  .text-cosmic {
+    background: var(--galaxy-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Animations */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Planet orbit animations */
+.orbit {
+  animation: orbit var(--orbit-duration) linear infinite;
+}
+
+.planet-spin {
+  animation: spin var(--spin-duration) linear infinite;
+}
+
+.sun-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Responsive text sizes */
+.text-responsive-xs {
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.text-responsive-sm {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.text-responsive-base {
+  font-size: clamp(1rem, 3vw, 1.125rem);
+}
+
+.text-responsive-lg {
+  font-size: clamp(1.125rem, 4vw, 1.5rem);
+}
+
+.text-responsive-xl {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+.text-responsive-2xl {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.text-responsive-3xl {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+}
+
+/* Glowing effects */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(79, 143, 247, 0.4);
+}
+
+.glow-yellow {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.glow-red {
+  box-shadow: 0 0 20px rgba(205, 92, 92, 0.4);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+}
+
+/* Gradient borders */
+.gradient-border {
+  border: 2px solid transparent;
+  background: linear-gradient(var(--space-dark), var(--space-dark)) padding-box,
+              var(--galaxy-gradient) border-box;
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
