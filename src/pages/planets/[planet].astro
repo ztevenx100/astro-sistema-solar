@@ -1,6 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { planetsData } from '../../data/planets';
+import PlanetComparison from '../../components/PlanetComparison.astro';
+import ScientificData from '../../components/ScientificData.astro';
+import DataVisualization from '../../components/DataVisualization.astro';
+import SpaceMissions from '../../components/SpaceMissions.astro';
+import PlanetNavigation from '../../components/PlanetNavigation.astro';
 
 export async function getStaticPaths() {
   return planetsData.map(planet => ({
@@ -142,6 +147,15 @@ const { planet } = Astro.props;
       </div>
       
     </section>
+
+    <!-- Enhanced Scientific Sections -->
+    <PlanetComparison planet={planet} />
+    <ScientificData planet={planet} />
+    <DataVisualization planet={planet} />
+    <SpaceMissions planet={planet} />
+    
+    <!-- Planet Navigation -->
+    <PlanetNavigation currentPlanet={planet} />
   </main>
 </Layout>
 

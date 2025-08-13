@@ -1,0 +1,241 @@
+---
+import type { Planet } from '../data/planets';
+
+interface Props {
+  planet: Planet;
+}
+
+const { planet } = Astro.props;
+
+// Datos de referencia de la Tierra para comparación
+const EARTH_DATA = {
+  diameter: 12756,
+  mass: 5.9724e24,
+  gravity: 9.8, // m/s²
+  orbitalPeriod: 365.25,
+  rotationPeriod: 24,
+  distanceFromSun: 150,
+  temperature: { min: -89, max: 58 }
+};
+
+// Funciones para calcular comparaciones
+const compareSize = () => {
+  const ratio = planet.diameter / EARTH_DATA.diameter;
+  if (ratio > 1) {
+    return `${ratio.toFixed(1)}x más grande que la Tierra`;
+  } else {
+    return `${(1/ratio).toFixed(1)}x más pequeño que la Tierra`;
+  }
+};
+
+const compareMass = () => {
+  const ratio = planet.mass / EARTH_DATA.mass;
+  if (ratio > 1) {
+    return `${ratio.toFixed(1)}x más masivo que la Tierra`;
+  } else {
+    return `${(1/ratio).toFixed(1)}x menos masivo que la Tierra`;
+  }
+};
+
+const compareDistance = () => {
+  const ratio = planet.distanceFromSun / EARTH_DATA.distanceFromSun;
+  return `${ratio.toFixed(1)}x la distancia Tierra-Sol`;
+};
+
+const compareYear = () => {
+  const ratio = planet.orbitalPeriod / EARTH_DATA.orbitalPeriod;
+  return `${ratio.toFixed(1)}x la duración de un año terrestre`;
+};
+
+const compareDay = () => {
+  const earthHours = Math.abs(planet.rotationPeriod);
+  const ratio = earthHours / EARTH_DATA.rotationPeriod;
+  const direction = planet.rotationPeriod < 0 ? ' (rotación retrógrada)' : '';
+  if (ratio > 1) {
+    return `${ratio.toFixed(1)}x más largo que un día terrestre${direction}`;
+  } else {
+    return `${(1/ratio).toFixed(1)}x más corto que un día terrestre${direction}`;
+  }
+};
+
+// Calcular gravedad estimada
+const calculateGravity = () => {
+  // G = GM/R² - simplificación usando masa y radio
+  const earthRadius = EARTH_DATA.diameter / 2;
+  const planetRadius = planet.diameter / 2;
+  const gravity = EARTH_DATA.gravity * (planet.mass / EARTH_DATA.mass) * Math.pow(earthRadius / planetRadius, 2);
+  return gravity.toFixed(1);
+};
+
+const compareGravity = () => {
+  const gravity = parseFloat(calculateGravity());
+  const ratio = gravity / EARTH_DATA.gravity;
+  return `${ratio.toFixed(1)}x la gravedad terrestre (${gravity} m/s²)`;
+};
+---
+
+<section class="comparison-section py-16 px-6 bg-gradient-to-b from-transparent via-gray-900 to-black">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-space text-3xl md:text-4xl font-bold text-center text-star mb-4">
+      Comparación Científica
+    </h2>
+    <p class="text-center text-gray-400 mb-12 text-lg">
+      Comparado con la Tierra, nuestro planeta de referencia
+    </p>
+
+    <!-- Comparison Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      
+      <!-- Size Comparison -->
+      <div class="comparison-card glass-effect rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Tamaño</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{compareSize()}</p>
+          <p class="text-gray-400 text-sm">Diámetro: {planet.diameter.toLocaleString()} km</p>
+          <p class="text-gray-500 text-xs">Tierra: {EARTH_DATA.diameter.toLocaleString()} km</p>
+        </div>
+      </div>
+
+      <!-- Mass Comparison -->
+      <div class="comparison-card glass-effect rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Masa</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{compareMass()}</p>
+          <p class="text-gray-400 text-sm">Masa: {planet.mass.toExponential(2)} kg</p>
+          <p class="text-gray-500 text-xs">Tierra: {EARTH_DATA.mass.toExponential(2)} kg</p>
+        </div>
+      </div>
+
+      <!-- Gravity Comparison -->
+      <div class="comparison-card glass-effect rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Gravedad</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{compareGravity()}</p>
+          <p class="text-gray-400 text-sm">Si pesaras 70 kg en la Tierra</p>
+          <p class="text-gray-400 text-sm">Pesarías {(70 * parseFloat(calculateGravity()) / 9.8).toFixed(1)} kg en {planet.name}</p>
+        </div>
+      </div>
+
+      <!-- Distance Comparison -->
+      <div class="comparison-card glass-effect rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Distancia del Sol</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{compareDistance()}</p>
+          <p class="text-gray-400 text-sm">{planet.distanceFromSun.toLocaleString()} millones de km</p>
+          <p class="text-gray-500 text-xs">Tierra: {EARTH_DATA.distanceFromSun} millones de km</p>
+        </div>
+      </div>
+
+      <!-- Orbital Period Comparison -->
+      <div class="comparison-card glass-effect rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Año Planetario</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{compareYear()}</p>
+          <p class="text-gray-400 text-sm">{planet.orbitalPeriod.toLocaleString()} días terrestres</p>
+          <p class="text-gray-500 text-xs">Tierra: {EARTH_DATA.orbitalPeriod} días</p>
+        </div>
+      </div>
+
+      <!-- Rotation Period Comparison -->
+      <div class="comparison-card glass-effect rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Día Planetario</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{compareDay()}</p>
+          <p class="text-gray-400 text-sm">{Math.abs(planet.rotationPeriod).toFixed(1)} horas terrestres</p>
+          <p class="text-gray-500 text-xs">Tierra: {EARTH_DATA.rotationPeriod} horas</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Visual Size Comparison -->
+    <div class="visual-comparison glass-effect rounded-xl p-8">
+      <h3 class="font-space font-bold text-white text-xl mb-6 text-center">Comparación Visual de Tamaño</h3>
+      <div class="flex items-end justify-center space-x-8 py-8">
+        <!-- Earth Reference -->
+        <div class="text-center">
+          <div 
+            class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-green-500 mx-auto mb-2 shadow-lg"
+          ></div>
+          <p class="text-gray-400 text-sm">Tierra</p>
+          <p class="text-gray-500 text-xs">{EARTH_DATA.diameter.toLocaleString()} km</p>
+        </div>
+        
+        <!-- Current Planet -->
+        <div class="text-center">
+          <div 
+            class="rounded-full mx-auto mb-2 shadow-lg"
+            style={`
+              width: ${Math.min(120, Math.max(8, (planet.diameter / EARTH_DATA.diameter) * 48))}px;
+              height: ${Math.min(120, Math.max(8, (planet.diameter / EARTH_DATA.diameter) * 48))}px;
+              background: linear-gradient(135deg, ${planet.color}dd 0%, ${planet.color} 50%, ${planet.color}aa 100%);
+            `}
+          ></div>
+          <p class="text-star font-medium">{planet.name}</p>
+          <p class="text-gray-400 text-sm">{planet.diameter.toLocaleString()} km</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .glass-effect {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .comparison-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .visual-comparison {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>

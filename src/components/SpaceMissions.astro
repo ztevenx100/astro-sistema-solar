@@ -1,0 +1,374 @@
+---
+import type { Planet } from '../data/planets';
+
+interface Props {
+  planet: Planet;
+}
+
+const { planet } = Astro.props;
+
+// Datos de misiones espaciales por planeta
+const missionData = {
+  mercury: [
+    {
+      name: "MESSENGER",
+      agency: "NASA",
+      year: "2004-2015",
+      status: "Completada",
+      description: "Primera sonda en orbitar Mercurio, mapeó toda la superficie y estudió su composición.",
+      achievements: ["Mapeo completo de la superficie", "Descubrimiento de hielo en cráteres polares", "Estudio del campo magnético"]
+    },
+    {
+      name: "BepiColombo",
+      agency: "ESA/JAXA",
+      year: "2018-2025",
+      status: "En curso",
+      description: "Misión conjunta europea-japonesa que llegará a Mercurio en 2025.",
+      achievements: ["En tránsito", "Dos orbitadores para estudio completo", "Tecnología de protección térmica avanzada"]
+    }
+  ],
+  venus: [
+    {
+      name: "Venera 7",
+      agency: "URSS",
+      year: "1970",
+      status: "Completada",
+      description: "Primera sonda en aterrizar exitosamente en Venus y transmitir datos desde la superficie.",
+      achievements: ["Primer aterrizaje exitoso", "Medición de temperatura superficial", "Confirmación de atmósfera extrema"]
+    },
+    {
+      name: "Magellan",
+      agency: "NASA",
+      year: "1989-1994",
+      status: "Completada",
+      description: "Mapeó el 98% de la superficie venusiana usando radar.",
+      achievements: ["Mapeo radar completo", "Descubrimiento de volcanes activos", "Análisis de tectónica de placas"]
+    },
+    {
+      name: "Parker Solar Probe",
+      agency: "NASA",
+      year: "2018-presente",
+      status: "En curso",
+      description: "Aunque su objetivo principal es el Sol, realiza vuelos cercanos a Venus.",
+      achievements: ["Múltiples asistencias gravitatorias", "Estudios atmosféricos", "Aproximación al Sol"]
+    }
+  ],
+  earth: [
+    {
+      name: "Programa Apollo",
+      agency: "NASA",
+      year: "1961-1975",
+      status: "Completada",
+      description: "Programa que llevó a los primeros humanos a la Luna.",
+      achievements: ["12 astronautas en la Luna", "Muestras lunares", "Avances tecnológicos fundamentales"]
+    },
+    {
+      name: "Estación Espacial Internacional",
+      agency: "Internacional",
+      year: "1998-presente",
+      status: "Operativa",
+      description: "Laboratorio orbital permanente para investigación científica.",
+      achievements: ["20+ años de ocupación continua", "Miles de experimentos", "Cooperación internacional"]
+    }
+  ],
+  mars: [
+    {
+      name: "Viking 1 & 2",
+      agency: "NASA",
+      year: "1975-1982",
+      status: "Completada",
+      description: "Primeras misiones exitosas en aterrizar en Marte y operar por años.",
+      achievements: ["Primeras imágenes desde la superficie", "Búsqueda de vida microbiana", "Mapeo detallado"]
+    },
+    {
+      name: "Curiosity",
+      agency: "NASA",
+      year: "2011-presente",
+      status: "Operativa",
+      description: "Rover nuclear que estudia la habitabilidad pasada de Marte.",
+      achievements: ["Evidencia de agua antigua", "Análisis de rocas sedimentarias", "12+ años operando"]
+    },
+    {
+      name: "Perseverance",
+      agency: "NASA",
+      year: "2020-presente",
+      status: "Operativa",
+      description: "Rover que busca evidencia de vida antigua y recolecta muestras.",
+      achievements: ["Primer helicóptero en otro planeta", "Recolección de muestras", "Producción de oxígeno"]
+    }
+  ],
+  jupiter: [
+    {
+      name: "Galileo",
+      agency: "NASA",
+      year: "1989-2003",
+      status: "Completada",
+      description: "Primera sonda en orbitar Júpiter, estudió el planeta y sus lunas por 8 años.",
+      achievements: ["Descubrimiento de océanos en lunas", "Estudio de la Gran Mancha Roja", "Análisis de la atmósfera"]
+    },
+    {
+      name: "Juno",
+      agency: "NASA",
+      year: "2011-presente",
+      status: "Operativa",
+      description: "Misión para estudiar la estructura interna y formación de Júpiter.",
+      achievements: ["Mapeo del campo gravitatorio", "Descubrimiento de ciclones polares", "Estructura interna revelada"]
+    }
+  ],
+  saturn: [
+    {
+      name: "Cassini-Huygens",
+      agency: "NASA/ESA",
+      year: "1997-2017",
+      status: "Completada",
+      description: "Misión de 20 años que revolucionó nuestro conocimiento de Saturno.",
+      achievements: ["Aterrizaje en Titán", "Descubrimiento de géiseres en Encélado", "Estudio detallado de anillos"]
+    }
+  ],
+  uranus: [
+    {
+      name: "Voyager 2",
+      agency: "NASA",
+      year: "1986",
+      status: "Completada",
+      description: "Única sonda que ha visitado Urano, durante un sobrevuelo en 1986.",
+      achievements: ["Descubrimiento de nuevas lunas", "Estudio del campo magnético", "Análisis de anillos verticales"]
+    }
+  ],
+  neptune: [
+    {
+      name: "Voyager 2",
+      agency: "NASA",
+      year: "1989",
+      status: "Completada",
+      description: "Única sonda que ha visitado Neptuno, completando el Grand Tour.",
+      achievements: ["Descubrimiento de la Gran Mancha Oscura", "Estudio de Tritón", "Medición de vientos extremos"]
+    }
+  ]
+};
+
+const missions = missionData[planet.id as keyof typeof missionData] || [];
+
+// Futuras misiones planeadas
+const futureMissions = {
+  mercury: ["Mercury-P (Roscosmos, 2031)"],
+  venus: ["VERITAS (NASA, 2028)", "DAVINCI+ (NASA, 2029)", "EnVision (ESA, 2032)"],
+  earth: ["Artemis (NASA, 2025+)", "Estación Lunar Gateway"],
+  mars: ["Mars Sample Return (NASA/ESA, 2028)", "ExoMars Rover (ESA, 2028)"],
+  jupiter: ["JUICE (ESA, 2031)", "Europa Clipper (NASA, 2030)"],
+  saturn: ["Dragonfly a Titán (NASA, 2034)"],
+  uranus: ["Uranus Orbiter (NASA, 2030s)"],
+  neptune: ["Neptune Orbiter (propuesta, 2040s)"]
+};
+
+const futurePlans = futureMissions[planet.id as keyof typeof futureMissions] || [];
+---
+
+<section class="space-missions-section py-16 px-6">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-space text-3xl md:text-4xl font-bold text-center text-star mb-4">
+      Exploración Espacial
+    </h2>
+    <p class="text-center text-gray-400 mb-12 text-lg">
+      Misiones históricas y futuras hacia {planet.name}
+    </p>
+
+    {missions.length > 0 ? (
+      <>
+        <!-- Historical Missions -->
+        <div class="historical-missions mb-12">
+          <h3 class="font-space font-bold text-white text-2xl mb-8 flex items-center">
+            <svg class="w-6 h-6 mr-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            Misiones Realizadas
+          </h3>
+          
+          <div class="missions-timeline space-y-6">
+            {missions.map((mission, index) => (
+              <div class="mission-card glass-effect rounded-xl p-6 hover:transform hover:scale-102 transition-all duration-300">
+                <div class="flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                  <!-- Mission Info -->
+                  <div class="flex-1 mb-4 lg:mb-0">
+                    <div class="flex items-center mb-3">
+                      <h4 class="font-space font-bold text-white text-xl mr-4">{mission.name}</h4>
+                      <span class={`px-3 py-1 rounded-full text-xs font-medium ${
+                        mission.status === 'Completada' ? 'bg-green-900 text-green-300' :
+                        mission.status === 'Operativa' || mission.status === 'En curso' ? 'bg-blue-900 text-blue-300' :
+                        'bg-gray-900 text-gray-300'
+                      }`}>
+                        {mission.status}
+                      </span>
+                    </div>
+                    
+                    <div class="flex items-center text-sm text-gray-400 mb-3">
+                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                      </svg>
+                      <span class="mr-4">{mission.agency}</span>
+                      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                      <span>{mission.year}</span>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4 leading-relaxed">{mission.description}</p>
+                    
+                    <!-- Achievements -->
+                    <div>
+                      <h5 class="font-space font-medium text-star text-sm mb-2">Logros Principales:</h5>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {mission.achievements.map(achievement => (
+                          <div class="flex items-start space-x-2">
+                            <div class="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <span class="text-gray-400 text-sm">{achievement}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Mission Visual -->
+                  <div class="mission-visual flex-shrink-0">
+                    <div class={`w-20 h-20 rounded-full flex items-center justify-center ${
+                      mission.status === 'Completada' ? 'bg-gradient-to-br from-green-600 to-green-800' :
+                      mission.status === 'Operativa' || mission.status === 'En curso' ? 'bg-gradient-to-br from-blue-600 to-blue-800' :
+                      'bg-gradient-to-br from-gray-600 to-gray-800'
+                    }`}>
+                      <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Future Missions -->
+        {futurePlans.length > 0 && (
+          <div class="future-missions">
+            <h3 class="font-space font-bold text-white text-2xl mb-8 flex items-center">
+              <svg class="w-6 h-6 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+              Misiones Futuras
+            </h3>
+            
+            <div class="future-missions-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+              {futurePlans.map(mission => (
+                <div class="future-mission-card glass-effect rounded-xl p-6 border-l-4 border-purple-400 hover:transform hover:scale-102 transition-all duration-300">
+                  <div class="flex items-center mb-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center mr-4">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                      </svg>
+                    </div>
+                    <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded-full text-xs font-medium">
+                      Planeada
+                    </span>
+                  </div>
+                  <p class="text-star font-medium text-lg mb-2">{mission}</p>
+                  <p class="text-gray-400 text-sm">
+                    Misión en desarrollo para futuras exploraciones de {planet.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </>
+    ) : (
+      <!-- No Missions Message -->
+      <div class="no-missions text-center py-16">
+        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center mx-auto mb-6">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <h3 class="font-space font-bold text-white text-xl mb-4">Exploración Futura</h3>
+        <p class="text-gray-400 text-lg leading-relaxed max-w-2xl mx-auto">
+          {planet.name} espera futuras misiones de exploración. Las agencias espaciales continúan desarrollando 
+          tecnologías avanzadas para estudiar este fascinante mundo del sistema solar.
+        </p>
+        
+        {futurePlans.length > 0 && (
+          <div class="future-plans mt-8">
+            <h4 class="font-space font-medium text-star text-lg mb-4">Misiones en Desarrollo:</h4>
+            <div class="space-y-2">
+              {futurePlans.map(mission => (
+                <p class="text-purple-300 text-sm">{mission}</p>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- Exploration Impact -->
+    <div class="exploration-impact glass-effect rounded-xl p-8 mt-12">
+      <h3 class="font-space font-bold text-white text-xl mb-6 text-center flex items-center justify-center">
+        <svg class="w-6 h-6 mr-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        Impacto Científico de la Exploración
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="impact-item text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+            </svg>
+          </div>
+          <h4 class="font-space font-bold text-white text-lg mb-2">Descubrimientos</h4>
+          <p class="text-gray-400 text-sm">Nuevos conocimientos sobre formación planetaria y condiciones extremas</p>
+        </div>
+        
+        <div class="impact-item text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+            </svg>
+          </div>
+          <h4 class="font-space font-bold text-white text-lg mb-2">Tecnología</h4>
+          <p class="text-gray-400 text-sm">Avances en propulsión, comunicaciones y supervivencia en ambientes extremos</p>
+        </div>
+        
+        <div class="impact-item text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h4 class="font-space font-bold text-white text-lg mb-2">Futuro</h4>
+          <p class="text-gray-400 text-sm">Preparación para exploración humana y colonización del sistema solar</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .glass-effect {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mission-card:hover, .future-mission-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .exploration-impact {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .scale-102 {
+    transform: scale(1.02);
+  }
+</style>

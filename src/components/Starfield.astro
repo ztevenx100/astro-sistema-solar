@@ -1,0 +1,110 @@
+---
+// Component for animated starfield background
+---
+
+<div class="starfield-container fixed inset-0 z-0 overflow-hidden">
+  <!-- Static stars -->
+  <div class="stars-layer-1"></div>
+  <div class="stars-layer-2"></div>
+  <div class="stars-layer-3"></div>
+  
+  <!-- Twinkling stars -->
+  <div class="twinkling-stars">
+    {Array.from({ length: 50 }, (_, i) => (
+      <div 
+        class="star twinkle" 
+        style={`
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          animation-delay: ${Math.random() * 3}s;
+          animation-duration: ${2 + Math.random() * 2}s;
+        `}
+      ></div>
+    ))}
+  </div>
+  
+  <!-- Shooting stars -->
+  <div class="shooting-stars">
+    {Array.from({ length: 3 }, (_, i) => (
+      <div 
+        class="shooting-star"
+        style={`
+          animation-delay: ${i * 8}s;
+          animation-duration: 3s;
+        `}
+      ></div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .starfield-container {
+    pointer-events: none;
+  }
+  
+  .stars-layer-1, .stars-layer-2, .stars-layer-3 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+      radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+      radial-gradient(1px 1px at 90px 40px, #fff, transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+  
+  .stars-layer-2 {
+    background-size: 400px 400px;
+    opacity: 0.7;
+    animation: drift 120s linear infinite;
+  }
+  
+  .stars-layer-3 {
+    background-size: 600px 600px;
+    opacity: 0.5;
+    animation: drift 180s linear infinite reverse;
+  }
+  
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+  }
+  
+  .twinkle {
+    animation: twinkle linear infinite;
+  }
+  
+  .shooting-star {
+    position: absolute;
+    top: 10%;
+    left: -5%;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(45deg, white, transparent);
+    box-shadow: 0 0 10px white;
+    animation: shooting-star linear infinite;
+  }
+  
+  .shooting-star::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, white, transparent);
+  }
+  
+  @keyframes drift {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-200px);
+    }
+  }
+</style>

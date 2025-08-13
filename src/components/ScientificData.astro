@@ -1,0 +1,375 @@
+---
+import type { Planet } from '../data/planets';
+
+interface Props {
+  planet: Planet;
+}
+
+const { planet } = Astro.props;
+
+// Función para calcular la velocidad orbital
+const calculateOrbitalVelocity = () => {
+  // V = 2πr/T donde r es la distancia del sol en km y T es el período orbital en segundos
+  const radiusKm = planet.distanceFromSun * 1000000; // millones de km a km
+  const periodSeconds = planet.orbitalPeriod * 24 * 3600; // días a segundos
+  const velocity = (2 * Math.PI * radiusKm) / periodSeconds; // km/s
+  return velocity.toFixed(1);
+};
+
+// Función para calcular la velocidad de escape
+const calculateEscapeVelocity = () => {
+  // V = √(2GM/r) - simplificación usando datos relativos a la Tierra
+  const earthEscapeVelocity = 11.2; // km/s
+  const earthMass = 5.9724e24;
+  const earthRadius = 6378; // km
+  
+  const massRatio = planet.mass / earthMass;
+  const radiusRatio = (planet.diameter / 2) / earthRadius;
+  
+  const escapeVelocity = earthEscapeVelocity * Math.sqrt(massRatio / radiusRatio);
+  return escapeVelocity.toFixed(1);
+};
+
+// Función para calcular la densidad
+const calculateDensity = () => {
+  const radiusKm = planet.diameter / 2;
+  const volumeKm3 = (4/3) * Math.PI * Math.pow(radiusKm, 3);
+  const volumeM3 = volumeKm3 * 1e9; // km³ a m³
+  const density = planet.mass / volumeM3; // kg/m³
+  return (density / 1000).toFixed(2); // convertir a g/cm³
+};
+
+// Función para obtener el tipo de planeta
+const getPlanetType = () => {
+  if (planet.id === 'mercury' || planet.id === 'venus' || planet.id === 'earth' || planet.id === 'mars') {
+    return 'Planeta Rocoso (Terrestre)';
+  } else if (planet.id === 'jupiter' || planet.id === 'saturn') {
+    return 'Gigante Gaseoso';
+  } else if (planet.id === 'uranus' || planet.id === 'neptune') {
+    return 'Gigante de Hielo';
+  }
+  return 'Desconocido';
+};
+
+// Función para obtener datos de habitabilidad
+const getHabitabilityData = () => {
+  const minTemp = planet.temperature.min;
+  const maxTemp = planet.temperature.max;
+  
+  let habitabilityScore = 0;
+  let factors = [];
+  
+  // Temperatura (agua líquida: 0-100°C)
+  if (minTemp <= 100 && maxTemp >= 0) {
+    habitabilityScore += 25;
+    factors.push('Temperatura permite agua líquida');
+  } else {
+    factors.push('Temperatura extrema para agua líquida');
+  }
+  
+  // Atmósfera
+  if (planet.atmosphere.includes('oxígeno') || planet.atmosphere.includes('oxygen')) {
+    habitabilityScore += 25;
+    factors.push('Contiene oxígeno en la atmósfera');
+  } else if (planet.atmosphere.includes('dióxido de carbono') || planet.atmosphere.includes('carbon dioxide')) {
+    habitabilityScore += 10;
+    factors.push('Atmósfera densa presente');
+  } else if (planet.atmosphere.includes('inexistente') || planet.atmosphere.includes('Prácticamente')) {
+    factors.push('Atmósfera inexistente o muy delgada');
+  } else {
+    factors.push('Atmósfera presente pero no respirable');
+  }
+  
+  // Tamaño/Gravedad
+  const gravity = parseFloat(calculateGravity());
+  if (gravity >= 0.5 && gravity <= 2.0) {
+    habitabilityScore += 15;
+    factors.push('Gravedad compatible con vida terrestre');
+  } else {
+    factors.push('Gravedad extrema');
+  }
+  
+  // Distancia del Sol (zona habitable: 0.95-1.37 UA)
+  const distanceAU = planet.distanceFromSun / 150;
+  if (distanceAU >= 0.95 && distanceAU <= 1.37) {
+    habitabilityScore += 25;
+    factors.push('Ubicado en la zona habitable');
+  } else if (distanceAU < 0.95) {
+    factors.push('Demasiado cerca del Sol (muy caliente)');
+  } else {
+    factors.push('Demasiado lejos del Sol (muy frío)');
+  }
+  
+  // Campo magnético (estimación basada en rotación y composición)
+  if (planet.rotationPeriod > 0 && planet.rotationPeriod < 50 && planet.composition.includes('hierro')) {
+    habitabilityScore += 10;
+    factors.push('Posible campo magnético protector');
+  } else {
+    factors.push('Campo magnético débil o inexistente');
+  }
+  
+  return { score: Math.min(habitabilityScore, 100), factors };
+};
+
+// Funciones auxiliares
+const calculateGravity = () => {
+  const earthRadius = 12756 / 2;
+  const planetRadius = planet.diameter / 2;
+  const earthMass = 5.9724e24;
+  const gravity = 9.8 * (planet.mass / earthMass) * Math.pow(earthRadius / planetRadius, 2);
+  return gravity.toFixed(1);
+};
+
+const habitability = getHabitabilityData();
+---
+
+<section class="scientific-data-section py-16 px-6">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="font-space text-3xl md:text-4xl font-bold text-center text-star mb-4">
+      Datos Científicos Avanzados
+    </h2>
+    <p class="text-center text-gray-400 mb-12 text-lg">
+      Información técnica y científica detallada sobre {planet.name}
+    </p>
+
+    <!-- Scientific Parameters Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      
+      <!-- Planet Classification -->
+      <div class="scientific-card glass-effect rounded-xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Clasificación</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{getPlanetType()}</p>
+          <p class="text-gray-400 text-sm">Densidad: {calculateDensity()} g/cm³</p>
+          <p class="text-gray-400 text-sm">Gravedad: {calculateGravity()} m/s²</p>
+        </div>
+      </div>
+
+      <!-- Orbital Mechanics -->
+      <div class="scientific-card glass-effect rounded-xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Mecánica Orbital</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">Velocidad Orbital: {calculateOrbitalVelocity()} km/s</p>
+          <p class="text-gray-400 text-sm">Distancia: {(planet.distanceFromSun / 150).toFixed(2)} UA</p>
+          <p class="text-gray-400 text-sm">Período: {planet.orbitalPeriodFormatted}</p>
+        </div>
+      </div>
+
+      <!-- Escape Velocity -->
+      <div class="scientific-card glass-effect rounded-xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Velocidad de Escape</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{calculateEscapeVelocity()} km/s</p>
+          <p class="text-gray-400 text-sm">Velocidad mínima para escapar</p>
+          <p class="text-gray-400 text-sm">de la gravedad del planeta</p>
+        </div>
+      </div>
+
+      <!-- Temperature Range -->
+      <div class="scientific-card glass-effect rounded-xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Rango Térmico</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{planet.temperatureFormatted}</p>
+          <p class="text-gray-400 text-sm">Mínima: {planet.temperature.min}°C</p>
+          <p class="text-gray-400 text-sm">Máxima: {planet.temperature.max}°C</p>
+        </div>
+      </div>
+
+      <!-- Moons Information -->
+      <div class="scientific-card glass-effect rounded-xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Sistema de Lunas</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">
+            {planet.moons === 0 ? 'Sin lunas conocidas' : 
+             planet.moons === 1 ? '1 luna natural' : 
+             `${planet.moons} lunas naturales`}
+          </p>
+          {planet.moons > 0 && (
+            <>
+              <p class="text-gray-400 text-sm">Lunas confirmadas: {planet.moons}</p>
+              {planet.moons > 10 && (
+                <p class="text-gray-400 text-sm">Sistema complejo de satélites</p>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+      <!-- Rotation Data -->
+      <div class="scientific-card glass-effect rounded-xl p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="font-space font-bold text-white text-lg">Rotación</h3>
+        </div>
+        <div class="space-y-2">
+          <p class="text-star font-medium">{planet.rotationPeriodFormatted}</p>
+          <p class="text-gray-400 text-sm">
+            {planet.rotationPeriod < 0 ? 'Rotación retrógrada' : 'Rotación normal'}
+          </p>
+          <p class="text-gray-400 text-sm">
+            {Math.abs(planet.rotationPeriod).toFixed(1)} horas terrestres
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Habitability Analysis -->
+    <div class="habitability-analysis glass-effect rounded-xl p-8 mb-12">
+      <h3 class="font-space font-bold text-white text-2xl mb-6 text-center flex items-center justify-center">
+        <svg class="w-8 h-8 mr-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Análisis de Habitabilidad
+      </h3>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Habitability Score -->
+        <div class="text-center">
+          <div class="relative w-32 h-32 mx-auto mb-4">
+            <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+              <path
+                class="text-gray-700"
+                stroke="currentColor"
+                stroke-width="3"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                class={habitability.score >= 70 ? 'text-green-400' : 
+                       habitability.score >= 40 ? 'text-yellow-400' : 'text-red-400'}
+                stroke="currentColor"
+                stroke-width="3"
+                fill="none"
+                stroke-dasharray={`${habitability.score}, 100`}
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-2xl font-bold text-white">{habitability.score}%</span>
+            </div>
+          </div>
+          <p class="text-lg font-medium text-star">Puntuación de Habitabilidad</p>
+          <p class="text-gray-400 text-sm mt-2">
+            {habitability.score >= 70 ? 'Potencialmente habitable' :
+             habitability.score >= 40 ? 'Parcialmente compatible' :
+             habitability.score >= 20 ? 'Condiciones extremas' : 'Inhabitable'}
+          </p>
+        </div>
+
+        <!-- Habitability Factors -->
+        <div>
+          <h4 class="font-space font-bold text-white text-lg mb-4">Factores Analizados:</h4>
+          <div class="space-y-3">
+            {habitability.factors.map((factor, index) => (
+              <div class="flex items-start space-x-3">
+                <div class={`flex-shrink-0 w-2 h-2 rounded-full mt-2 ${
+                  factor.includes('permite') || factor.includes('compatible') || factor.includes('zona habitable') || factor.includes('protector') ? 
+                  'bg-green-400' : factor.includes('presente') || factor.includes('densa') ? 'bg-yellow-400' : 'bg-red-400'
+                }`}></div>
+                <p class="text-gray-300 text-sm leading-relaxed">{factor}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Physical Characteristics Detailed -->
+    <div class="physical-characteristics glass-effect rounded-xl p-8">
+      <h3 class="font-space font-bold text-white text-2xl mb-6 text-center">Características Físicas Detalladas</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Atmospheric Composition -->
+        <div>
+          <h4 class="font-space font-bold text-star text-lg mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            Composición Atmosférica
+          </h4>
+          <div class="bg-gray-900 rounded-lg p-4 text-sm text-gray-300 leading-relaxed">
+            {planet.atmosphere}
+          </div>
+        </div>
+
+        <!-- Internal Composition -->
+        <div>
+          <h4 class="font-space font-bold text-star text-lg mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+            Estructura Interna
+          </h4>
+          <div class="bg-gray-900 rounded-lg p-4 text-sm text-gray-300 leading-relaxed">
+            {planet.composition}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .glass-effect {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .scientific-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .habitability-analysis {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .physical-characteristics {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>
