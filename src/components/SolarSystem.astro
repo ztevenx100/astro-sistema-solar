@@ -8,7 +8,7 @@ import Planet from './Planet.astro';
   <!-- Solar System -->
   <div class="solar-system relative" style="width: 1000px; height: 1000px;">
     
-    <!-- Orbit lines (visible) -->
+    <!-- Orbit lines (visible guides) -->
     {planetsData.map((planet) => (
       <div 
         class="orbit-line absolute rounded-full border border-gray-500 border-opacity-20"
@@ -18,12 +18,13 @@ import Planet from './Planet.astro';
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+          pointer-events: none;
         `}
       ></div>
     ))}
     
     <!-- Central Sun -->
-    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 group">
+    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
       <Sun />
     </div>
     
