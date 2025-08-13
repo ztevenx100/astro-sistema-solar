@@ -8,40 +8,42 @@ export interface Props {
 
 const { planet, index } = Astro.props;
 const delayAnimation = index * 0.5; // Stagger animation
+const startAngle = index * 45; // Diferentes ángulos iniciales para cada planeta
 ---
 
+<!-- Planet orbit container -->
 <div 
-  class="planet-orbit absolute rounded-full border border-gray-600 border-opacity-30"
+  class="planet-orbit-container absolute"
   style={`
-    width: ${planet.orbitRadius * 2}px;
-    height: ${planet.orbitRadius * 2}px;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    --orbit-radius: ${planet.orbitRadius}px;
-    --orbit-duration: ${planet.orbitSpeed}s;
-    animation-delay: ${delayAnimation}s;
+    transform: translate(-50%, -50%) rotate(${startAngle}deg);
   `}
 >
-  <!-- Planet -->
+  <!-- Planet on orbit using transform-origin -->
   <div 
-    class="planet-container absolute orbit group cursor-pointer"
-    style="
+    class="planet-on-orbit orbit group cursor-pointer"
+    style={`
+      position: absolute;
+      width: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
+      height: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
       left: 50%;
       top: 50%;
-      margin-left: var(--orbit-radius);
-      margin-top: -15px;
-    "
+      transform: translate(-50%, -50%) translateX(${planet.orbitRadius}px);
+      transform-origin: -${planet.orbitRadius}px 0;
+      --orbit-radius: ${planet.orbitRadius}px;
+      --orbit-duration: ${planet.orbitSpeed}s;
+      animation-delay: ${delayAnimation}s;
+    `}
   >
-    <a href={`/planets/${planet.id}`} class="block">
+    <a href={`/planets/${planet.id}`} class="block w-full h-full">
       <div 
-        class={`planet relative rounded-full transition-all duration-300 hover:scale-125 planet-spin ${planet.color === '#FDB813' ? 'glow-yellow' : planet.color === '#6B93D6' ? 'glow-blue' : planet.color === '#CD5C5C' ? 'glow-red' : 'glow-purple'}`}
+        class={`planet relative rounded-full transition-all duration-300 hover:scale-125 planet-spin w-full h-full ${planet.color === '#FDB813' ? 'glow-yellow' : planet.color === '#6B93D6' ? 'glow-blue' : planet.color === '#CD5C5C' ? 'glow-red' : 'glow-purple'}`}
         style={`
-          width: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
-          height: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
           background: linear-gradient(135deg, ${planet.color}dd 0%, ${planet.color} 50%, ${planet.color}aa 100%);
           --spin-duration: ${planet.rotationPeriod > 0 ? Math.abs(planet.rotationPeriod) / 100 : 10}s;
           animation-direction: ${planet.rotationPeriod < 0 ? 'reverse' : 'normal'};
+          box-shadow: 0 0 15px ${planet.color}66;
         `}
       >
         <!-- Planet surface details -->
@@ -70,11 +72,11 @@ const delayAnimation = index * 0.5; // Stagger animation
 </div>
 
 <style>
-  .planet-orbit {
+  .planet-orbit-container {
     pointer-events: none;
   }
   
-  .planet-container {
+  .planet-on-orbit {
     pointer-events: auto;
   }
   
@@ -90,10 +92,27 @@ const delayAnimation = index * 0.5; // Stagger animation
     filter: brightness(1.2);
   }
   
+  /* Glow effects for different planet types */
+  .glow-yellow {
+    box-shadow: 0 0 20px #ffd70066;
+  }
+  
+  .glow-blue {
+    box-shadow: 0 0 20px #6b93d666;
+  }
+  
+  .glow-red {
+    box-shadow: 0 0 20px #cd5c5c66;
+  }
+  
+  .glow-purple {
+    box-shadow: 0 0 20px #9966cc66;
+  }
+  
   /* Responsive planet sizes */
   @media (max-width: 768px) {
-    .planet-orbit {
-      transform: translate(-50%, -50%) scale(0.8);
+    .planet-orbit-container {
+      transform: translate(-50%, -50%) scale(0.8) rotate(var(--start-angle, 0deg));
     }
     
     .planet-info {
@@ -103,8 +122,8 @@ const delayAnimation = index * 0.5; // Stagger animation
   }
   
   @media (max-width: 480px) {
-    .planet-orbit {
-      transform: translate(-50%, -50%) scale(0.6);
+    .planet-orbit-container {
+      transform: translate(-50%, -50%) scale(0.6) rotate(var(--start-angle, 0deg));
     }
     
     .planet-info {
