@@ -2,9 +2,14 @@
 import { planetsData } from '../data/planets';
 import Sun from './Sun.astro';
 import Planet from './Planet.astro';
+import SimulationControls from './SimulationControls.astro';
+import Starfield from './Starfield.astro';
 ---
 
 <div class="solar-system-container w-full h-screen flex items-center justify-center relative overflow-hidden">
+  <!-- Animated starfield background -->
+  <Starfield />
+  
   <!-- Solar System -->
   <div class="solar-system relative" style="width: 1000px; height: 1000px;">
     
@@ -62,6 +67,9 @@ import Planet from './Planet.astro';
       Los planetas orbitan en tiempo real
     </div>
   </div>
+  
+  <!-- Simulation Controls -->
+  <SimulationControls />
   
   <!-- Mobile controls -->
   <div class="mobile-controls fixed bottom-4 left-1/2 transform -translate-x-1/2 md:hidden z-40">

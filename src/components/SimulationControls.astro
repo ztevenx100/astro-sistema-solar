@@ -1,0 +1,192 @@
+---
+// Controls for solar system simulation
+---
+
+<div class="simulation-controls fixed top-6 right-6 glass-effect rounded-xl p-4 z-50">
+  <h3 class="font-space font-bold text-star text-sm mb-3">Controles</h3>
+  
+  <div class="space-y-3">
+    <!-- Play/Pause -->
+    <button 
+      id="playPauseBtn"
+      class="w-full flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-black px-3 py-2 rounded-lg transition-colors duration-200"
+    >
+      <svg id="playIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M8 5v10l8-5z"/>
+      </svg>
+      <svg id="pauseIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M6 4h2v12H6V4zm6 0h2v12h-2V4z"/>
+      </svg>
+      <span id="playPauseText">Pausar</span>
+    </button>
+    
+    <!-- Speed Control -->
+    <div class="space-y-2">
+      <label class="text-xs text-gray-300">Velocidad</label>
+      <input 
+        type="range" 
+        id="speedControl" 
+        min="0.1" 
+        max="5" 
+        step="0.1" 
+        value="1"
+        class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+      >
+      <div class="flex justify-between text-xs text-gray-400">
+        <span>0.1x</span>
+        <span id="speedValue">1.0x</span>
+        <span>5.0x</span>
+      </div>
+    </div>
+    
+    <!-- Focus Planet -->
+    <div class="space-y-2">
+      <label class="text-xs text-gray-300">Enfocar</label>
+      <select 
+        id="focusPlanet"
+        class="w-full bg-gray-800 text-white text-xs rounded-lg px-2 py-1 border border-gray-600"
+      >
+        <option value="none">Sistema completo</option>
+        <option value="mercury">Mercurio</option>
+        <option value="venus">Venus</option>
+        <option value="earth">Tierra</option>
+        <option value="mars">Marte</option>
+        <option value="jupiter">Júpiter</option>
+        <option value="saturn">Saturno</option>
+        <option value="uranus">Urano</option>
+        <option value="neptune">Neptuno</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animation control variables
+  let isPlaying = true;
+  let currentSpeed = 1;
+  
+  // Get all elements with orbit animation
+  const orbitElements = document.querySelectorAll('.orbit') as NodeListOf<HTMLElement>;
+  const spinElements = document.querySelectorAll('.planet-spin') as NodeListOf<HTMLElement>;
+  
+  // Play/Pause functionality
+  const playPauseBtn = document.getElementById('playPauseBtn') as HTMLButtonElement;
+  const playIcon = document.getElementById('playIcon') as HTMLElement;
+  const pauseIcon = document.getElementById('pauseIcon') as HTMLElement;
+  const playPauseText = document.getElementById('playPauseText') as HTMLElement;
+  
+  playPauseBtn?.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    
+    if (isPlaying) {
+      // Resume animations
+      orbitElements.forEach(el => el.style.animationPlayState = 'running');
+      spinElements.forEach(el => el.style.animationPlayState = 'running');
+      
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+      playPauseText.textContent = 'Pausar';
+      playPauseBtn.classList.remove('bg-green-500', 'hover:bg-green-400');
+      playPauseBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-400');
+    } else {
+      // Pause animations
+      orbitElements.forEach(el => el.style.animationPlayState = 'paused');
+      spinElements.forEach(el => el.style.animationPlayState = 'paused');
+      
+      playIcon.classList.add('hidden');
+      pauseIcon.classList.remove('hidden');
+      playPauseText.textContent = 'Reanudar';
+      playPauseBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-400');
+      playPauseBtn.classList.add('bg-green-500', 'hover:bg-green-400');
+    }
+  });
+  
+  // Speed control
+  const speedControl = document.getElementById('speedControl') as HTMLInputElement;
+  const speedValue = document.getElementById('speedValue') as HTMLElement;
+  
+  speedControl?.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    const speed = parseFloat(target.value);
+    currentSpeed = speed;
+    if (speedValue) {
+      speedValue.textContent = `${speed.toFixed(1)}x`;
+    }
+    
+    // Update animation speeds
+    orbitElements.forEach(el => {
+      const originalDuration = parseFloat(el.style.getPropertyValue('--orbit-duration')) || 30;
+      el.style.animationDuration = `${originalDuration / speed}s`;
+    });
+    
+    spinElements.forEach(el => {
+      const originalDuration = parseFloat(el.style.getPropertyValue('--spin-duration')) || 10;
+      el.style.animationDuration = `${originalDuration / speed}s`;
+    });
+  });
+  
+  // Focus planet functionality
+  const focusPlanet = document.getElementById('focusPlanet') as HTMLSelectElement;
+  const solarSystem = document.querySelector('.solar-system') as HTMLElement;
+  
+  focusPlanet?.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement;
+    const planetId = target.value;
+    
+    if (planetId === 'none') {
+      // Reset to full view
+      if (solarSystem) {
+        solarSystem.style.transform = 'scale(1)';
+        solarSystem.style.transformOrigin = 'center';
+      }
+    } else {
+      // Find and focus on the selected planet
+      const planetElement = document.querySelector(`[data-planet="${planetId}"]`) as HTMLElement;
+      if (planetElement && solarSystem) {
+        solarSystem.style.transform = 'scale(2)';
+        solarSystem.style.transformOrigin = 'center';
+        // Could add more sophisticated focusing logic here
+      }
+    }
+  });
+</script>
+
+<style>
+  .simulation-controls {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 200px;
+  }
+  
+  /* Custom slider styles */
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #ffd700;
+    cursor: pointer;
+    border: 2px solid #333;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #ffd700;
+    cursor: pointer;
+    border: 2px solid #333;
+  }
+  
+  @media (max-width: 768px) {
+    .simulation-controls {
+      position: fixed;
+      top: auto;
+      bottom: 6px;
+      right: 6px;
+      left: 6px;
+      min-width: auto;
+    }
+  }
+</style>
