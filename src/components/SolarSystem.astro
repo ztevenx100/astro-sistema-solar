@@ -3,12 +3,9 @@ import { planetsData } from '../data/planets';
 import Sun from './Sun.astro';
 import Planet from './Planet.astro';
 import SimulationControls from './SimulationControls.astro';
-import Starfield from './Starfield.astro';
 ---
 
-<div class="solar-system-container w-full h-screen flex items-center justify-center relative overflow-hidden">
-  <!-- Animated starfield background -->
-  <Starfield />
+<div class="solar-system-container w-full h-screen flex items-center justify-center relative overflow-hidden z-20">
   
   <!-- Solar System -->
   <div class="solar-system relative" style="width: 1000px; height: 1000px;">

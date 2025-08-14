@@ -1,0 +1,257 @@
+---
+// Constellation information tooltip component
+interface Props {
+  constellationId: string;
+  name: string;
+  planet: string;
+  visible?: boolean;
+}
+
+const { constellationId, name, planet, visible = false } = Astro.props;
+
+// Información adicional sobre cada constelación
+const constellationInfo = {
+  'ursa-major': {
+    mythology: 'La Osa Mayor representa a Calisto en la mitología griega',
+    facts: [
+      'Forma parte de la constelación Ursa Major',
+      'Es visible todo el año en el hemisferio norte',
+      'Sus 7 estrellas principales forman "El Carro"',
+      'Apunta hacia la Estrella Polar'
+    ],
+    distance: '79-124 años luz de la Tierra',
+    brightest: 'Alioth (ε Ursae Majoris)'
+  },
+  'orion': {
+    mythology: 'Orión era un gran cazador en la mitología griega',
+    facts: [
+      'Contiene la famosa Nebulosa de Orión',
+      'Betelgeuse es una supergigante roja',
+      'Visible en invierno desde el hemisferio norte',
+      'Las tres estrellas del cinturón son únicas'
+    ],
+    distance: '240-2000 años luz de la Tierra',
+    brightest: 'Rigel (β Orionis)'
+  },
+  'cassiopeia': {
+    mythology: 'Casiopea era una reina vanidosa en la mitología griega',
+    facts: [
+      'Tiene forma característica de "W"',
+      'Es circumpolar en latitudes altas del norte',
+      'Contiene varios cúmulos estelares',
+      'Su estrella central es variable'
+    ],
+    distance: '54-550 años luz de la Tierra',
+    brightest: 'Schedar (α Cassiopeiae)'
+  },
+  'leo': {
+    mythology: 'Representa al León de Nemea derrotado por Hércules',
+    facts: [
+      'Contiene la estrella Regulus en el corazón',
+      'Es una constelación zodiacal',
+      'Mejor visible en primavera',
+      'Contiene varias galaxias brillantes'
+    ],
+    distance: '36-247 años luz de la Tierra',
+    brightest: 'Regulus (α Leonis)'
+  },
+  'aquarius': {
+    mythology: 'El portador de agua de los dioses',
+    facts: [
+      'Es una constelación zodiacal',
+      'Contiene la estrella más cercana, Gliese 876',
+      'Asociada con lluvia y agua en muchas culturas',
+      'Visible mejor en otoño'
+    ],
+    distance: '25-520 años luz de la Tierra',
+    brightest: 'Sadalsuud (β Aquarii)'
+  },
+  'gemini': {
+    mythology: 'Los gemelos Cástor y Pólux de la mitología griega',
+    facts: [
+      'Contiene el cúmulo abierto M35',
+      'Es una constelación zodiacal',
+      'Las dos estrellas principales son muy diferentes',
+      'Visible en invierno y primavera'
+    ],
+    distance: '34-520 años luz de la Tierra',
+    brightest: 'Pollux (β Geminorum)'
+  },
+  'scorpius': {
+    mythology: 'El escorpión que mató a Orión en la mitología',
+    facts: [
+      'Contiene la supergigante roja Antares',
+      'Es una constelación zodiacal',
+      'Rica en cúmulos estelares brillantes',
+      'Mejor visible en verano'
+    ],
+    distance: '65-700 años luz de la Tierra',
+    brightest: 'Antares (α Scorpii)'
+  },
+  'cygnus': {
+    mythology: 'Representa un cisne volando por la Vía Láctea',
+    facts: [
+      'Contiene la Cruz del Norte',
+      'Deneb es una de las estrellas más luminosas',
+      'Rica región de la Vía Láctea',
+      'Visible en verano y otoño'
+    ],
+    distance: '45-2600 años luz de la Tierra',
+    brightest: 'Deneb (α Cygni)'
+  }
+};
+
+const info = constellationInfo[constellationId as keyof typeof constellationInfo];
+---
+
+<div 
+  class={`constellation-info-panel ${visible ? 'visible' : ''}`}
+  id={`info-${constellationId}`}
+>
+  <div class="info-content glass-effect rounded-xl p-6 max-w-sm">
+    <!-- Header -->
+    <div class="info-header mb-4">
+      <h3 class="font-space text-lg font-bold text-star mb-1">{name}</h3>
+      <p class="text-sm text-blue-300">→ Navegar a {planet}</p>
+    </div>
+
+    <!-- Mythology -->
+    <div class="mythology-section mb-4">
+      <h4 class="text-sm font-semibold text-purple-300 mb-2">🏛️ Mitología</h4>
+      <p class="text-xs text-gray-300 leading-relaxed">{info?.mythology}</p>
+    </div>
+
+    <!-- Facts -->
+    <div class="facts-section mb-4">
+      <h4 class="text-sm font-semibold text-green-300 mb-2">⭐ Datos Curiosos</h4>
+      <ul class="text-xs text-gray-300 space-y-1">
+        {info?.facts.map((fact) => (
+          <li class="flex items-start">
+            <span class="text-yellow-400 mr-2">•</span>
+            <span>{fact}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Technical Info -->
+    <div class="technical-section">
+      <div class="grid grid-cols-1 gap-2 text-xs">
+        <div class="tech-item">
+          <span class="text-cyan-400 font-medium">📏 Distancia:</span>
+          <span class="text-gray-300 ml-2">{info?.distance}</span>
+        </div>
+        <div class="tech-item">
+          <span class="text-orange-400 font-medium">🌟 Estrella principal:</span>
+          <span class="text-gray-300 ml-2">{info?.brightest}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation hint -->
+    <div class="navigation-hint mt-4 pt-3 border-t border-gray-600">
+      <p class="text-xs text-gray-400 text-center">
+        🖱️ Click para navegar a <span class="text-yellow-300 font-medium">{planet}</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .constellation-info-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .constellation-info-panel.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .info-content {
+    background: rgba(0, 0, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    box-shadow: 
+      0 0 30px rgba(135, 206, 235, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.05);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .info-header {
+    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+    padding-bottom: 0.5rem;
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  /* Scrollbar for overflow content */
+  .info-content::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .info-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+  }
+
+  .info-content::-webkit-scrollbar-thumb {
+    background: rgba(135, 206, 235, 0.4);
+    border-radius: 2px;
+  }
+
+  .info-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(135, 206, 235, 0.6);
+  }
+
+  /* Animation effects */
+  .mythology-section, .facts-section, .technical-section {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .mythology-section {
+    animation-delay: 0.1s;
+  }
+
+  .facts-section {
+    animation-delay: 0.2s;
+  }
+
+  .technical-section {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .info-content {
+      max-width: 90vw;
+      padding: 1rem;
+    }
+    
+    .constellation-info-panel {
+      top: 40%;
+    }
+  }
+</style>
