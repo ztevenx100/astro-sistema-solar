@@ -1,10 +1,13 @@
 ---
+import InteractiveStarfield from '../components/InteractiveStarfield.astro';
+
 export interface Props {
   title: string;
   description?: string;
+  currentPlanet?: string;
 }
 
-const { title, description = "Explora el sistema solar de forma interactiva" } = Astro.props;
+const { title, description = "Explora el sistema solar de forma interactiva", currentPlanet } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,11 +26,8 @@ const { title, description = "Explora el sistema solar de forma interactiva" } =
 		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	</head>
 	<body class="bg-space-dark text-white overflow-x-hidden">
-		<!-- Background stars -->
-		<div class="fixed inset-0 z-0">
-			<div class="stars"></div>
-			<div class="twinkling"></div>
-		</div>
+		<!-- Interactive starfield background with constellations -->
+		<InteractiveStarfield currentPlanet={currentPlanet} />
 		
 		<!-- Main content -->
 		<main class="relative z-10">
@@ -56,55 +56,7 @@ const { title, description = "Explora el sistema solar de forma interactiva" } =
 	.font-space {
 		font-family: 'Orbitron', monospace;
 	}
-	
-	/* Animated starfield background */
-	.stars, .twinkling {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-	}
-	
-	.stars {
-		width: 100%;
-		height: 100%;
-		background: 
-			radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-			radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-			radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-			radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-			radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
-		background-repeat: repeat;
-		background-size: 200px 100px;
-		animation: zoom 20s infinite linear;
-	}
-	
-	.twinkling {
-		background: 
-			radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
-		background-size: 100px 100px;
-		animation: twinkling 5s infinite ease-in-out;
-	}
-	
-	@keyframes zoom {
-		from {
-			transform: scale(1);
-		}
-		to {
-			transform: scale(1.1);
-		}
-	}
-	
-	@keyframes twinkling {
-		0%, 100% {
-			opacity: 0.3;
-		}
-		50% {
-			opacity: 0.8;
-		}
-	}
-	
+
 	/* Custom scrollbar */
 	::-webkit-scrollbar {
 		width: 8px;

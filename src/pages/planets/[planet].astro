@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 const { planet } = Astro.props;
 ---
 
-<Layout title={`${planet.name} - Sistema Solar Interactivo`}>
+<Layout title={`${planet.name} - Sistema Solar Interactivo`} currentPlanet={planet.id}>
   <main class="min-h-screen relative overflow-x-hidden">
     
     <!-- Header with planet visualization -->
