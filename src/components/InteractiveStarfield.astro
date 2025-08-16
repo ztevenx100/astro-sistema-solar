@@ -1,309 +1,257 @@
 ---
-// Interactive starfield with navigable constellations
-interface Props {
+export interface Props {
   currentPlanet?: string;
 }
 
-const { currentPlanet = 'earth' } = Astro.props;
+const { currentPlanet = '' } = Astro.props;
 
-// Constelaciones principales con sus estrellas y planetas asociados
+// Definición de las constelaciones distribuidas alrededor del sistema solar
 const constellations = [
   {
     id: 'ursa-major',
     name: 'Osa Mayor',
-    planet: 'jupiter',
+    planet: 'Jupiter',
     stars: [
-      // Esquina superior izquierda - Más compacta
-      { x: 8, y: 8, brightness: 0.9, name: 'Dubhe' },
-      { x: 12, y: 7, brightness: 0.8, name: 'Merak' },
-      { x: 16, y: 9, brightness: 0.7, name: 'Phecda' },
-      { x: 19, y: 10, brightness: 0.8, name: 'Megrez' },
-      { x: 22, y: 8.5, brightness: 0.9, name: 'Alioth' },
-      { x: 25, y: 9.5, brightness: 0.7, name: 'Mizar' },
-      { x: 28, y: 11, brightness: 0.8, name: 'Alkaid' }
+      { name: 'Dubhe', x: 2, y: 8, brightness: 0.9 },
+      { name: 'Merak', x: 8, y: 12, brightness: 0.8 },
+      { name: 'Phecda', x: 15, y: 10, brightness: 0.7 },
+      { name: 'Megrez', x: 22, y: 8, brightness: 0.6 },
+      { name: 'Alioth', x: 28, y: 5, brightness: 0.8 },
+      { name: 'Mizar', x: 35, y: 3, brightness: 0.7 },
+      { name: 'Alkaid', x: 42, y: 2, brightness: 0.9 }
     ],
-    lines: [
-      [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [0, 4]
-    ]
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6]]
   },
   {
     id: 'orion',
     name: 'Orión',
-    planet: 'mars',
+    planet: 'Mars',
     stars: [
-      // Esquina inferior derecha - Más compacta
-      { x: 78, y: 82, brightness: 1.0, name: 'Betelgeuse' },
-      { x: 80, y: 85, brightness: 0.9, name: 'Bellatrix' },
-      { x: 82, y: 88, brightness: 0.8, name: 'Alnitak' },
-      { x: 83, y: 89, brightness: 0.8, name: 'Alnilam' },
-      { x: 84, y: 90, brightness: 0.8, name: 'Mintaka' },
-      { x: 86, y: 92, brightness: 1.0, name: 'Rigel' },
-      { x: 79, y: 91, brightness: 0.7, name: 'Saiph' }
+      { name: 'Bellatrix', x: 88, y: 5, brightness: 0.8 },
+      { name: 'Betelgeuse', x: 92, y: 10, brightness: 1.0 },
+      { name: 'Rigel', x: 95, y: 25, brightness: 0.9 },
+      { name: 'Alnitak', x: 90, y: 15, brightness: 0.7 },
+      { name: 'Alnilam', x: 93, y: 17, brightness: 0.8 },
+      { name: 'Mintaka', x: 96, y: 19, brightness: 0.7 },
+      { name: 'Saiph', x: 88, y: 22, brightness: 0.6 }
     ],
-    lines: [
-      [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 0], [2, 6]
-    ]
+    lines: [[0,1], [1,3], [3,4], [4,5], [1,6], [2,6], [3,6]]
   },
   {
     id: 'cassiopeia',
     name: 'Casiopea',
-    planet: 'saturn',
+    planet: 'Saturn',
     stars: [
-      // Borde izquierdo inferior - Más compacta
-      { x: 4, y: 78, brightness: 0.9, name: 'Caph' },
-      { x: 7, y: 80, brightness: 0.8, name: 'Schedar' },
-      { x: 10, y: 82, brightness: 1.0, name: 'Gamma Cas' },
-      { x: 13, y: 84, brightness: 0.8, name: 'Ruchbah' },
-      { x: 16, y: 86, brightness: 0.7, name: 'Segin' }
+      { name: 'Schedar', x: 85, y: 88, brightness: 0.8 },
+      { name: 'Caph', x: 90, y: 92, brightness: 0.7 },
+      { name: 'Gamma Cas', x: 95, y: 90, brightness: 0.9 },
+      { name: 'Ruchbah', x: 98, y: 95, brightness: 0.6 },
+      { name: 'Segin', x: 92, y: 98, brightness: 0.5 }
     ],
-    lines: [
-      [0, 1], [1, 2], [2, 3], [3, 4]
-    ]
+    lines: [[0,1], [1,2], [2,3], [3,4]]
   },
   {
     id: 'leo',
     name: 'Leo',
-    planet: 'venus',
+    planet: 'Mercury',
     stars: [
-      // Borde superior derecho - Más compacta
-      { x: 80, y: 12, brightness: 1.0, name: 'Regulus' },
-      { x: 83, y: 10, brightness: 0.8, name: 'Zosma' },
-      { x: 86, y: 8, brightness: 0.9, name: 'Chertan' },
-      { x: 89, y: 11, brightness: 0.8, name: 'Denebola' },
-      { x: 78, y: 15, brightness: 0.7, name: 'Algieba' }
+      { name: 'Regulus', x: 98, y: 45, brightness: 0.9 },
+      { name: 'Algieba', x: 95, y: 50, brightness: 0.7 },
+      { name: 'Denebola', x: 92, y: 55, brightness: 0.8 },
+      { name: 'Zosma', x: 96, y: 60, brightness: 0.6 },
+      { name: 'Chertan', x: 98, y: 65, brightness: 0.5 }
     ],
-    lines: [
-      [0, 1], [1, 2], [2, 3], [0, 4]
-    ]
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
   },
   {
     id: 'aquarius',
     name: 'Acuario',
-    planet: 'neptune',
+    planet: 'Uranus',
     stars: [
-      // Esquina inferior izquierda - Más compacta
-      { x: 5, y: 92, brightness: 0.8, name: 'Sadalmelik' },
-      { x: 8, y: 94, brightness: 0.7, name: 'Sadalsuud' },
-      { x: 11, y: 95, brightness: 0.6, name: 'Sadachbia' },
-      { x: 7, y: 96, brightness: 0.5, name: 'Albali' }
+      { name: 'Sadalsuud', x: 58, y: 95, brightness: 0.8 },
+      { name: 'Sadalmelik', x: 52, y: 98, brightness: 0.7 },
+      { name: 'Sadachbia', x: 45, y: 96, brightness: 0.6 },
+      { name: 'Albali', x: 38, y: 92, brightness: 0.5 }
     ],
-    lines: [
-      [0, 1], [1, 2], [0, 3]
-    ]
+    lines: [[0,1], [1,2], [2,3]]
   },
   {
     id: 'gemini',
     name: 'Géminis',
-    planet: 'mercury',
+    planet: 'Venus',
     stars: [
-      // Borde superior centro-derecha - Más compacta
-      { x: 88, y: 4, brightness: 1.0, name: 'Castor' },
-      { x: 91, y: 3, brightness: 0.9, name: 'Pollux' },
-      { x: 85, y: 6, brightness: 0.7, name: 'Alhena' },
-      { x: 93, y: 7, brightness: 0.6, name: 'Tejat' }
+      { name: 'Castor', x: 15, y: 95, brightness: 0.9 },
+      { name: 'Pollux', x: 8, y: 92, brightness: 0.8 },
+      { name: 'Alhena', x: 2, y: 88, brightness: 0.7 }
     ],
-    lines: [
-      [0, 1], [0, 2], [1, 3]
-    ]
+    lines: [[0,1], [1,2]]
   },
   {
     id: 'scorpius',
     name: 'Escorpión',
-    planet: 'earth',
+    planet: 'Neptune',
     stars: [
-      // Borde derecho medio - Más compacta
-      { x: 93, y: 52, brightness: 1.0, name: 'Antares' },
-      { x: 95, y: 55, brightness: 0.8, name: 'Shaula' },
-      { x: 94, y: 58, brightness: 0.7, name: 'Sargas' },
-      { x: 91, y: 49, brightness: 0.8, name: 'Dschubba' }
+      { name: 'Antares', x: 2, y: 55, brightness: 1.0 },
+      { name: 'Shaula', x: 5, y: 48, brightness: 0.8 },
+      { name: 'Sargas', x: 8, y: 42, brightness: 0.7 }
     ],
-    lines: [
-      [0, 1], [1, 2], [0, 3]
-    ]
+    lines: [[0,1], [0,2]]
   },
   {
     id: 'cygnus',
     name: 'Cisne',
-    planet: 'uranus',
+    planet: 'Earth',
     stars: [
-      // Borde superior centro-izquierda - Más compacta
-      { x: 18, y: 3, brightness: 1.0, name: 'Deneb' },
-      { x: 20, y: 5, brightness: 0.8, name: 'Sadr' },
-      { x: 22, y: 7, brightness: 0.9, name: 'Albireo' },
-      { x: 16, y: 6, brightness: 0.7, name: 'Delta Cyg' },
-      { x: 24, y: 4, brightness: 0.6, name: 'Epsilon Cyg' }
+      { name: 'Deneb', x: 58, y: 2, brightness: 0.9 },
+      { name: 'Sadr', x: 65, y: 5, brightness: 0.8 },
+      { name: 'Albireo', x: 72, y: 8, brightness: 0.7 }
     ],
-    lines: [
-      [0, 1], [1, 2], [1, 3], [1, 4]
-    ]
+    lines: [[0,1], [1,2]]
   }
 ];
-
-// Estrellas de fondo adicionales - distribuidas para evitar el centro del sistema solar
-const backgroundStars = Array.from({ length: 150 }, (_, i) => {
-  let x, y;
-  do {
-    x = Math.random() * 100;
-    y = Math.random() * 100;
-    // Evitar el área central del sistema solar (30-70% tanto en x como en y)
-  } while (x > 25 && x < 75 && y > 25 && y < 75);
-  
-  return {
-    id: i,
-    x,
-    y,
-    brightness: 0.3 + Math.random() * 0.4,
-    twinkle: Math.random() * 3
-  };
-});
 ---
 
-<div class="interactive-starfield fixed inset-0 z-10 overflow-hidden" data-current-planet={currentPlanet}>
-  <!-- Fondo de estrellas estáticas -->
-  <div class="background-stars">
-    {backgroundStars.map((star) => (
-      <div 
-        class="bg-star"
-        style={`
-          left: ${star.x}%;
-          top: ${star.y}%;
-          opacity: ${star.brightness};
-          animation-delay: ${star.twinkle}s;
-        `}
-      ></div>
-    ))}
-  </div>
-
-  <!-- Constelaciones interactivas -->
-  <div class="constellations-layer">
-    {constellations.map((constellation) => {
-      // Calcular el área de la constelación
-      const minX = Math.min(...constellation.stars.map(s => s.x));
-      const maxX = Math.max(...constellation.stars.map(s => s.x));
-      const minY = Math.min(...constellation.stars.map(s => s.y));
-      const maxY = Math.max(...constellation.stars.map(s => s.y));
-      const width = maxX - minX;
-      const height = maxY - minY;
-      
+<div class="interactive-starfield">
+  <!-- Fondo estrellado aleatorio con más densidad -->
+  <div class="starfield-background">
+    {Array.from({ length: 400 }, (_, i) => {
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      // Crear más estrellas en los bordes donde están las constelaciones
+      const isEdge = x < 15 || x > 85 || y < 15 || y > 85;
+      const opacity = isEdge ? 0.4 + Math.random() * 0.5 : 0.2 + Math.random() * 0.3;
       return (
         <div 
-          class={`constellation ${constellation.planet === currentPlanet ? 'active' : ''}`}
-          data-constellation={constellation.id}
-          data-planet={constellation.planet}
+          class="background-star"
           style={`
-            left: ${minX}%;
-            top: ${minY}%;
-            width: ${width}%;
-            height: ${height}%;
+            left: ${x}%;
+            top: ${y}%;
+            animation-delay: ${Math.random() * 4}s;
+            opacity: ${opacity};
           `}
-        >
-          <!-- Líneas de la constelación -->
-          <svg class="constellation-lines" viewBox={`0 0 ${width} ${height}`} style={`width: 100%; height: 100%;`}>
-            {constellation.lines.map((line) => (
-              <line
-                x1={constellation.stars[line[0]].x - minX}
-                y1={constellation.stars[line[0]].y - minY}
-                x2={constellation.stars[line[1]].x - minX}
-                y2={constellation.stars[line[1]].y - minY}
-                class="constellation-line"
-              />
-            ))}
-          </svg>
-
-          <!-- Estrellas de la constelación -->
-          {constellation.stars.map((star, index) => (
-            <div
-              class="constellation-star"
-              style={`
-                left: ${((star.x - minX) / width) * 100}%;
-                top: ${((star.y - minY) / height) * 100}%;
-                opacity: ${star.brightness};
-              `}
-              data-star-name={star.name}
-              title={`${star.name} - Ir a ${constellation.name} (${constellation.planet})`}
-            >
-              <div class="star-glow"></div>
-            </div>
-          ))}
-
-          <!-- Etiqueta de la constelación -->
-          <div 
-            class="constellation-label"
-            style={`
-              left: 50%;
-              top: -15%;
-            `}
-          >
-            <span class="constellation-name">{constellation.name}</span>
-            <span class="constellation-planet">→ {constellation.planet}</span>
-          </div>
-        </div>
+        ></div>
       );
     })}
   </div>
 
-  <!-- Shooting stars mejoradas -->
-  <div class="enhanced-shooting-stars">
+  <!-- Nebulosas de fondo -->
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+
+  <!-- Constelaciones -->
+  <div class="constellations-container">
+    {constellations.map((constellation) => (
+      <div 
+        class={`constellation ${constellation.planet === currentPlanet ? 'active' : ''}`}
+        data-constellation={constellation.id}
+        data-planet={constellation.planet}
+        onclick={`showConstellationInfo('${constellation.id}')`}
+      >
+        <!-- Líneas de la constelación -->
+        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          {constellation.lines.map((line) => (
+            <line
+              x1={constellation.stars[line[0]].x}
+              y1={constellation.stars[line[0]].y}
+              x2={constellation.stars[line[1]].x}
+              y2={constellation.stars[line[1]].y}
+              class="constellation-line"
+            />
+          ))}
+        </svg>
+
+        <!-- Estrellas de la constelación -->
+        {constellation.stars.map((star, index) => (
+          <div
+            class="constellation-star"
+            style={`
+              left: ${star.x}%;
+              top: ${star.y}%;
+              opacity: ${star.brightness};
+            `}
+            data-star-name={star.name}
+            title={`${star.name} - Ir a ${constellation.name} (${constellation.planet})`}
+          >
+            <div class="star-glow"></div>
+          </div>
+        ))}
+
+        <!-- Etiqueta de la constelación -->
+        <div 
+          class="constellation-label"
+          style={`
+            left: ${constellation.stars.reduce((sum, star) => sum + star.x, 0) / constellation.stars.length}%;
+            top: ${constellation.stars.reduce((sum, star) => sum + star.y, 0) / constellation.stars.length - 3}%;
+          `}
+        >
+          <span class="constellation-name">{constellation.name}</span>
+          <span class="constellation-planet">→ {constellation.planet}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Estrellas fugaces -->
+  <div class="shooting-stars">
     {Array.from({ length: 5 }, (_, i) => (
       <div 
-        class="enhanced-shooting-star"
+        class="shooting-star"
         style={`
-          animation-delay: ${i * 12 + Math.random() * 5}s;
-          animation-duration: ${3 + Math.random() * 2}s;
+          animation-delay: ${i * 8 + Math.random() * 5}s;
+          animation-duration: ${2 + Math.random() * 2}s;
         `}
       ></div>
     ))}
   </div>
-
-  <!-- Nebulosas de fondo -->
-  <div class="nebula-layer">
-    <div class="nebula nebula-1"></div>
-    <div class="nebula nebula-2"></div>
-    <div class="nebula nebula-3"></div>
-  </div>
-
-  <!-- Indicador de constelaciones navegables (solo en página principal) -->
-  {currentPlanet === 'system' && (
-    <div class="constellation-guide fixed top-4 left-1/2 transform -translate-x-1/2 glass-effect rounded-xl p-4 z-50 max-w-xs">
-      <h3 class="font-space font-bold text-star text-sm mb-2 text-center">🌌 Constelaciones Navegables</h3>
-      <p class="text-xs text-gray-300 mb-2 text-center">
-        Haz clic en las constelaciones para navegar a los planetas
-      </p>
-      <div class="text-xs text-gray-400 space-y-1">
-        <div class="flex items-center justify-center gap-2">
-          <span>⭐ <span class="text-yellow-400">Estrellas doradas</span> = Clickeables</span>
-        </div>
-        <div class="flex items-center justify-center gap-2">
-          <span>🖱️ <span class="text-blue-400">Hover</span> = Ver información</span>
-        </div>
-        <div class="flex items-center justify-center gap-2">
-          <span>⌨️ <span class="text-green-400">Teclas 1-8</span> = Acceso directo</span>
-        </div>
-      </div>
-    </div>
-  )}
 </div>
 
 <style>
   .interactive-starfield {
-    pointer-events: auto;
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 10;
+    /* Gradiente sutil para enfatizar los bordes */
+    background: radial-gradient(
+      ellipse at center,
+      transparent 25%, 
+      rgba(135, 206, 235, 0.02) 60%, 
+      rgba(135, 206, 235, 0.05) 85%,
+      rgba(135, 206, 235, 0.08) 100%
+    );
   }
 
-  /* Estrellas de fondo */
-  .bg-star {
+  /* Fondo estrellado */
+  .starfield-background {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .background-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
     background: white;
     border-radius: 50%;
-    animation: gentle-twinkle 4s ease-in-out infinite;
+    animation: gentle-twinkle 4s infinite;
   }
 
   /* Constelaciones */
+  .constellations-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
   .constellation {
     position: absolute;
-    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
     transition: all 0.5s ease;
     pointer-events: auto;
     cursor: pointer;
@@ -312,7 +260,8 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
 
   .constellation:hover {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 15px rgba(135, 206, 235, 0.5));
   }
 
   .constellation.active {
@@ -322,16 +271,16 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
 
   .constellation-lines {
     position: absolute;
-    top: 0;
-    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 20;
   }
 
   .constellation-line {
     stroke: #87CEEB;
-    stroke-width: 0.3;
-    opacity: 0.4;
+    stroke-width: 0.15;
+    opacity: 0.5;
     transition: opacity 0.3s ease;
     filter: drop-shadow(0 0 2px #87CEEB);
   }
@@ -342,32 +291,32 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
     animation: line-pulse 2s ease-in-out infinite;
   }
 
-  /* Estrellas de constelación */
+  /* Estrellas de constelación - tamaño más pequeño */
   .constellation-star {
     position: absolute;
-    width: 5px;
-    height: 5px;
-    background: #ffd700;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, #fff, #87CEEB);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
-    cursor: pointer;
     z-index: 25;
-    box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(135, 206, 235, 0.3);
   }
 
-  .constellation-star:hover {
-    transform: translate(-50%, -50%) scale(1.6);
-    box-shadow: 0 0 15px #ffd700;
+  .constellation:hover .constellation-star {
+    animation: star-glow 1.5s ease-in-out infinite;
+    box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3);
+    transform: translate(-50%, -50%) scale(1.15);
   }
 
   .star-glow {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, #ffd700 0%, transparent 70%);
+    background: inherit;
     border-radius: 50%;
-    animation: star-glow 3s ease-in-out infinite;
+    animation: gentle-twinkle 3s infinite;
   }
 
   /* Etiquetas de constelación */
@@ -375,51 +324,56 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
     position: absolute;
     transform: translate(-50%, -100%);
     text-align: center;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 30;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 4px 8px;
-    border-radius: 6px;
-    border: 1px solid rgba(135, 206, 235, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  .constellation:hover .constellation-label,
-  .constellation.active .constellation-label {
+  .constellation:hover .constellation-label {
     opacity: 1;
+    animation: label-glow 2s ease-in-out infinite;
   }
 
   .constellation-name {
     display: block;
     color: #87CEEB;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: bold;
-    text-shadow: 0 0 8px rgba(135, 206, 235, 0.8);
+    text-shadow: 0 0 6px rgba(135, 206, 235, 1), 0 0 12px rgba(135, 206, 235, 0.4);
     margin-bottom: 2px;
   }
 
   .constellation-planet {
     display: block;
     color: #ffd700;
-    font-size: 0.7rem;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+    font-size: 0.6rem;
+    margin-top: 2px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 1), 0 0 10px rgba(255, 215, 0, 0.4);
   }
 
-  /* Estrellas fugaces mejoradas */
-  .enhanced-shooting-star {
+  /* Estrellas fugaces */
+  .shooting-stars {
     position: absolute;
-    top: 5%;
-    left: -10%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .shooting-star {
+    position: absolute;
     width: 3px;
     height: 3px;
     background: linear-gradient(45deg, #fff, #87CEEB);
     border-radius: 50%;
-    box-shadow: 0 0 10px #87CEEB;
-    animation: enhanced-shooting infinite;
+    top: 20%;
+    left: -10px;
+    animation: shooting 4s linear infinite;
+    box-shadow: 0 0 8px #87CEEB;
   }
 
-  .enhanced-shooting-star::before {
+  .shooting-star::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -475,8 +429,8 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
   }
 
   @keyframes star-glow {
-    0%, 100% { transform: scale(0.8); opacity: 0.7; }
-    50% { transform: scale(1.2); opacity: 1; }
+    0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.7; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
   }
 
   @keyframes line-pulse {
@@ -484,7 +438,7 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
     50% { opacity: 1; }
   }
 
-  @keyframes enhanced-shooting {
+  @keyframes shooting {
     0% {
       transform: translateX(0) translateY(0);
       opacity: 1;
@@ -504,62 +458,50 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
     100% { transform: translateX(-10px) translateY(-5px); }
   }
 
-  /* Panel de guía de constelaciones */
-  .constellation-guide {
-    background: rgba(0, 0, 20, 0.9);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(135, 206, 235, 0.3);
-    box-shadow: 0 0 20px rgba(135, 206, 235, 0.2);
-    animation: guide-fade-in 1s ease-out;
-  }
-
-  /* Responsive para el panel de guía */
-  @media (max-width: 768px) {
-    .constellation-guide {
-      max-width: calc(100vw - 2rem);
-      padding: 0.75rem;
-      top: 1rem;
-    }
-    
-    .constellation-guide h3 {
-      font-size: 0.7rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .constellation-guide p {
-      font-size: 0.65rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .constellation-guide div div {
-      font-size: 0.6rem;
-    }
-  }
-
-  @keyframes guide-fade-in {
-    from {
-      opacity: 0;
-      transform: translateX(-50%) translateY(-20px);
-    }
-    to {
+  @keyframes ripple-effect {
+    0% {
+      width: 20px;
+      height: 20px;
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    }
+    100% {
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+    }
+  }
+
+  @keyframes label-glow {
+    0%, 100% { 
+      text-shadow: 
+        0 0 8px rgba(135, 206, 235, 1), 
+        0 0 15px rgba(135, 206, 235, 0.5);
+    }
+    50% { 
+      text-shadow: 
+        0 0 12px rgba(135, 206, 235, 1), 
+        0 0 25px rgba(135, 206, 235, 0.8),
+        0 0 35px rgba(135, 206, 235, 0.3);
     }
   }
 
   /* Responsive */
   @media (max-width: 768px) {
     .constellation-star {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
     }
     
     .constellation-name {
-      font-size: 0.6rem;
+      font-size: 0.55rem;
     }
     
     .constellation-planet {
-      font-size: 0.5rem;
+      font-size: 0.45rem;
+    }
+    
+    .constellation-line {
+      stroke-width: 0.12;
     }
   }
 </style>
@@ -567,9 +509,7 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
 <script>
   // Script para navegación por constelaciones
   document.addEventListener('DOMContentLoaded', () => {
-    const constellations = document.querySelectorAll('.constellation');
-    
-    // Mapeo de planetas para navegación (usando IDs directos)
+    // Mapeo de planetas para navegación
     const planetPaths: Record<string, string> = {
       'mercury': 'mercury',
       'venus': 'venus', 
@@ -580,134 +520,46 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
       'uranus': 'uranus',
       'neptune': 'neptune'
     };
-    
-    constellations.forEach(constellation => {
-      const htmlConstellation = constellation as HTMLElement;
-      
-      constellation.addEventListener('click', (e) => {
-        e.preventDefault();
-        const planet = htmlConstellation.dataset.planet;
-        const constellationName = htmlConstellation.dataset.constellation;
-        
-        // Crear efecto visual de selección
-        htmlConstellation.style.transform = 'scale(1.1)';
-        htmlConstellation.style.filter = 'drop-shadow(0 0 20px #ffd700)';
-        
-        // Mostrar efecto de "viaje espacial"
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: radial-gradient(circle, transparent 0%, black 70%);
-          z-index: 1000;
-          opacity: 0;
-          transition: opacity 0.8s ease;
-          pointer-events: none;
-        `;
-        document.body.appendChild(overlay);
-        
-        // Animar entrada del efecto
-        setTimeout(() => {
-          overlay.style.opacity = '1';
-        }, 100);
-        
-        // Crear estrellas que se mueven hacia el centro (efecto hiperespacio)
-        for (let i = 0; i < 50; i++) {
-          const star = document.createElement('div');
-          star.style.cssText = `
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            top: ${Math.random() * 100}%;
-            left: ${Math.random() * 100}%;
-            z-index: 1001;
-            animation: hyperspace 0.8s ease-in-out forwards;
-          `;
-          document.body.appendChild(star);
-          
-          setTimeout(() => {
-            star.remove();
-          }, 800);
-        }
-        
-        // Restaurar constelación después de un momento
-        setTimeout(() => {
-          htmlConstellation.style.transform = '';
-          htmlConstellation.style.filter = '';
-        }, 300);
-        
-        // Navegar al planeta
-        if (planet && planet in planetPaths) {
-          setTimeout(() => {
-            window.location.href = `/planets/${planetPaths[planet]}`;
-          }, 800);
-        } else if (planet === 'system') {
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 800);
-        }
-      });
 
-      // Efecto hover mejorado para constelaciones
-      constellation.addEventListener('mouseenter', () => {
-        // Resaltar toda la constelación
-        htmlConstellation.style.transform = 'scale(1.05)';
-        htmlConstellation.style.filter = 'brightness(1.3) drop-shadow(0 0 10px rgba(135, 206, 235, 0.5))';
-        
-        // Crear tooltip dinámico
-        const tooltip = document.createElement('div');
-        const rect = constellation.getBoundingClientRect();
-        const constellationName = constellation.querySelector('.constellation-name')?.textContent || '';
-        const planetName = constellation.querySelector('.constellation-planet')?.textContent || '';
-        
-        tooltip.innerHTML = `
-          <div class="constellation-tooltip">
-            <div class="tooltip-title">${constellationName}</div>
-            <div class="tooltip-subtitle">${planetName}</div>
-            <div class="tooltip-hint">🖱️ Click para explorar</div>
-          </div>
-        `;
-        tooltip.style.cssText = `
-          position: fixed;
-          top: ${rect.top - 80}px;
-          left: ${rect.left + rect.width / 2}px;
-          transform: translateX(-50%);
-          z-index: 200;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        `;
-        
-        document.body.appendChild(tooltip);
-        setTimeout(() => {
-          tooltip.style.opacity = '1';
-        }, 100);
-        
-        (htmlConstellation as any)._tooltip = tooltip;
-      });
-      
-      constellation.addEventListener('mouseleave', () => {
-        htmlConstellation.style.transform = '';
-        htmlConstellation.style.filter = '';
-        
-        const tooltip = (htmlConstellation as any)._tooltip;
-        if (tooltip) {
-          tooltip.remove();
-          (htmlConstellation as any)._tooltip = null;
-        }
-      });
+    // Función global para mostrar información de constelación
+    (window as any).showConstellationInfo = (constellationId: string) => {
+      // Datos de constelaciones
+      const constellations = [
+        { id: 'ursa-major', name: 'Osa Mayor', planet: 'Jupiter' },
+        { id: 'orion', name: 'Orión', planet: 'Mars' },
+        { id: 'cassiopeia', name: 'Casiopea', planet: 'Saturn' },
+        { id: 'leo', name: 'Leo', planet: 'Mercury' },
+        { id: 'aquarius', name: 'Acuario', planet: 'Uranus' },
+        { id: 'gemini', name: 'Géminis', planet: 'Venus' },
+        { id: 'scorpius', name: 'Escorpión', planet: 'Neptune' },
+        { id: 'cygnus', name: 'Cisne', planet: 'Earth' }
+      ];
 
-      // Efecto hover para estrellas individuales
-      const stars = constellation.querySelectorAll('.constellation-star');
-      stars.forEach(star => {
+      const constellation = constellations.find(c => c.id === constellationId);
+      if (!constellation) return;
+
+      const planet = constellation.planet.toLowerCase();
+      
+      // Navegar al planeta
+      setTimeout(() => {
+        if (planet in planetPaths) {
+          window.location.href = `/planets/${planetPaths[planet]}`;
+        }
+      }, 300);
+    };
+
+    // Configurar eventos para constelaciones
+    const constellationElements = document.querySelectorAll('.constellation');
+    constellationElements.forEach((constellationEl) => {
+      const htmlElement = constellationEl as HTMLElement;
+      
+      // Efectos hover para las estrellas
+      const stars = htmlElement.querySelectorAll('.constellation-star');
+      stars.forEach((star) => {
         const htmlStar = star as HTMLElement;
+        
         star.addEventListener('mouseenter', () => {
-          // Crear efecto de ondas en la estrella
+          // Crear efecto de ondas
           const ripple = document.createElement('div');
           ripple.style.cssText = `
             position: absolute;
@@ -732,124 +584,14 @@ const backgroundStars = Array.from({ length: 150 }, (_, i) => {
     });
 
     // Efecto de paralaje suave
-    let mouseX = 0, mouseY = 0;
-    
     document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
       
       const starfield = document.querySelector('.interactive-starfield') as HTMLElement;
       if (starfield) {
-        starfield.style.transform = `translate(${mouseX * 5}px, ${mouseY * 5}px)`;
+        starfield.style.transform = `translate(${mouseX * 3}px, ${mouseY * 3}px)`;
       }
     });
-
-    // Navegación por teclado (números para planetas)
-    document.addEventListener('keydown', (e) => {
-      const planetKeys: Record<string, string> = {
-        '1': 'mercury',
-        '2': 'venus', 
-        '3': 'earth',
-        '4': 'mars',
-        '5': 'jupiter',
-        '6': 'saturn',
-        '7': 'uranus',
-        '8': 'neptune',
-        '0': 'system'
-      };
-      
-      if (e.key in planetKeys) {
-        const targetPlanet = planetKeys[e.key];
-        const constellation = document.querySelector(`[data-planet="${targetPlanet}"]`) as HTMLElement;
-        if (constellation) {
-          constellation.click();
-        }
-      }
-    });
-
-    // Auto-ocultar el panel de guía después de 10 segundos
-    const guidePanel = document.querySelector('.constellation-guide') as HTMLElement;
-    if (guidePanel) {
-      setTimeout(() => {
-        (guidePanel as HTMLElement).style.opacity = '0';
-        (guidePanel as HTMLElement).style.transform = 'translateX(-50%) translateY(-20px)';
-        setTimeout(() => {
-          (guidePanel as HTMLElement).style.display = 'none';
-        }, 500);
-      }, 10000);
-
-      // Mostrar el panel al pasar el mouse por las constelaciones
-      const showGuidePanel = () => {
-        (guidePanel as HTMLElement).style.display = 'block';
-        setTimeout(() => {
-          (guidePanel as HTMLElement).style.opacity = '1';
-          (guidePanel as HTMLElement).style.transform = 'translateX(-50%) translateY(0)';
-        }, 50);
-      };
-
-      // Re-mostrar el panel cuando el usuario interactúe con constelaciones
-      constellations.forEach(constellation => {
-        constellation.addEventListener('mouseenter', showGuidePanel);
-      });
-    }
   });
-
-  // Añadir estilos dinámicos
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes ripple-effect {
-      0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(2);
-        opacity: 0;
-      }
-    }
-    
-    @keyframes hyperspace {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(0.5);
-        opacity: 0.8;
-      }
-      100% {
-        transform: scale(0) translate(50vw, 50vh);
-        opacity: 0;
-      }
-    }
-    
-    .constellation-tooltip {
-      background: rgba(0, 0, 20, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(135, 206, 235, 0.3);
-      border-radius: 8px;
-      padding: 8px 12px;
-      color: white;
-      font-size: 0.75rem;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
-    }
-    
-    .tooltip-title {
-      font-weight: bold;
-      color: #87CEEB;
-      margin-bottom: 2px;
-    }
-    
-    .tooltip-subtitle {
-      color: #ffd700;
-      margin-bottom: 4px;
-    }
-    
-    .tooltip-hint {
-      color: #ccc;
-      font-size: 0.65rem;
-    }
-  `;
-  document.head.appendChild(style);
 </script>
