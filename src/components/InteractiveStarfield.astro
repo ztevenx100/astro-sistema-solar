@@ -10,6 +10,7 @@ const constellations = [
   {
     id: 'ursa-major',
     name: 'Osa Mayor',
+    distinctiveName: 'El Gran Carro',
     planet: 'Jupiter',
     stars: [
       { name: 'Dubhe', x: 2, y: 8, brightness: 0.9 },
@@ -25,6 +26,7 @@ const constellations = [
   {
     id: 'orion',
     name: 'Orión',
+    distinctiveName: 'El Cazador Guerrero',
     planet: 'Mars',
     stars: [
       { name: 'Bellatrix', x: 88, y: 5, brightness: 0.8 },
@@ -40,6 +42,7 @@ const constellations = [
   {
     id: 'cassiopeia',
     name: 'Casiopea',
+    distinctiveName: 'La Reina Celestial',
     planet: 'Saturn',
     stars: [
       { name: 'Schedar', x: 85, y: 88, brightness: 0.8 },
@@ -53,6 +56,7 @@ const constellations = [
   {
     id: 'leo',
     name: 'Leo',
+    distinctiveName: 'El León Dorado',
     planet: 'Mercury',
     stars: [
       { name: 'Regulus', x: 98, y: 45, brightness: 0.9 },
@@ -66,6 +70,7 @@ const constellations = [
   {
     id: 'aquarius',
     name: 'Acuario',
+    distinctiveName: 'El Portador Cósmico',
     planet: 'Uranus',
     stars: [
       { name: 'Sadalsuud', x: 58, y: 95, brightness: 0.8 },
@@ -78,6 +83,7 @@ const constellations = [
   {
     id: 'gemini',
     name: 'Géminis',
+    distinctiveName: 'Los Hermanos Estelares',
     planet: 'Venus',
     stars: [
       { name: 'Castor', x: 15, y: 95, brightness: 0.9 },
@@ -89,6 +95,7 @@ const constellations = [
   {
     id: 'scorpius',
     name: 'Escorpión',
+    distinctiveName: 'El Guardián Ardiente',
     planet: 'Neptune',
     stars: [
       { name: 'Antares', x: 2, y: 55, brightness: 1.0 },
@@ -100,6 +107,7 @@ const constellations = [
   {
     id: 'cygnus',
     name: 'Cisne',
+    distinctiveName: 'El Navegante del Norte',
     planet: 'Earth',
     stars: [
       { name: 'Deneb', x: 58, y: 2, brightness: 0.9 },
@@ -171,7 +179,7 @@ const constellations = [
               opacity: ${star.brightness};
             `}
             data-star-name={star.name}
-            title={`${star.name} - Ir a ${constellation.name} (${constellation.planet})`}
+            title={`${star.name} - Ir a ${constellation.distinctiveName} (${constellation.name}) → ${constellation.planet}`}
           >
             <div class="star-glow"></div>
           </div>
@@ -185,7 +193,8 @@ const constellations = [
             top: ${constellation.stars.reduce((sum, star) => sum + star.y, 0) / constellation.stars.length - 3}%;
           `}
         >
-          <span class="constellation-name">{constellation.name}</span>
+          <span class="constellation-distinctive-name">{constellation.distinctiveName}</span>
+          <span class="constellation-traditional-name">({constellation.name})</span>
           <span class="constellation-planet">→ {constellation.planet}</span>
         </div>
       </div>
@@ -335,13 +344,24 @@ const constellations = [
     animation: label-glow 2s ease-in-out infinite;
   }
 
-  .constellation-name {
+  .constellation-distinctive-name {
     display: block;
     color: #87CEEB;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: bold;
-    text-shadow: 0 0 6px rgba(135, 206, 235, 1), 0 0 12px rgba(135, 206, 235, 0.4);
-    margin-bottom: 2px;
+    text-shadow: 0 0 8px rgba(135, 206, 235, 1), 0 0 16px rgba(135, 206, 235, 0.6);
+    margin-bottom: 1px;
+    letter-spacing: 0.5px;
+  }
+
+  .constellation-traditional-name {
+    display: block;
+    color: #B0C4DE;
+    font-size: 0.6rem;
+    font-style: italic;
+    text-shadow: 0 0 4px rgba(176, 196, 222, 0.8);
+    margin-bottom: 3px;
+    opacity: 0.9;
   }
 
   .constellation-planet {
@@ -523,16 +543,16 @@ const constellations = [
 
     // Función global para mostrar información de constelación
     (window as any).showConstellationInfo = (constellationId: string) => {
-      // Datos de constelaciones
+      // Datos de constelaciones con nombres distintivos
       const constellations = [
-        { id: 'ursa-major', name: 'Osa Mayor', planet: 'Jupiter' },
-        { id: 'orion', name: 'Orión', planet: 'Mars' },
-        { id: 'cassiopeia', name: 'Casiopea', planet: 'Saturn' },
-        { id: 'leo', name: 'Leo', planet: 'Mercury' },
-        { id: 'aquarius', name: 'Acuario', planet: 'Uranus' },
-        { id: 'gemini', name: 'Géminis', planet: 'Venus' },
-        { id: 'scorpius', name: 'Escorpión', planet: 'Neptune' },
-        { id: 'cygnus', name: 'Cisne', planet: 'Earth' }
+        { id: 'ursa-major', name: 'Osa Mayor', distinctiveName: 'El Gran Carro', planet: 'Jupiter' },
+        { id: 'orion', name: 'Orión', distinctiveName: 'El Cazador Guerrero', planet: 'Mars' },
+        { id: 'cassiopeia', name: 'Casiopea', distinctiveName: 'La Reina Celestial', planet: 'Saturn' },
+        { id: 'leo', name: 'Leo', distinctiveName: 'El León Dorado', planet: 'Mercury' },
+        { id: 'aquarius', name: 'Acuario', distinctiveName: 'El Portador Cósmico', planet: 'Uranus' },
+        { id: 'gemini', name: 'Géminis', distinctiveName: 'Los Hermanos Estelares', planet: 'Venus' },
+        { id: 'scorpius', name: 'Escorpión', distinctiveName: 'El Guardián Ardiente', planet: 'Neptune' },
+        { id: 'cygnus', name: 'Cisne', distinctiveName: 'El Navegante del Norte', planet: 'Earth' }
       ];
 
       const constellation = constellations.find(c => c.id === constellationId);

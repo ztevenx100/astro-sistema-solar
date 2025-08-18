@@ -24,7 +24,15 @@
 - **Escala Científica**: Proporciones y distancias basadas en datos reales
 
 ### 🌌 **Sistema de Constelaciones Interactivas** ⭐ *NUEVO*
-- **8 Constelaciones Navegables**: Osa Mayor, Orión, Casiopea, Leo, Acuario, Géminis, Escorpión, Cisne
+- **8 Constelaciones Navegables**: 
+  - 🐻 **"El Gran Carro"** (Osa Mayor) → Júpiter
+  - ⚔️ **"El Cazador Guerrero"** (Orión) → Marte  
+  - 👑 **"La Reina Celestial"** (Casiopea) → Saturno
+  - 🦁 **"El León Dorado"** (Leo) → Mercurio
+  - 🏺 **"El Portador Cósmico"** (Acuario) → Urano
+  - 👥 **"Los Hermanos Estelares"** (Géminis) → Venus
+  - 🦂 **"El Guardián Ardiente"** (Escorpión) → Neptuno
+  - 🦢 **"El Navegante del Norte"** (Cisne) → Tierra
 - **Navegación Intuitiva**: Click en constelaciones para viajar a planetas asociados
 - **Efectos Visuales Inmersivos**: Estrellas con resplandor, líneas dinámicas y transiciones suaves
 - **Mapeo Astronómico Real**: Posiciones y conexiones basadas en constelaciones reales
@@ -214,17 +222,17 @@ npm run dev
 - **Movimiento del Mouse**: Paralaje suave del campo estelar para mayor inmersión
 
 #### **⌨️ Atajos de Teclado**
-| Tecla | Planeta | Constelación |
-|-------|---------|--------------|
-| `1` | Mercurio | Géminis |
-| `2` | Venus | Leo |
-| `3` | Tierra | Escorpión |
-| `4` | Marte | Orión |
-| `5` | Júpiter | Osa Mayor |
-| `6` | Saturno | Casiopea |
-| `7` | Urano | Cisne |
-| `8` | Neptuno | Acuario |
-| `0` | Sistema Solar Completo | - |
+| Tecla | Planeta | Constelación | Nombre |
+|-------|---------|--------------|--------|
+| `1` | Mercurio | Géminis | "Los Hermanos Estelares" |
+| `2` | Venus | Leo | "El León Dorado" |
+| `3` | Tierra | Escorpión | "El Guardián Ardiente" |
+| `4` | Marte | Orión | "El Cazador Guerrero" |
+| `5` | Júpiter | Osa Mayor | "El Gran Carro" |
+| `6` | Saturno | Casiopea | "La Reina Celestial" |
+| `7` | Urano | Cisne | "El Navegante del Norte" |
+| `8` | Neptuno | Acuario | "El Portador Cósmico" |
+| `0` | Sistema Solar Completo | - | - |
 
 ### 🎮 **Gestión de Paneles**
 
@@ -269,16 +277,16 @@ npm run dev
 
 </div>
 
-| Constelación | Planeta Asociado | Estrellas Principales | Mitología |
-|--------------|------------------|----------------------|-----------|
-| 🐻 **Osa Mayor** | Júpiter | Dubhe, Merak, Alioth | El gran carro del cielo |
-| ⚔️ **Orión** | Marte | Betelgeuse, Rigel, Bellatrix | El cazador celestial |
-| 👑 **Casiopea** | Saturno | Schedar, Caph, Gamma Cas | La reina vanidosa |
-| 🦁 **Leo** | Venus | Regulus, Denebola, Algieba | El león del zodiaco |
-| 🏺 **Acuario** | Neptuno | Sadalmelik, Sadalsuud | El portador de agua |
-| 👥 **Géminis** | Mercurio | Castor, Pollux | Los gemelos divinos |
-| 🦂 **Escorpión** | Tierra | Antares, Shaula | El escorpión ardiente |
-| 🦢 **Cisne** | Urano | Deneb, Sadr, Albireo | El cisne del norte |
+| Constelación | Planeta Asociado | Estrellas Principales | Nombre Distintivo |
+|--------------|------------------|----------------------|-------------------|
+| 🐻 **Osa Mayor** | Júpiter | Dubhe, Merak, Alioth | "El Gran Carro" |
+| ⚔️ **Orión** | Marte | Betelgeuse, Rigel, Bellatrix | "El Cazador Guerrero" |
+| 👑 **Casiopea** | Saturno | Schedar, Caph, Gamma Cas | "La Reina Celestial" |
+| 🦁 **Leo** | Mercurio | Regulus, Denebola, Algieba | "El León Dorado" |
+| 🏺 **Acuario** | Urano | Sadalmelik, Sadalsuud | "El Portador Cósmico" |
+| 👥 **Géminis** | Venus | Castor, Pollux | "Los Hermanos Estelares" |
+| 🦂 **Escorpión** | Neptuno | Antares, Shaula | "El Guardián Ardiente" |
+| 🦢 **Cisne** | Tierra | Deneb, Sadr, Albireo | "El Navegante del Norte" |
 
 #### **🎮 Controles Interactivos**
 
