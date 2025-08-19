@@ -278,6 +278,19 @@ const constellations = [
     filter: drop-shadow(0 0 15px #ffd700);
   }
 
+  .constellation.active .constellation-label {
+    opacity: 1 !important;
+    animation: active-label-glow 2s ease-in-out infinite;
+  }
+
+  .constellation.active .constellation-distinctive-name {
+    color: #ffd700;
+    text-shadow: 
+      0 0 15px #ffd700, 
+      0 0 25px rgba(255, 215, 0, 0.8);
+    background: rgba(20, 20, 0, 0.7);
+  }
+
   .constellation-lines {
     position: absolute;
     width: 100%;
@@ -335,33 +348,44 @@ const constellations = [
     text-align: center;
     pointer-events: none;
     z-index: 30;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    opacity: 0.75; /* Visible por defecto */
+    transition: all 0.3s ease;
+    animation: gentle-label-pulse 4s ease-in-out infinite;
   }
 
   .constellation:hover .constellation-label {
     opacity: 1;
+    transform: translate(-50%, -100%) scale(1.1);
     animation: label-glow 2s ease-in-out infinite;
   }
 
   .constellation-distinctive-name {
     display: block;
     color: #87CEEB;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: bold;
-    text-shadow: 0 0 8px rgba(135, 206, 235, 1), 0 0 16px rgba(135, 206, 235, 0.6);
-    margin-bottom: 1px;
-    letter-spacing: 0.5px;
+    text-shadow: 
+      0 0 10px rgba(135, 206, 235, 1), 
+      0 0 20px rgba(135, 206, 235, 0.8);
+    margin-bottom: 2px;
+    letter-spacing: 0.8px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 8px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
   }
 
   .constellation-traditional-name {
     display: block;
     color: #B0C4DE;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     font-style: italic;
-    text-shadow: 0 0 4px rgba(176, 196, 222, 0.8);
+    text-shadow: 0 0 8px rgba(176, 196, 222, 1);
     margin-bottom: 3px;
-    opacity: 0.9;
+    opacity: 0.95;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1px 6px;
+    border-radius: 4px;
   }
 
   .constellation-planet {
@@ -505,6 +529,24 @@ const constellations = [
     }
   }
 
+  @keyframes gentle-label-pulse {
+    0%, 100% { 
+      opacity: 0.7;
+    }
+    50% { 
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes active-label-glow {
+    0%, 100% { 
+      transform: translate(-50%, -100%) scale(1.1);
+    }
+    50% { 
+      transform: translate(-50%, -100%) scale(1.2);
+    }
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .constellation-star {
@@ -512,8 +554,14 @@ const constellations = [
       height: 5px;
     }
     
-    .constellation-name {
+    .constellation-distinctive-name {
+      font-size: 0.75rem;
+      padding: 1px 6px;
+    }
+    
+    .constellation-traditional-name {
       font-size: 0.55rem;
+      padding: 1px 4px;
     }
     
     .constellation-planet {
@@ -522,6 +570,10 @@ const constellations = [
     
     .constellation-line {
       stroke-width: 0.12;
+    }
+
+    .constellation-label {
+      opacity: 0.8; /* Más visible en móviles */
     }
   }
 </style>
