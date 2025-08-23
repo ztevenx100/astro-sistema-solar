@@ -5,7 +5,7 @@ import Planet from './Planet.astro';
 import SimulationControls from './SimulationControls.astro';
 ---
 
-<div class="solar-system-container w-full h-screen flex items-center justify-center relative overflow-hidden z-20">
+<div class="solar-system-container w-full h-screen flex items-center justify-center relative overflow-hidden z-10">
   
   <!-- Solar System -->
   <div class="solar-system relative" style="width: 1000px; height: 1000px;">
@@ -121,6 +121,7 @@ import SimulationControls from './SimulationControls.astro';
       </div>
       
       <div class="space-y-2 text-sm max-h-96 overflow-y-auto">
+        <!-- Constelaciones Originales -->
         <div class="constellation-item">
           <div class="flex items-center justify-between mb-1">
             <span class="text-blue-300 font-semibold">🐻 El Gran Carro</span>
@@ -184,6 +185,88 @@ import SimulationControls from './SimulationControls.astro';
           </div>
           <span class="text-gray-400 text-xs italic">(Cisne)</span>
         </div>
+
+        <!-- Constelaciones Extendidas -->
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🐉 El Dragón Guardián</span>
+            <span class="text-yellow-400 text-xs">→ Júpiter</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Draco)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">👸 La Princesa Encadenada</span>
+            <span class="text-yellow-400 text-xs">→ Venus</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Andrómeda)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🗡️ El Héroe Volador</span>
+            <span class="text-yellow-400 text-xs">→ Marte</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Perseo)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🎵 El Arpa Celestial</span>
+            <span class="text-yellow-400 text-xs">→ Mercurio</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Lira)</span>
+        </div>
+
+        <!-- Constelaciones del Zodíaco -->
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🐏 El Carnero Dorado</span>
+            <span class="text-yellow-400 text-xs">→ Marte</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Aries)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🐂 El Toro Celestial</span>
+            <span class="text-yellow-400 text-xs">→ Venus</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Tauro)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🏹 El Arquero Galáctico</span>
+            <span class="text-yellow-400 text-xs">→ Júpiter</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Sagitario)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">👩 La Doncella Cósmica</span>
+            <span class="text-yellow-400 text-xs">→ Tierra</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Virgo)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">⚖️ La Balanza Estelar</span>
+            <span class="text-yellow-400 text-xs">→ Venus</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Libra)</span>
+        </div>
+        
+        <div class="constellation-item">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-blue-300 font-semibold">🐐 La Cabra Marina</span>
+            <span class="text-yellow-400 text-xs">→ Saturno</span>
+          </div>
+          <span class="text-gray-400 text-xs italic">(Capricornio)</span>
+        </div>
       </div>
     </div>
   </div>
@@ -245,7 +328,7 @@ import SimulationControls from './SimulationControls.astro';
             <div class="text-gray-400">Planetas</div>
           </div>
           <div class="text-center">
-            <div class="text-blue-400 font-bold">8</div>
+            <div class="text-blue-400 font-bold">18</div>
             <div class="text-gray-400">Constelaciones</div>
           </div>
         </div>

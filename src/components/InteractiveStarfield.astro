@@ -29,13 +29,13 @@ const constellations = [
     distinctiveName: 'El Cazador Guerrero',
     planet: 'Mars',
     stars: [
-      { name: 'Bellatrix', x: 78, y: 23.75, brightness: 0.8 },
-      { name: 'Betelgeuse', x: 81, y: 27.5, brightness: 1.0 },
-      { name: 'Rigel', x: 83.25, y: 38.75, brightness: 0.9 },
-      { name: 'Alnitak', x: 79.5, y: 31.25, brightness: 0.7 },
-      { name: 'Alnilam', x: 81.75, y: 32.75, brightness: 0.8 },
-      { name: 'Mintaka', x: 84, y: 34.25, brightness: 0.7 },
-      { name: 'Saiph', x: 78, y: 36.5, brightness: 0.6 }
+      { name: 'Bellatrix', x: 78, y: 28.75, brightness: 0.8 },
+      { name: 'Betelgeuse', x: 81, y: 32.5, brightness: 1.0 },
+      { name: 'Rigel', x: 83.25, y: 43.75, brightness: 0.9 },
+      { name: 'Alnitak', x: 79.5, y: 36.25, brightness: 0.7 },
+      { name: 'Alnilam', x: 81.75, y: 37.75, brightness: 0.8 },
+      { name: 'Mintaka', x: 84, y: 39.25, brightness: 0.7 },
+      { name: 'Saiph', x: 78, y: 41.5, brightness: 0.6 }
     ],
     lines: [[0,1], [1,3], [3,4], [4,5], [1,6], [2,6], [3,6]]
   },
@@ -59,11 +59,11 @@ const constellations = [
     distinctiveName: 'El León Dorado',
     planet: 'Mercury',
     stars: [
-      { name: 'Regulus', x: 85.5, y: 33.75, brightness: 0.9 },
-      { name: 'Algieba', x: 83.25, y: 37.5, brightness: 0.7 },
-      { name: 'Denebola', x: 81, y: 41.25, brightness: 0.8 },
-      { name: 'Zosma', x: 84, y: 45, brightness: 0.6 },
-      { name: 'Chertan', x: 85.5, y: 48.75, brightness: 0.5 }
+      { name: 'Regulus', x: 92.5, y: 38.75, brightness: 0.9 },
+      { name: 'Algieba', x: 90.25, y: 42.5, brightness: 0.7 },
+      { name: 'Denebola', x: 88, y: 46.25, brightness: 0.8 },
+      { name: 'Zosma', x: 91, y: 50, brightness: 0.6 },
+      { name: 'Chertan', x: 92.5, y: 53.75, brightness: 0.5 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
   },
@@ -110,9 +110,9 @@ const constellations = [
     distinctiveName: 'El Navegante del Norte',
     planet: 'Earth',
     stars: [
-      { name: 'Deneb', x: 55.5, y: 21.5, brightness: 0.9 },
-      { name: 'Sadr', x: 60.75, y: 23.75, brightness: 0.8 },
-      { name: 'Albireo', x: 66, y: 26, brightness: 0.7 }
+      { name: 'Deneb', x: 45.5, y: 15.5, brightness: 0.9 },
+      { name: 'Sadr', x: 50.75, y: 17.75, brightness: 0.8 },
+      { name: 'Albireo', x: 56, y: 20, brightness: 0.7 }
     ],
     lines: [[0,1], [1,2]]
   },
@@ -122,11 +122,11 @@ const constellations = [
     distinctiveName: 'El Dragón Guardián',
     planet: 'Jupiter', // Navegación alternativa a Júpiter
     stars: [
-      { name: 'Thuban', x: 68.25, y: 29, brightness: 0.7 },
-      { name: 'Eltanin', x: 70.5, y: 33.5, brightness: 0.9 },
-      { name: 'Rastaban', x: 73.5, y: 38.75, brightness: 0.8 },
-      { name: 'Aldhibah', x: 75.75, y: 31.25, brightness: 0.6 },
-      { name: 'Edasich', x: 78, y: 35, brightness: 0.7 }
+      { name: 'Thuban', x: 58.25, y: 29, brightness: 0.7 },
+      { name: 'Eltanin', x: 60.5, y: 33.5, brightness: 0.9 },
+      { name: 'Rastaban', x: 63.5, y: 38.75, brightness: 0.8 },
+      { name: 'Aldhibah', x: 65.75, y: 31.25, brightness: 0.6 },
+      { name: 'Edasich', x: 68, y: 35, brightness: 0.7 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,4], [4,1]]
   },
@@ -162,12 +162,88 @@ const constellations = [
     distinctiveName: 'El Arpa Celestial',
     planet: 'Mercury', // Navegación alternativa a Mercurio
     stars: [
-      { name: 'Vega', x: 75.75, y: 26.25, brightness: 1.0 },
-      { name: 'Sheliak', x: 78, y: 30, brightness: 0.7 },
-      { name: 'Sulafat', x: 73.5, y: 28.5, brightness: 0.8 },
-      { name: 'Delta Lyr', x: 79.5, y: 26.25, brightness: 0.6 }
+      { name: 'Vega', x: 88.75, y: 18.25, brightness: 1.0 },
+      { name: 'Sheliak', x: 91, y: 22, brightness: 0.7 },
+      { name: 'Sulafat', x: 86.5, y: 20.5, brightness: 0.8 },
+      { name: 'Delta Lyr', x: 92.5, y: 18.25, brightness: 0.6 }
     ],
     lines: [[0,1], [0,2], [0,3], [1,2]]
+  },
+  {
+    id: 'aries',
+    name: 'Aries',
+    distinctiveName: 'El Carnero Dorado',
+    planet: 'Mars', // Navegación alternativa a Marte
+    stars: [
+      { name: 'Hamal', x: 35, y: 55, brightness: 0.9 },
+      { name: 'Sheratan', x: 32, y: 58, brightness: 0.8 },
+      { name: 'Mesarthim', x: 30, y: 56, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2]]
+  },
+  {
+    id: 'taurus',
+    name: 'Tauro',
+    distinctiveName: 'El Toro Celestial',
+    planet: 'Venus', // Navegación alternativa a Venus
+    stars: [
+      { name: 'Aldebaran', x: 65, y: 52, brightness: 1.0 },
+      { name: 'Elnath', x: 68, y: 48, brightness: 0.8 },
+      { name: 'Alcyone', x: 70, y: 55, brightness: 0.7 },
+      { name: 'Maia', x: 72, y: 53, brightness: 0.6 }
+    ],
+    lines: [[0,1], [0,2], [2,3]]
+  },
+  {
+    id: 'sagittarius',
+    name: 'Sagitario',
+    distinctiveName: 'El Arquero Galáctico',
+    planet: 'Jupiter', // Navegación alternativa a Júpiter
+    stars: [
+      { name: 'Rukbat', x: 8, y: 58, brightness: 0.8 },
+      { name: 'Arkab', x: 12, y: 55, brightness: 0.7 },
+      { name: 'Kaus Australis', x: 15, y: 60, brightness: 0.9 },
+      { name: 'Nunki', x: 18, y: 57, brightness: 0.8 }
+    ],
+    lines: [[0,1], [1,2], [2,3]]
+  },
+  {
+    id: 'virgo',
+    name: 'Virgo',
+    distinctiveName: 'La Doncella Cósmica',
+    planet: 'Earth', // Navegación alternativa a la Tierra
+    stars: [
+      { name: 'Spica', x: 95, y: 60, brightness: 1.0 },
+      { name: 'Zavijava', x: 92, y: 63, brightness: 0.7 },
+      { name: 'Porrima', x: 90, y: 58, brightness: 0.8 },
+      { name: 'Vindemiatrix', x: 88, y: 65, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3]]
+  },
+  {
+    id: 'libra',
+    name: 'Libra',
+    distinctiveName: 'La Balanza Estelar',
+    planet: 'Venus', // Navegación alternativa a Venus
+    stars: [
+      { name: 'Zubeneschamali', x: 75, y: 75, brightness: 0.8 },
+      { name: 'Zubenelgenubi', x: 78, y: 78, brightness: 0.9 },
+      { name: 'Brachium', x: 72, y: 80, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2]]
+  },
+  {
+    id: 'capricornus',
+    name: 'Capricornio',
+    distinctiveName: 'La Cabra Marina',
+    planet: 'Saturn', // Navegación alternativa a Saturno
+    stars: [
+      { name: 'Deneb Algedi', x: 25, y: 78, brightness: 0.8 },
+      { name: 'Dabih', x: 28, y: 75, brightness: 0.9 },
+      { name: 'Nashira', x: 22, y: 82, brightness: 0.7 },
+      { name: 'Algedi', x: 30, y: 80, brightness: 0.6 }
+    ],
+    lines: [[0,1], [0,2], [1,3]]
   }
 ];
 ---
@@ -232,9 +308,18 @@ const constellations = [
               opacity: ${star.brightness};
             `}
             data-star-name={star.name}
-            title={`${star.name} - Ir a ${constellation.distinctiveName} (${constellation.name}) → ${constellation.planet}`}
+            data-constellation-name={constellation.name}
+            data-constellation-id={constellation.id}
+            data-planet={constellation.planet}
+            onmouseenter="showStarTooltip(event)"
+            onmouseleave="hideStarTooltip()"
+            onclick={`showConstellationInfo('${constellation.id}')`}
           >
             <div class="star-glow"></div>
+            <div class="star-tooltip" id="star-tooltip-${constellation.id}-${index}">
+              <div class="tooltip-star-name">{star.name}</div>
+              <div class="tooltip-constellation">de {constellation.name}</div>
+            </div>
           </div>
         ))}
 
@@ -274,7 +359,7 @@ const constellations = [
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: 10;
+    z-index: 5; /* Reducido para estar por debajo del solar system */
     /* Gradiente sutil para enfatizar los bordes */
     background: radial-gradient(
       ellipse at center,
@@ -315,12 +400,13 @@ const constellations = [
     height: 100%;
     opacity: 0.9;
     transition: all 0.5s ease;
-    pointer-events: auto;
+    pointer-events: none; /* Deshabilitamos eventos en el contenedor */
     cursor: pointer;
-    z-index: 15;
+    z-index: 10; /* Relativo al starfield */
   }
 
-  .constellation:hover {
+  .constellation:hover,
+  .constellation.hover {
     opacity: 1;
     transform: scale(1.02);
     filter: drop-shadow(0 0 15px rgba(135, 206, 235, 0.5));
@@ -349,7 +435,7 @@ const constellations = [
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 20;
+    z-index: 15; /* Por debajo de las estrellas pero por encima de las constelaciones */
   }
 
   .constellation-line {
@@ -361,6 +447,7 @@ const constellations = [
   }
 
   .constellation:hover .constellation-line,
+  .constellation.hover .constellation-line,
   .constellation.active .constellation-line {
     opacity: 0.8;
     animation: line-pulse 2s ease-in-out infinite;
@@ -375,11 +462,14 @@ const constellations = [
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
-    z-index: 25;
+    z-index: 20; /* Por encima de las líneas de constelación */
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(135, 206, 235, 0.3);
+    pointer-events: auto; /* Asegurar que sea interactiva */
+    cursor: pointer;
   }
 
-  .constellation:hover .constellation-star {
+  .constellation:hover .constellation-star,
+  .constellation.hover .constellation-star {
     animation: star-glow 1.5s ease-in-out infinite;
     box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3);
     transform: translate(-50%, -50%) scale(1.15);
@@ -394,19 +484,66 @@ const constellations = [
     animation: gentle-twinkle 3s infinite;
   }
 
+  /* Tooltip para estrellas */
+  .star-tooltip {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    pointer-events: none;
+    z-index: 1000; /* Muy alto para estar por encima de todo */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+  }
+
+  .star-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+  }
+
+  .tooltip-star-name {
+    color: #ffd700;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+
+  .tooltip-constellation {
+    color: #87CEEB;
+    font-size: 10px;
+    opacity: 0.9;
+  }
+
+  .constellation-star:hover .star-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+  }
+
   /* Etiquetas de constelación */
   .constellation-label {
     position: absolute;
     transform: translate(-50%, -100%);
     text-align: center;
     pointer-events: none;
-    z-index: 30;
+    z-index: 25; /* Por encima de las estrellas */
     opacity: 0.75; /* Visible por defecto */
     transition: all 0.3s ease;
     animation: gentle-label-pulse 4s ease-in-out infinite;
   }
 
-  .constellation:hover .constellation-label {
+  .constellation:hover .constellation-label,
+  .constellation.hover .constellation-label {
     opacity: 1;
     transform: translate(-50%, -100%) scale(1.1);
     animation: label-glow 2s ease-in-out infinite;
@@ -661,7 +798,13 @@ const constellations = [
         { id: 'draco', name: 'Draco', distinctiveName: 'El Dragón Guardián', planet: 'Jupiter' },
         { id: 'andromeda', name: 'Andrómeda', distinctiveName: 'La Princesa Encadenada', planet: 'Venus' },
         { id: 'perseus', name: 'Perseo', distinctiveName: 'El Héroe Volador', planet: 'Mars' },
-        { id: 'lyra', name: 'Lira', distinctiveName: 'El Arpa Celestial', planet: 'Mercury' }
+        { id: 'lyra', name: 'Lira', distinctiveName: 'El Arpa Celestial', planet: 'Mercury' },
+        { id: 'aries', name: 'Aries', distinctiveName: 'El Carnero Dorado', planet: 'Mars' },
+        { id: 'taurus', name: 'Tauro', distinctiveName: 'El Toro Celestial', planet: 'Venus' },
+        { id: 'sagittarius', name: 'Sagitario', distinctiveName: 'El Arquero Galáctico', planet: 'Jupiter' },
+        { id: 'virgo', name: 'Virgo', distinctiveName: 'La Doncella Cósmica', planet: 'Earth' },
+        { id: 'libra', name: 'Libra', distinctiveName: 'La Balanza Estelar', planet: 'Venus' },
+        { id: 'capricornus', name: 'Capricornio', distinctiveName: 'La Cabra Marina', planet: 'Saturn' }
       ];
 
       const constellation = constellations.find(c => c.id === constellationId);
@@ -712,15 +855,38 @@ const constellations = [
       });
     });
 
-    // Efecto de paralaje suave
-    document.addEventListener('mousemove', (e) => {
-      const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    // Funciones globales para tooltip de estrellas
+    (window as any).showStarTooltip = (event: MouseEvent) => {
+      const starElement = event.currentTarget as HTMLElement;
+      const tooltip = starElement.querySelector('.star-tooltip') as HTMLElement;
+      const constellationId = starElement.getAttribute('data-constellation-id');
       
-      const starfield = document.querySelector('.interactive-starfield') as HTMLElement;
-      if (starfield) {
-        starfield.style.transform = `translate(${mouseX * 3}px, ${mouseY * 3}px)`;
+      // Mostrar tooltip
+      if (tooltip) {
+        tooltip.classList.add('visible');
       }
-    });
+      
+      // Agregar efecto hover a toda la constelación
+      if (constellationId) {
+        const constellation = document.querySelector(`[data-constellation="${constellationId}"]`) as HTMLElement;
+        if (constellation) {
+          constellation.classList.add('hover');
+        }
+      }
+    };
+
+    (window as any).hideStarTooltip = (event?: MouseEvent) => {
+      // Ocultar todos los tooltips visibles
+      const visibleTooltips = document.querySelectorAll('.star-tooltip.visible');
+      visibleTooltips.forEach(tooltip => {
+        tooltip.classList.remove('visible');
+      });
+      
+      // Remover efectos hover de todas las constelaciones
+      const hoveredConstellations = document.querySelectorAll('.constellation.hover');
+      hoveredConstellations.forEach(constellation => {
+        constellation.classList.remove('hover');
+      });
+    };
   });
 </script>
