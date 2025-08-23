@@ -6,6 +6,45 @@
 
 [![Astro](https://img.shields.io/badge/Astro-4.0+-orange?style=for-the-badge&logo=astro)](https://astro.build/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+
+
+### 🌟 **Sistema de Constelaciones** ⭐
+
+<div align="center">
+
+**¡Navega por el cosmos con 18 constelaciones interactivas!**
+
+</div>
+
+#### **🌟 Constelaciones Originales**
+| Constelación | Planeta Asociado | Estrellas Principales | Nombre Distintivo |
+|--------------|------------------|----------------------|-------------------|
+| 🐻 **Osa Mayor** | Júpiter | Dubhe, Merak, Alioth | "El Gran Carro" |
+| ⚔️ **Orión** | Marte | Betelgeuse, Rigel, Bellatrix | "El Cazador Guerrero" |
+| 👑 **Casiopea** | Saturno | Schedar, Caph, Gamma Cas | "La Reina Celestial" |
+| 🦁 **Leo** | Mercurio | Regulus, Denebola, Algieba | "El León Dorado" |
+| 🏺 **Acuario** | Urano | Sadalmelik, Sadalsuud | "El Portador Cósmico" |
+| 👥 **Géminis** | Venus | Castor, Pollux | "Los Hermanos Estelares" |
+| 🦂 **Escorpión** | Neptuno | Antares, Shaula | "El Guardián Ardiente" |
+| 🦢 **Cisne** | Tierra | Deneb, Sadr, Albireo | "El Navegante del Norte" |
+
+#### **⭐ Constelaciones Extendidas**
+| Constelación | Planeta Asociado | Estrellas Principales | Nombre Distintivo |
+|--------------|------------------|----------------------|-------------------|
+| 🐉 **Draco** | Júpiter | Thuban, Eltanin, Rastaban | "El Dragón Guardián" |
+| 👸 **Andrómeda** | Venus | Alpheratz, Mirach, Almach | "La Princesa Encadenada" |
+| 🗡️ **Perseo** | Marte | Mirfak, Algol, Atik | "El Héroe Volador" |
+| 🎵 **Lira** | Mercurio | Vega, Sheliak, Sulafat | "El Arpa Celestial" |
+
+#### **♈ Constelaciones del Zodíaco**
+| Constelación | Planeta Asociado | Estrellas Principales | Nombre Distintivo |
+|--------------|------------------|----------------------|-------------------|
+| 🐏 **Aries** | Marte | Hamal, Sheratan, Mesarthim | "El Carnero Dorado" |
+| 🐂 **Tauro** | Venus | Aldebaran, Elnath, Alcyone | "El Toro Celestial" |
+| 🏹 **Sagitario** | Júpiter | Rukbat, Arkab, Kaus Australis | "El Arquero Galáctico" |
+| 👩 **Virgo** | Tierra | Spica, Zavijava, Porrima | "La Doncella Cósmica" |
+| ⚖️ **Libra** | Venus | Zubeneschamali, Zubenelgenubi | "La Balanza Estelar" |
+| 🐐 **Capricornio** | Saturno | Deneb Algedi, Dabih, Nashira | "La Cabra Marina" |cript-5.0+-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.0+-cyan?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
@@ -23,8 +62,10 @@
 - **Controles Avanzados**: Play/Pause, velocidad variable (0.5x - 3x)
 - **Escala Científica**: Proporciones y distancias basadas en datos reales
 
-### 🌌 **Sistema de Constelaciones Interactivas** ⭐ *NUEVO*
-- **8 Constelaciones Navegables**: 
+### 🌌 **Sistema de Constelaciones Interactivas** ⭐ *ACTUALIZADO*
+- **18 Constelaciones Navegables** organizadas en 3 categorías:
+
+#### **🌟 Constelaciones Originales (8)**
   - 🐻 **"El Gran Carro"** (Osa Mayor) → Júpiter
   - ⚔️ **"El Cazador Guerrero"** (Orión) → Marte  
   - 👑 **"La Reina Celestial"** (Casiopea) → Saturno
@@ -33,12 +74,27 @@
   - 👥 **"Los Hermanos Estelares"** (Géminis) → Venus
   - 🦂 **"El Guardián Ardiente"** (Escorpión) → Neptuno
   - 🦢 **"El Navegante del Norte"** (Cisne) → Tierra
-- **Navegación Intuitiva**: Click en constelaciones para viajar a planetas asociados
+
+#### **⭐ Constelaciones Extendidas (4)**
+  - 🐉 **"El Dragón Guardián"** (Draco) → Júpiter
+  - 👸 **"La Princesa Encadenada"** (Andrómeda) → Venus
+  - 🗡️ **"El Héroe Volador"** (Perseo) → Marte
+  - 🎵 **"El Arpa Celestial"** (Lira) → Mercurio
+
+#### **♈ Constelaciones del Zodíaco (6)**
+  - 🐏 **"El Carnero Dorado"** (Aries) → Marte
+  - 🐂 **"El Toro Celestial"** (Tauro) → Venus
+  - 🏹 **"El Arquero Galáctico"** (Sagitario) → Júpiter
+  - 👩 **"La Doncella Cósmica"** (Virgo) → Tierra
+  - ⚖️ **"La Balanza Estelar"** (Libra) → Venus
+  - 🐐 **"La Cabra Marina"** (Capricornio) → Saturno
+- **Navegación Intuitiva**: Click en cualquiera de las 18 constelaciones para viajar a planetas asociados
+- **Tooltips de Estrellas**: Hover sobre estrellas individuales para ver nombres astronómicos reales
 - **Efectos Visuales Inmersivos**: Estrellas con resplandor, líneas dinámicas y transiciones suaves
 - **Mapeo Astronómico Real**: Posiciones y conexiones basadas en constelaciones reales
-- **Atajos de Teclado**: Teclas 1-8 para navegación directa entre planetas
-- **Efectos de Paralaje**: Movimiento suave del campo estelar con el mouse
-- **Estrellas Fugaces**: Animaciones ambientales para mayor inmersión
+- **Leyenda Organizada**: Panel lateral con categorías (Originales/Extendidas/Zodíaco)
+- **Atajos de Teclado**: Teclas 1-8 para navegación directa entre planetas principales
+- **Efectos Ambientales**: Estrellas fugaces, nebulosas y efectos de profundidad
 - **Responsive Design**: Optimizado para todos los dispositivos
 
 ### 🎮 **Sistema de Controles Avanzado** ⭐ *MEJORADO*
@@ -49,10 +105,11 @@
 - **Navegación Fluida**: Transiciones suaves entre estados
 - **Interfaz Adaptativa**: Controles optimizados para móviles y desktop
 
-### 🚀 **Experiencia de Usuario Mejorada** ⭐ *NUEVO*
+### 🚀 **Experiencia de Usuario Mejorada** ⭐ *ACTUALIZADO*
 - **Paneles Inteligentes**: 
   - 📋 **Panel de Navegación**: Lista de planetas con botones de minimizar/ocultar
-  - ℹ️ **Panel de Información**: Guía interactiva del sistema solar
+  - ℹ️ **Panel de Información**: Guía interactiva con estadísticas actualizadas (18 constelaciones)
+  - 🌟 **Leyenda de Constelaciones**: Panel lateral con categorías organizadas
   - 🎛️ **Panel de Controles**: Gestión completa de la simulación
 - **Gestión de Estado**: Cada panel recuerda su estado (expandido/minimizado/oculto)
 - **Interfaz Limpia**: Oculta paneles para vista despejada de constelaciones
@@ -113,7 +170,7 @@ astro-sistema-solar/
 │   │   ├── 🪐 Planet.astro                  # Componente individual de planeta
 │   │   ├── ☀️ SolarSystem.astro            # Sistema solar principal + UI panels
 │   │   ├── 🎮 SimulationControls.astro     # Controles avanzados de simulación
-│   │   ├── ⭐ InteractiveStarfield.astro   # Constelaciones navegables
+│   │   ├── ⭐ InteractiveStarfield.astro   # Sistema completo de 18 constelaciones
 │   │   ├── 🌟 ConstellationInfo.astro      # Info detallada de constelaciones
 │   │   ├── 📊 PlanetComparison.astro       # Comparaciones científicas
 │   │   ├── 🔬 ScientificData.astro         # Datos científicos avanzados
@@ -123,7 +180,7 @@ astro-sistema-solar/
 │   ├── 📁 data/
 │   │   └── 📋 planets.ts                   # Base de datos completa de planetas
 │   ├── 📁 pages/
-│   │   ├── 🏠 index.astro                  # Página principal con constelaciones
+│   │   ├── 🏠 index.astro                  # Página principal con 18 constelaciones
 │   │   └── 📁 planets/
 │   │       └── 🪐 [planet].astro           # Páginas dinámicas de planetas
 │   ├── 📁 layouts/
@@ -131,7 +188,7 @@ astro-sistema-solar/
 │   ├── 📁 styles/
 │   │   ├── 🎨 global.css                   # Estilos globales
 │   │   ├── 🎬 animations.css               # Animaciones personalizadas
-│   │   └── 🌌 constellation.css            # Estilos de constelaciones
+│   │   └── 🌌 constellation.css            # Estilos específicos de constelaciones
 │   └── 📁 utils/
 │       ├── 🧮 calculations.ts              # Funciones de cálculo científico
 │       └── 🎯 navigation.ts                # Utilidades de navegación
@@ -253,6 +310,13 @@ npm run dev
 
 ### 🌟 **Características Visuales**
 
+#### **✨ Tooltips de Estrellas Individuales** ⭐ *NUEVO*
+- **🏷️ Nombres Astronómicos**: Cada estrella muestra su nombre científico real
+- **🌌 Contexto Constelación**: Información de pertenencia a constelación
+- **🎨 Diseño Elegante**: Tooltips con efecto glass y animaciones suaves
+- **⚡ Interacción Fluida**: Aparición/desaparición con efectos de transición
+- **📱 Touch Optimizado**: Funcionalidad completa en dispositivos móviles
+
 #### **✨ Efectos de Constelaciones**
 - **Estrellas Dinámicas**: Resplandor dorado al hacer hover
 - **Líneas Interactivas**: Se iluminan al interactuar con constelaciones
@@ -290,14 +354,18 @@ npm run dev
 
 #### **🎮 Controles Interactivos**
 
-- **🖱️ Click**: Navegar al planeta asociado con efecto hiperespacio
+- **🖱️ Click en Constelaciones**: Navegar al planeta asociado con efecto hiperespacio
+- **⭐ Hover sobre Estrellas**: Ver tooltips con nombres astronómicos reales
 - **⌨️ Teclas 1-8**: Acceso directo a planetas específicos
-- **🔍 Hover**: Revelar información astronómica y mitológica
+- **🔍 Hover sobre Constelaciones**: Revelar información astronómica y mitológica
 - **📱 Touch**: Tocar constelaciones en dispositivos móviles
+- **🌟 Leyenda Lateral**: Panel organizado por categorías de constelaciones
 
 #### **✨ Efectos Visuales**
 
 - **💫 Estrellas Fugaces**: Meteoros aleatorios cruzan el cielo
+- **🌌 Tooltips Informativos**: Información detallada de cada estrella individual
+- **🎭 Nombres Distintivos**: Etiquetas poéticas permanentemente visibles
 - **🌌 Nebulosas Deriva**: Nubes cósmicas con movimiento suave
 - **⚡ Líneas Dinámicas**: SVG vectoriales perfectamente alineados
 - **🌟 Brillo Estelar**: Animaciones de parpadeo realistas
@@ -720,17 +788,31 @@ git push origin feature/nueva-funcionalidad
 
 | Métrica | Estado Actual | Objetivo v2.0 |
 |---------|---------------|---------------|
-| 📄 **Líneas de Código** | ~2,500 | ~5,000 |
+| 📄 **Líneas de Código** | ~3,200 | ~5,000 |
+| 🌟 **Constelaciones** | 18 | 25+ |
+| ⭐ **Estrellas con Nombres** | 80+ | 150+ |
 | 🧪 **Cobertura de Tests** | 0% | 80% |
 | 🌍 **Idiomas Soportados** | 1 (Español) | 5+ |
 | 📱 **Score Lighthouse** | 95+ | 100 |
-| ⚡ **Bundle Size** | <500KB | <750KB |
-| 🎨 **Componentes** | 8 | 15+ |
+| ⚡ **Bundle Size** | <600KB | <750KB |
+| 🎨 **Componentes** | 12 | 20+ |
 
 ### 📝 **Changelog**
 
-#### **v1.2.0** - *Agosto 2025* ⭐ *ACTUAL*
-- ✨ **NUEVO**: Sistema de constelaciones navegables con 8 constelaciones reales
+#### **v1.3.0** - *Agosto 2025* ⭐ *ACTUAL*
+- ✨ **NUEVO**: Sistema expandido a 18 constelaciones navegables (vs. 8 previas)
+- ✨ **NUEVO**: Tooltips informativos con nombres reales de estrellas individuales
+- ✨ **NUEVO**: Categorización de constelaciones (Originales/Extendidas/Zodíaco)
+- ✨ **NUEVO**: 6 constelaciones del zodíaco agregadas
+- ✨ **NUEVO**: 4 constelaciones extendidas con navegación alternativa
+- 🔧 **MEJORADO**: Leyenda lateral organizada por categorías
+- 🔧 **MEJORADO**: Posicionamiento optimizado para evitar solapamientos
+- 📊 **ACTUALIZADO**: Estadísticas del panel de información (18 constelaciones)
+- 🎨 **MEJORADO**: Etiquetas distintivas permanentemente visibles
+- 💫 **MEJORADO**: Efectos hover más fluidos y responsivos
+
+#### **v1.2.0** - *Agosto 2025*
+- ✨ **NUEVO**: Sistema inicial de constelaciones navegables con 8 constelaciones reales
 - ✨ **NUEVO**: Gestión completa de paneles con estados persistentes
 - ✨ **NUEVO**: Efectos visuales inmersivos (estrellas fugaces, nebulosas, paralaje)
 - 🔧 **MEJORADO**: Controles de simulación con velocidad variable (0.1x-5.0x)
