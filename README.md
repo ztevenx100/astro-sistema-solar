@@ -857,14 +857,12 @@ Este proyecto está bajo la **Licencia MIT** - see [LICENSE](LICENSE) para detal
 | 🇯🇵 **JAXA** | Información de misiones asiáticas | [jaxa.jp](https://jaxa.jp) |
 | 🚀 **Astro Team** | Framework excepcional | [astro.build](https://astro.build) |
 | 🎨 **Tailwind Labs** | Sistema de diseño | [tailwindcss.com](https://tailwindcss.com) |
-| 💾 **TypeScript Team** | Type safety | [typescriptlang.org](https://typescriptlang.org) |
 
 ### **🌟 Inspiración**
 
 Este proyecto fue inspirado por:
 - 📚 **Carl Sagan** - Cosmos y la divulgación científica
 - 🔭 **Neil deGrasse Tyson** - Astrophysics for People in a Hurry
-- 🌌 **Brian Cox** - El Universo en una cáscara de nuez
 - 🎬 **Christopher Nolan** - Interstellar y la visualización del espacio
 
 ---
