@@ -12,7 +12,7 @@
 
 <div align="center">
 
-**¡Navega por el cosmos con 18 constelaciones interactivas!**
+**¡Navega por el cosmos con 24 constelaciones interactivas!**
 
 </div>
 
@@ -44,7 +44,16 @@
 | 🏹 **Sagitario** | Júpiter | Rukbat, Arkab, Kaus Australis | "El Arquero Galáctico" |
 | 👩 **Virgo** | Tierra | Spica, Zavijava, Porrima | "La Doncella Cósmica" |
 | ⚖️ **Libra** | Venus | Zubeneschamali, Zubenelgenubi | "La Balanza Estelar" |
-| 🐐 **Capricornio** | Saturno | Deneb Algedi, Dabih, Nashira | "La Cabra Marina" |cript-5.0+-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+| 🐐 **Capricornio** | Saturno | Deneb Algedi, Dabih, Nashira | "La Cabra Marina" |
+
+#### **🌌 Constelaciones Adicionales**
+| Constelación | Planeta Asociado | Estrellas Principales | Nombre Distintivo |
+|--------------|------------------|----------------------|-------------------|
+| 🐻 **Osa Menor** | Neptuno | Polaris, Kochab, Pherkad | "La Estrella Polar" |
+| 👑 **Corona Borealis** | Urano | Alphecca, Nusakan | "La Corona del Norte" |
+| 🦅 **Águila** | Mercurio | Altair, Alshain, Tarazed | "El Ave Celestial" |
+| 🦀 **Cáncer** | Tierra | Altarf, Al Tarf, Acubens | "El Cangrejo Dorado" |
+| 🐟 **Piscis** | Venus | Alrescha, Fumalsamakah | "Los Peces Gemelos" |cript-5.0+-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.0+-cyan?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
@@ -63,7 +72,7 @@
 - **Escala Científica**: Proporciones y distancias basadas en datos reales
 
 ### 🌌 **Sistema de Constelaciones Interactivas** ⭐ *ACTUALIZADO*
-- **18 Constelaciones Navegables** organizadas en 3 categorías:
+- **24 Constelaciones Navegables** organizadas en 4 categorías:
 
 #### **🌟 Constelaciones Originales (8)**
   - 🐻 **"El Gran Carro"** (Osa Mayor) → Júpiter
@@ -88,7 +97,15 @@
   - 👩 **"La Doncella Cósmica"** (Virgo) → Tierra
   - ⚖️ **"La Balanza Estelar"** (Libra) → Venus
   - 🐐 **"La Cabra Marina"** (Capricornio) → Saturno
-- **Navegación Intuitiva**: Click en cualquiera de las 18 constelaciones para viajar a planetas asociados
+
+#### **🌌 Constelaciones Adicionales (6)**
+  - 🐻 **"La Estrella Polar"** (Osa Menor) → Neptuno
+  - 👑 **"La Corona del Norte"** (Corona Borealis) → Urano
+  - 🦅 **"El Ave Celestial"** (Águila) → Mercurio
+  - 🦀 **"El Cangrejo Dorado"** (Cáncer) → Tierra
+  - 🐟 **"Los Peces Gemelos"** (Piscis) → Venus
+
+- **Navegación Intuitiva**: Click en cualquiera de las 24 constelaciones para viajar a planetas asociados
 - **Tooltips de Estrellas**: Hover sobre estrellas individuales para ver nombres astronómicos reales
 - **Efectos Visuales Inmersivos**: Estrellas con resplandor, líneas dinámicas y transiciones suaves
 - **Mapeo Astronómico Real**: Posiciones y conexiones basadas en constelaciones reales
@@ -108,7 +125,7 @@
 ### 🚀 **Experiencia de Usuario Mejorada** ⭐ *ACTUALIZADO*
 - **Paneles Inteligentes**: 
   - 📋 **Panel de Navegación**: Lista de planetas con botones de minimizar/ocultar
-  - ℹ️ **Panel de Información**: Guía interactiva con estadísticas actualizadas (18 constelaciones)
+  - ℹ️ **Panel de Información**: Guía interactiva con estadísticas actualizadas (24 constelaciones)
   - 🌟 **Leyenda de Constelaciones**: Panel lateral con categorías organizadas
   - 🎛️ **Panel de Controles**: Gestión completa de la simulación
 - **Gestión de Estado**: Cada panel recuerda su estado (expandido/minimizado/oculto)
@@ -440,7 +457,7 @@ Cada planeta incluye más de **15 secciones de información**:
 
 <div align="center">
 
-**8 mundos • 120+ datos científicos • 50+ misiones espaciales**
+**8 mundos • 150+ datos científicos • 50+ misiones espaciales**
 
 </div>
 
@@ -799,7 +816,17 @@ git push origin feature/nueva-funcionalidad
 
 ### 📝 **Changelog**
 
-#### **v1.3.0** - *Agosto 2025* ⭐ *ACTUAL*
+#### **v1.4.0** - *Agosto 2025* ⭐ *ACTUAL*
+- ✨ **NUEVO**: Sistema expandido a 24 constelaciones navegables (vs. 18 previas)
+- ✨ **NUEVO**: 6 nuevas constelaciones adicionales: Osa Menor, Corona Borealis, Águila, Cáncer, Piscis
+- ✨ **NUEVO**: Cuarta categoría "Constelaciones Adicionales" en la leyenda
+- 🔧 **MEJORADO**: Distribución mejorada de planetas con navegación alternativa
+- 🔧 **MEJORADO**: Tooltips con estrellas adicionales de alta precisión astronómica
+- 📊 **ACTUALIZADO**: Estadísticas del sistema (24 constelaciones, 150+ estrellas)
+- 🎨 **MEJORADO**: Organización visual de 4 categorías de constelaciones
+- 💫 **MEJORADO**: Mapeo astronómico extendido con estrellas como Polaris y Altair
+
+#### **v1.3.0** - *Agosto 2025*
 - ✨ **NUEVO**: Sistema expandido a 18 constelaciones navegables (vs. 8 previas)
 - ✨ **NUEVO**: Tooltips informativos con nombres reales de estrellas individuales
 - ✨ **NUEVO**: Categorización de constelaciones (Originales/Extendidas/Zodíaco)
