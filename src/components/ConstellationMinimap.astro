@@ -1,0 +1,429 @@
+---
+import { constellationCategories } from '../data/constellationCategories';
+
+export interface Props {
+  constellations: any[];
+  currentPlanet?: string;
+}
+
+const { constellations, currentPlanet } = Astro.props;
+---
+
+<div class="constellation-minimap">
+  <div class="minimap-header">
+    <h4>Mapa Estelar</h4>
+    <button class="minimap-toggle" id="minimap-toggle">
+      <span class="toggle-icon">📍</span>
+    </button>
+  </div>
+  
+  <div class="minimap-container" id="minimap-container">
+    <!-- Círculos de referencia -->
+    <div class="reference-circles">
+      <div class="reference-circle inner" style="width: 40%; height: 40%;"></div>
+      <div class="reference-circle middle" style="width: 70%; height: 70%;"></div>
+      <div class="reference-circle outer" style="width: 100%; height: 100%;"></div>
+    </div>
+    
+    <!-- Sistema solar central -->
+    <div class="minimap-solar-system">
+      <div class="minimap-sun"></div>
+      <div class="minimap-planets">
+        {['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map((planet, index) => (
+          <div 
+            class={`minimap-planet ${planet.toLowerCase()} ${currentPlanet === planet ? 'current' : ''}`}
+            style={`
+              transform: rotate(${index * 45}deg) translateX(${8 + index * 2}px) rotate(-${index * 45}deg);
+            `}
+            data-planet={planet}
+            title={planet}
+          ></div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Constelaciones -->
+    <div class="minimap-constellations">
+      {constellations.map((constellation, index) => {
+        // Calcular posición basada en el índice para distribución circular
+        const angle = (index / constellations.length) * 360;
+        const radius = 35; // Porcentaje del radio del contenedor
+        const x = 50 + radius * Math.cos((angle * Math.PI) / 180);
+        const y = 50 + radius * Math.sin((angle * Math.PI) / 180);
+        
+        // Determinar categoría
+        let category = 'modern';
+        for (const [key, cat] of Object.entries(constellationCategories)) {
+          if (cat.constellations.includes(constellation.id)) {
+            category = key;
+            break;
+          }
+        }
+        
+        return (
+          <div 
+            class={`minimap-constellation ${category}`}
+            style={`left: ${x}%; top: ${y}%;`}
+            data-constellation={constellation.id}
+            data-planet={constellation.planet}
+            title={`${constellation.distinctiveName} → ${constellation.planet}`}
+          >
+            <div class="constellation-dot"></div>
+            <div class="constellation-name">{constellation.distinctiveName}</div>
+            <div class="connection-line" style={`
+              transform: rotate(${Math.atan2(50 - y, 50 - x) * 180 / Math.PI}deg);
+              width: ${Math.sqrt(Math.pow(50 - x, 2) + Math.pow(50 - y, 2))}%;
+            `}></div>
+          </div>
+        );
+      })}
+    </div>
+    
+    <!-- Indicador de dirección actual -->
+    <div class="current-direction" id="current-direction">
+      <div class="direction-arrow"></div>
+    </div>
+  </div>
+  
+  <!-- Leyenda -->
+  <div class="minimap-legend">
+    <div class="legend-categories">
+      {Object.entries(constellationCategories).map(([key, category]) => (
+        <div class="legend-item" data-category={key}>
+          <div class="legend-color" style={`background: ${category.color}`}></div>
+          <span class="legend-text">{category.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .constellation-minimap {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 280px;
+    background: rgba(0, 10, 20, 0.95);
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+  
+  .minimap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px 10px;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+  }
+  
+  .minimap-header h4 {
+    color: #87CEEB;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  .minimap-toggle {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+  }
+  
+  .minimap-toggle:hover {
+    color: #87CEEB;
+    background: rgba(135, 206, 235, 0.1);
+  }
+  
+  .minimap-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(135, 206, 235, 0.05) 0%, rgba(0, 10, 20, 0.8) 100%);
+    border: 2px solid rgba(135, 206, 235, 0.2);
+    overflow: hidden;
+  }
+  
+  .reference-circles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .reference-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(135, 206, 235, 0.1);
+    border-radius: 50%;
+  }
+  
+  .minimap-solar-system {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+  }
+  
+  .minimap-sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  }
+  
+  .minimap-planets {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .minimap-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    transform-origin: center;
+  }
+  
+  .minimap-planet.mercury { background: #8C7853; }
+  .minimap-planet.venus { background: #FFC649; }
+  .minimap-planet.earth { background: #6B93D6; }
+  .minimap-planet.mars { background: #CD5C5C; }
+  .minimap-planet.jupiter { background: #D8CA9D; }
+  .minimap-planet.saturn { background: #FAD5A5; }
+  .minimap-planet.uranus { background: #4FD0E7; }
+  .minimap-planet.neptune { background: #4B70DD; }
+  
+  .minimap-planet.current {
+    box-shadow: 0 0 8px currentColor;
+    transform: scale(1.5);
+  }
+  
+  .minimap-constellation {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .constellation-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    transition: all 0.2s ease;
+  }
+  
+  .minimap-constellation.zodiac { color: #FFD700; }
+  .minimap-constellation.mythological { color: #87CEEB; }
+  .minimap-constellation.navigation { color: #98FB98; }
+  .minimap-constellation.modern { color: #DDA0DD; }
+  
+  .minimap-constellation:hover .constellation-dot {
+    transform: scale(2);
+    box-shadow: 0 0 8px currentColor;
+  }
+  
+  .constellation-name {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: currentColor;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+  }
+  
+  .minimap-constellation:hover .constellation-name {
+    opacity: 1;
+  }
+  
+  .connection-line {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 1px;
+    background: linear-gradient(to right, currentColor, transparent);
+    transform-origin: left center;
+    opacity: 0.3;
+  }
+  
+  .current-direction {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .direction-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 10px solid #87CEEB;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .minimap-legend {
+    padding: 10px 20px 20px;
+  }
+  
+  .legend-categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .legend-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .legend-color {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  
+  .legend-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+  }
+  
+  /* Estados colapsado */
+  .constellation-minimap.collapsed .minimap-container,
+  .constellation-minimap.collapsed .minimap-legend {
+    display: none;
+  }
+  
+  .constellation-minimap.collapsed {
+    width: auto;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .constellation-minimap {
+      width: 240px;
+      bottom: 10px;
+      left: 10px;
+    }
+    
+    .minimap-container {
+      width: 160px;
+      height: 160px;
+    }
+    
+    .legend-categories {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const minimap = document.querySelector('.constellation-minimap');
+    const toggle = document.getElementById('minimap-toggle');
+    const container = document.getElementById('minimap-container');
+    const constellations = document.querySelectorAll('.minimap-constellation');
+    const directionArrow = document.querySelector('.direction-arrow') as HTMLElement;
+    
+    let isCollapsed = false;
+    
+    // Toggle minimap
+    toggle?.addEventListener('click', () => {
+      isCollapsed = !isCollapsed;
+      minimap?.classList.toggle('collapsed', isCollapsed);
+      
+      const icon = toggle.querySelector('.toggle-icon');
+      if (icon) {
+        icon.textContent = isCollapsed ? '🗺️' : '📍';
+      }
+    });
+    
+    // Click en constelaciones del minimap
+    constellations.forEach(constellation => {
+      constellation.addEventListener('click', () => {
+        const constellationId = constellation.getAttribute('data-constellation');
+        const planet = constellation.getAttribute('data-planet');
+        
+        // Disparar evento de navegación
+        window.dispatchEvent(new CustomEvent('minimap-constellation-click', {
+          detail: { constellationId, planet }
+        }));
+      });
+    });
+    
+    // Actualizar dirección basada en constelación activa
+    window.addEventListener('constellation-active-change', (e: Event) => {
+      const customEvent = e as CustomEvent<{ constellationId: string }>;
+      const { constellationId } = customEvent.detail;
+      
+      // Encontrar la constelación en el minimap
+      const activeConstellation = document.querySelector(`[data-constellation="${constellationId}"]`);
+      if (activeConstellation && directionArrow) {
+        const rect = container?.getBoundingClientRect();
+        const constellationRect = activeConstellation.getBoundingClientRect();
+        
+        if (rect) {
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const constellationX = constellationRect.left + constellationRect.width / 2;
+          const constellationY = constellationRect.top + constellationRect.height / 2;
+          
+          const angle = Math.atan2(constellationY - centerY, constellationX - centerX) * 180 / Math.PI;
+          directionArrow.style.transform = `rotate(${angle + 90}deg)`;
+        }
+      }
+    });
+    
+    // Resaltar categorías en la leyenda
+    const legendItems = document.querySelectorAll('.legend-item');
+    legendItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const category = item.getAttribute('data-category');
+        
+        // Disparar evento de filtro de categoría
+        window.dispatchEvent(new CustomEvent('constellation-filter-change', {
+          detail: { filter: category }
+        }));
+      });
+    });
+  });
+</script>

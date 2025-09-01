@@ -1,4 +1,6 @@
 ---
+import type { Constellation, Star } from '../types/constellation';
+
 export interface Props {
   currentPlanet?: string;
 }
@@ -6,7 +8,7 @@ export interface Props {
 const { currentPlanet = '' } = Astro.props;
 
 // Definición de las constelaciones distribuidas alrededor del sistema solar
-const constellations = [
+const constellations: Constellation[] = [
   {
     id: 'ursa-major',
     name: 'Osa Mayor',
@@ -452,7 +454,7 @@ const constellations = [
       >
         <!-- Líneas de la constelación -->
         <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {constellation.lines.map((line) => (
+          {constellation.lines && constellation.lines.map((line) => (
             <line
               x1={constellation.stars[line[0]].x}
               y1={constellation.stars[line[0]].y}
