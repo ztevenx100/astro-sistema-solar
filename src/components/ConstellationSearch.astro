@@ -1,0 +1,387 @@
+---
+import type { Constellation, Star, SearchItem } from '../types/constellation';
+
+export interface Props {
+  constellations: Constellation[];
+}
+
+const { constellations } = Astro.props;
+
+// Preparar datos para búsqueda
+const searchData: SearchItem[] = constellations.flatMap((constellation: Constellation) => [
+  {
+    type: 'constellation' as const,
+    name: constellation.name,
+    distinctiveName: constellation.distinctiveName,
+    id: constellation.id,
+    planet: constellation.planet,
+    category: 'constellation'
+  },
+  ...constellation.stars.map((star: Star) => ({
+    type: 'star' as const,
+    name: star.name,
+    constellation: constellation.name,
+    constellationId: constellation.id,
+    brightness: star.brightness,
+    category: 'star'
+  }))
+]);
+---
+
+<div class="constellation-search">
+  <div class="search-container">
+    <div class="search-input-wrapper">
+      <span class="search-icon">🔍</span>
+      <input 
+        type="text" 
+        placeholder="Buscar constelaciones, estrellas o planetas..."
+        id="search-input"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="clear-search" id="clear-search" style="display: none;">✕</button>
+    </div>
+    
+    <div class="search-suggestions" id="search-suggestions"></div>
+  </div>
+  
+  <div class="search-stats" id="search-stats" style="display: none;">
+    <span id="stats-text"></span>
+  </div>
+</div>
+
+<style>
+  .constellation-search {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+  }
+  
+  .search-container {
+    position: relative;
+    background: rgba(0, 10, 20, 0.95);
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    overflow: hidden;
+  }
+  
+  .search-input-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+  }
+  
+  .search-icon {
+    color: #87CEEB;
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  #search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  #search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .clear-search {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+  
+  .clear-search:hover {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+  }
+  
+  .search-suggestions {
+    max-height: 300px;
+    overflow-y: auto;
+    border-top: 1px solid rgba(135, 206, 235, 0.1);
+    display: none;
+  }
+  
+  .search-suggestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .search-suggestion:hover {
+    background: rgba(135, 206, 235, 0.1);
+  }
+  
+  .suggestion-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .suggestion-name {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  
+  .suggestion-details {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+  }
+  
+  .suggestion-type {
+    background: rgba(135, 206, 235, 0.2);
+    color: #87CEEB;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .suggestion-type.star {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+  }
+  
+  .suggestion-type.planet {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+  }
+  
+  .search-stats {
+    background: rgba(0, 10, 20, 0.8);
+    padding: 8px 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(135, 206, 235, 0.1);
+  }
+  
+  .no-results {
+    padding: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Scrollbar personalizado */
+  .search-suggestions::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .search-suggestions::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .search-suggestions::-webkit-scrollbar-thumb {
+    background: rgba(135, 206, 235, 0.3);
+    border-radius: 3px;
+  }
+  
+  .search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: rgba(135, 206, 235, 0.5);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .constellation-search {
+      max-width: calc(100% - 20px);
+      padding: 0 10px;
+    }
+    
+    .search-input-wrapper {
+      padding: 12px 15px;
+    }
+    
+    #search-input {
+      font-size: 0.9rem;
+    }
+    
+    .search-suggestion {
+      padding: 10px 15px;
+    }
+  }
+</style>
+
+<script define:vars={{ searchData }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const clearButton = document.getElementById('clear-search');
+    const suggestionsContainer = document.getElementById('search-suggestions');
+    const statsContainer = document.getElementById('search-stats');
+    const statsText = document.getElementById('stats-text');
+    
+    let currentSuggestions = [];
+    let selectedIndex = -1;
+    
+    // Función de búsqueda
+    const performSearch = (query) => {
+      if (!query.trim()) {
+        hideSuggestions();
+        return;
+      }
+      
+      const lowercaseQuery = query.toLowerCase();
+      const results = searchData.filter(item => 
+        item.name.toLowerCase().includes(lowercaseQuery) ||
+        (item.distinctiveName && item.distinctiveName.toLowerCase().includes(lowercaseQuery)) ||
+        (item.constellation && item.constellation.toLowerCase().includes(lowercaseQuery))
+      ).slice(0, 8);
+      
+      currentSuggestions = results;
+      showSuggestions(results);
+      updateStats(results.length, query);
+    };
+    
+    // Mostrar sugerencias
+    const showSuggestions = (suggestions) => {
+      if (suggestions.length === 0) {
+        suggestionsContainer.innerHTML = '<div class="no-results">No se encontraron resultados</div>';
+      } else {
+        suggestionsContainer.innerHTML = suggestions.map((suggestion, index) => `
+          <div class="search-suggestion" data-index="${index}" data-id="${suggestion.id || suggestion.constellationId}">
+            <div class="suggestion-main">
+              <div class="suggestion-name">${suggestion.name}</div>
+              <div class="suggestion-details">
+                ${suggestion.type === 'star' ? 
+                  `Estrella en ${suggestion.constellation} • Brillo: ${suggestion.brightness}` :
+                  `${suggestion.distinctiveName} • Navega a ${suggestion.planet}`
+                }
+              </div>
+            </div>
+            <span class="suggestion-type ${suggestion.type}">${suggestion.type === 'star' ? 'Estrella' : 'Constelación'}</span>
+          </div>
+        `).join('');
+      }
+      
+      suggestionsContainer.style.display = 'block';
+      selectedIndex = -1;
+    };
+    
+    // Ocultar sugerencias
+    const hideSuggestions = () => {
+      suggestionsContainer.style.display = 'none';
+      statsContainer.style.display = 'none';
+      selectedIndex = -1;
+    };
+    
+    // Actualizar estadísticas
+    const updateStats = (count, query) => {
+      if (count > 0) {
+        statsText.textContent = `${count} resultado${count !== 1 ? 's' : ''} para "${query}"`;
+        statsContainer.style.display = 'block';
+      } else {
+        statsContainer.style.display = 'none';
+      }
+    };
+    
+    // Seleccionar sugerencia
+    const selectSuggestion = (suggestion) => {
+      const event = new CustomEvent('constellation-search-select', {
+        detail: {
+          type: suggestion.type,
+          id: suggestion.id || suggestion.constellationId,
+          name: suggestion.name,
+          constellation: suggestion.constellation
+        }
+      });
+      window.dispatchEvent(event);
+      
+      searchInput.value = suggestion.name;
+      hideSuggestions();
+    };
+    
+    // Event listeners
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value;
+      clearButton.style.display = query ? 'block' : 'none';
+      performSearch(query);
+    });
+    
+    searchInput.addEventListener('keydown', (e) => {
+      if (currentSuggestions.length === 0) return;
+      
+      switch(e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          selectedIndex = Math.min(selectedIndex + 1, currentSuggestions.length - 1);
+          updateSelection();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          selectedIndex = Math.max(selectedIndex - 1, -1);
+          updateSelection();
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (selectedIndex >= 0) {
+            selectSuggestion(currentSuggestions[selectedIndex]);
+          }
+          break;
+        case 'Escape':
+          hideSuggestions();
+          searchInput.blur();
+          break;
+      }
+    });
+    
+    // Actualizar selección visual
+    const updateSelection = () => {
+      const suggestions = suggestionsContainer.querySelectorAll('.search-suggestion');
+      suggestions.forEach((item, index) => {
+        if (index === selectedIndex) {
+          item.style.background = 'rgba(135, 206, 235, 0.2)';
+        } else {
+          item.style.background = '';
+        }
+      });
+    };
+    
+    // Click en sugerencias
+    suggestionsContainer.addEventListener('click', (e) => {
+      const suggestion = e.target.closest('.search-suggestion');
+      if (suggestion) {
+        const index = parseInt(suggestion.getAttribute('data-index'));
+        selectSuggestion(currentSuggestions[index]);
+      }
+    });
+    
+    // Limpiar búsqueda
+    clearButton.addEventListener('click', () => {
+      searchInput.value = '';
+      clearButton.style.display = 'none';
+      hideSuggestions();
+      searchInput.focus();
+    });
+    
+    // Cerrar al hacer click fuera
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.constellation-search')) {
+        hideSuggestions();
+      }
+    });
+  });
+</script>

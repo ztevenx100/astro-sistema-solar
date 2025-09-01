@@ -1,4 +1,6 @@
 ---
+import type { Constellation, Star } from '../types/constellation';
+
 export interface Props {
   currentPlanet?: string;
 }
@@ -6,20 +8,20 @@ export interface Props {
 const { currentPlanet = '' } = Astro.props;
 
 // Definición de las constelaciones distribuidas alrededor del sistema solar
-const constellations = [
+const constellations: Constellation[] = [
   {
     id: 'ursa-major',
     name: 'Osa Mayor',
     distinctiveName: 'El Gran Carro',
     planet: 'Jupiter',
     stars: [
-      { name: 'Dubhe', x: 13.5, y: 26, brightness: 0.9 },
-      { name: 'Merak', x: 18, y: 29, brightness: 0.8 },
-      { name: 'Phecda', x: 23.25, y: 27.5, brightness: 0.7 },
-      { name: 'Megrez', x: 28.5, y: 26, brightness: 0.6 },
-      { name: 'Alioth', x: 33, y: 23.75, brightness: 0.8 },
-      { name: 'Mizar', x: 38.25, y: 22.25, brightness: 0.7 },
-      { name: 'Alkaid', x: 43.5, y: 21.5, brightness: 0.9 }
+  { name: 'Dubhe', x: 8, y: 18, brightness: 0.63 },
+  { name: 'Merak', x: 12, y: 22, brightness: 0.56 },
+  { name: 'Phecda', x: 18, y: 20, brightness: 0.49 },
+  { name: 'Megrez', x: 24, y: 18, brightness: 0.42 },
+  { name: 'Alioth', x: 38, y: 12, brightness: 0.56 },
+  { name: 'Mizar', x: 44, y: 10, brightness: 0.49 },
+  { name: 'Alkaid', x: 50, y: 8, brightness: 0.63 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6]]
   },
@@ -29,13 +31,13 @@ const constellations = [
     distinctiveName: 'El Cazador Guerrero',
     planet: 'Mars',
     stars: [
-      { name: 'Bellatrix', x: 78, y: 28.75, brightness: 0.8 },
-      { name: 'Betelgeuse', x: 81, y: 32.5, brightness: 1.0 },
-      { name: 'Rigel', x: 83.25, y: 43.75, brightness: 0.9 },
-      { name: 'Alnitak', x: 79.5, y: 36.25, brightness: 0.7 },
-      { name: 'Alnilam', x: 81.75, y: 37.75, brightness: 0.8 },
-      { name: 'Mintaka', x: 84, y: 39.25, brightness: 0.7 },
-      { name: 'Saiph', x: 78, y: 41.5, brightness: 0.6 }
+  { name: 'Bellatrix', x: 92, y: 18, brightness: 0.56 },
+  { name: 'Betelgeuse', x: 96, y: 22, brightness: 0.7 },
+  { name: 'Rigel', x: 98, y: 38, brightness: 0.63 },
+  { name: 'Alnitak', x: 94, y: 28, brightness: 0.49 },
+  { name: 'Alnilam', x: 97, y: 30, brightness: 0.56 },
+  { name: 'Mintaka', x: 99, y: 32, brightness: 0.49 },
+  { name: 'Saiph', x: 92, y: 36, brightness: 0.42 }
     ],
     lines: [[0,1], [1,3], [3,4], [4,5], [1,6], [2,6], [3,6]]
   },
@@ -45,11 +47,11 @@ const constellations = [
     distinctiveName: 'La Reina Celestial',
     planet: 'Saturn',
     stars: [
-      { name: 'Schedar', x: 75.75, y: 66, brightness: 0.8 },
-      { name: 'Caph', x: 79.5, y: 69, brightness: 0.7 },
-      { name: 'Gamma Cas', x: 83.25, y: 67.5, brightness: 0.9 },
-      { name: 'Ruchbah', x: 85.5, y: 71.25, brightness: 0.6 },
-      { name: 'Segin', x: 81, y: 73.5, brightness: 0.5 }
+  { name: 'Schedar', x: 90, y: 80, brightness: 0.56 },
+  { name: 'Caph', x: 94, y: 84, brightness: 0.49 },
+  { name: 'Gamma Cas', x: 98, y: 82, brightness: 0.63 },
+  { name: 'Ruchbah', x: 100, y: 88, brightness: 0.42 },
+  { name: 'Segin', x: 96, y: 92, brightness: 0.35 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,4]]
   },
@@ -59,11 +61,11 @@ const constellations = [
     distinctiveName: 'El León Dorado',
     planet: 'Mercury',
     stars: [
-      { name: 'Regulus', x: 92.5, y: 38.75, brightness: 0.9 },
-      { name: 'Algieba', x: 90.25, y: 42.5, brightness: 0.7 },
-      { name: 'Denebola', x: 88, y: 46.25, brightness: 0.8 },
-      { name: 'Zosma', x: 91, y: 50, brightness: 0.6 },
-      { name: 'Chertan', x: 92.5, y: 53.75, brightness: 0.5 }
+      { name: 'Regulus', x: 96, y: 8, brightness: 0.63 },
+      { name: 'Algieba', x: 94, y: 12, brightness: 0.49 },
+      { name: 'Denebola', x: 92, y: 16, brightness: 0.56 },
+      { name: 'Zosma', x: 98, y: 20, brightness: 0.42 },
+      { name: 'Chertan', x: 100, y: 24, brightness: 0.35 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
   },
@@ -73,10 +75,10 @@ const constellations = [
     distinctiveName: 'El Portador Cósmico',
     planet: 'Uranus',
     stars: [
-      { name: 'Sadalsuud', x: 55.5, y: 71.25, brightness: 0.8 },
-      { name: 'Sadalmelik', x: 51, y: 73.5, brightness: 0.7 },
-      { name: 'Sadachbia', x: 45.75, y: 72, brightness: 0.6 },
-      { name: 'Albali', x: 40.5, y: 69, brightness: 0.5 }
+      { name: 'Sadalsuud', x: 15, y: 88, brightness: 0.56 },
+      { name: 'Sadalmelik', x: 10, y: 92, brightness: 0.49 },
+      { name: 'Sadachbia', x: 5, y: 90, brightness: 0.42 },
+      { name: 'Albali', x: 2, y: 86, brightness: 0.35 }
     ],
     lines: [[0,1], [1,2], [2,3]]
   },
@@ -86,9 +88,9 @@ const constellations = [
     distinctiveName: 'Los Hermanos Estelares',
     planet: 'Venus',
     stars: [
-      { name: 'Castor', x: 23.25, y: 71.25, brightness: 0.9 },
-      { name: 'Pollux', x: 18, y: 69, brightness: 0.8 },
-      { name: 'Alhena', x: 13.5, y: 66, brightness: 0.7 }
+      { name: 'Castor', x: 8, y: 92, brightness: 0.63 },
+      { name: 'Pollux', x: 4, y: 88, brightness: 0.56 },
+      { name: 'Alhena', x: 2, y: 84, brightness: 0.49 }
     ],
     lines: [[0,1], [1,2]]
   },
@@ -98,9 +100,9 @@ const constellations = [
     distinctiveName: 'El Guardián Ardiente',
     planet: 'Neptune',
     stars: [
-      { name: 'Antares', x: 13.5, y: 41.25, brightness: 1.0 },
-      { name: 'Shaula', x: 15.75, y: 36, brightness: 0.8 },
-      { name: 'Sargas', x: 18, y: 31.5, brightness: 0.7 }
+      { name: 'Antares', x: 2, y: 45, brightness: 0.7 },
+      { name: 'Shaula', x: 4, y: 38, brightness: 0.56 },
+      { name: 'Sargas', x: 6, y: 32, brightness: 0.49 }
     ],
     lines: [[0,1], [0,2]]
   },
@@ -110,9 +112,9 @@ const constellations = [
     distinctiveName: 'El Navegante del Norte',
     planet: 'Earth',
     stars: [
-      { name: 'Deneb', x: 45.5, y: 15.5, brightness: 0.9 },
-      { name: 'Sadr', x: 50.75, y: 17.75, brightness: 0.8 },
-      { name: 'Albireo', x: 56, y: 20, brightness: 0.7 }
+      { name: 'Deneb', x: 45, y: 4, brightness: 0.63 },
+      { name: 'Sadr', x: 52, y: 6, brightness: 0.56 },
+      { name: 'Albireo', x: 58, y: 8, brightness: 0.49 }
     ],
     lines: [[0,1], [1,2]]
   },
@@ -122,11 +124,11 @@ const constellations = [
     distinctiveName: 'El Dragón Guardián',
     planet: 'Jupiter', // Navegación alternativa a Júpiter
     stars: [
-      { name: 'Thuban', x: 58.25, y: 29, brightness: 0.7 },
-      { name: 'Eltanin', x: 60.5, y: 33.5, brightness: 0.9 },
-      { name: 'Rastaban', x: 63.5, y: 38.75, brightness: 0.8 },
-      { name: 'Aldhibah', x: 65.75, y: 31.25, brightness: 0.6 },
-      { name: 'Edasich', x: 68, y: 35, brightness: 0.7 }
+      { name: 'Thuban', x: 75, y: 8, brightness: 0.49 },
+      { name: 'Eltanin', x: 78, y: 12, brightness: 0.63 },
+      { name: 'Rastaban', x: 82, y: 18, brightness: 0.56 },
+      { name: 'Aldhibah', x: 85, y: 10, brightness: 0.42 },
+      { name: 'Edasich', x: 88, y: 14, brightness: 0.49 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,4], [4,1]]
   },
@@ -136,10 +138,10 @@ const constellations = [
     distinctiveName: 'La Princesa Encadenada',
     planet: 'Venus', // Navegación alternativa a Venus
     stars: [
-      { name: 'Alpheratz', x: 21, y: 61.5, brightness: 0.8 },
-      { name: 'Mirach', x: 25.5, y: 63.75, brightness: 0.9 },
-      { name: 'Almach', x: 30.75, y: 66, brightness: 0.7 },
-      { name: 'Adhil', x: 23.25, y: 58.5, brightness: 0.6 }
+      { name: 'Alpheratz', x: 6, y: 76, brightness: 0.56 },
+      { name: 'Mirach', x: 10, y: 80, brightness: 0.63 },
+      { name: 'Almach', x: 14, y: 84, brightness: 0.49 },
+      { name: 'Adhil', x: 8, y: 72, brightness: 0.42 }
     ],
     lines: [[0,1], [1,2], [0,3]]
   },
@@ -149,10 +151,10 @@ const constellations = [
     distinctiveName: 'El Héroe Volador',
     planet: 'Mars', // Navegación alternativa a Marte
     stars: [
-      { name: 'Mirfak', x: 38.25, y: 31.25, brightness: 0.9 },
-      { name: 'Algol', x: 42, y: 33.5, brightness: 0.8 },
-      { name: 'Atik', x: 45.75, y: 29, brightness: 0.7 },
-      { name: 'Menkib', x: 40.5, y: 26, brightness: 0.6 }
+      { name: 'Mirfak', x: 8, y: 28, brightness: 0.63 },
+      { name: 'Algol', x: 12, y: 32, brightness: 0.56 },
+      { name: 'Atik', x: 16, y: 24, brightness: 0.49 },
+      { name: 'Menkib', x: 10, y: 20, brightness: 0.42 }
     ],
     lines: [[0,1], [0,2], [0,3], [1,2]]
   },
@@ -162,10 +164,10 @@ const constellations = [
     distinctiveName: 'El Arpa Celestial',
     planet: 'Mercury', // Navegación alternativa a Mercurio
     stars: [
-      { name: 'Vega', x: 88.75, y: 18.25, brightness: 1.0 },
-      { name: 'Sheliak', x: 91, y: 22, brightness: 0.7 },
-      { name: 'Sulafat', x: 86.5, y: 20.5, brightness: 0.8 },
-      { name: 'Delta Lyr', x: 92.5, y: 18.25, brightness: 0.6 }
+      { name: 'Vega', x: 98, y: 4, brightness: 0.7 },
+      { name: 'Sheliak', x: 100, y: 8, brightness: 0.49 },
+      { name: 'Sulafat', x: 96, y: 6, brightness: 0.56 },
+      { name: 'Delta Lyr', x: 102, y: 4, brightness: 0.42 }
     ],
     lines: [[0,1], [0,2], [0,3], [1,2]]
   },
@@ -175,9 +177,9 @@ const constellations = [
     distinctiveName: 'El Carnero Dorado',
     planet: 'Mars', // Navegación alternativa a Marte
     stars: [
-      { name: 'Hamal', x: 35, y: 55, brightness: 0.9 },
-      { name: 'Sheratan', x: 32, y: 58, brightness: 0.8 },
-      { name: 'Mesarthim', x: 30, y: 56, brightness: 0.7 }
+      { name: 'Hamal', x: 4, y: 60, brightness: 0.63 },
+      { name: 'Sheratan', x: 2, y: 64, brightness: 0.56 },
+      { name: 'Mesarthim', x: 1, y: 62, brightness: 0.49 }
     ],
     lines: [[0,1], [1,2]]
   },
@@ -187,10 +189,10 @@ const constellations = [
     distinctiveName: 'El Toro Celestial',
     planet: 'Venus', // Navegación alternativa a Venus
     stars: [
-      { name: 'Aldebaran', x: 65, y: 52, brightness: 1.0 },
-      { name: 'Elnath', x: 68, y: 48, brightness: 0.8 },
-      { name: 'Alcyone', x: 70, y: 55, brightness: 0.7 },
-      { name: 'Maia', x: 72, y: 53, brightness: 0.6 }
+      { name: 'Aldebaran', x: 94, y: 52, brightness: 0.7 },
+      { name: 'Elnath', x: 98, y: 48, brightness: 0.56 },
+      { name: 'Alcyone', x: 100, y: 56, brightness: 0.49 },
+      { name: 'Maia', x: 102, y: 54, brightness: 0.42 }
     ],
     lines: [[0,1], [0,2], [2,3]]
   },
@@ -200,10 +202,10 @@ const constellations = [
     distinctiveName: 'El Arquero Galáctico',
     planet: 'Jupiter', // Navegación alternativa a Júpiter
     stars: [
-      { name: 'Rukbat', x: 8, y: 58, brightness: 0.8 },
-      { name: 'Arkab', x: 12, y: 55, brightness: 0.7 },
-      { name: 'Kaus Australis', x: 15, y: 60, brightness: 0.9 },
-      { name: 'Nunki', x: 18, y: 57, brightness: 0.8 }
+      { name: 'Rukbat', x: 8, y: 58, brightness: 0.56 },
+      { name: 'Arkab', x: 12, y: 55, brightness: 0.49 },
+      { name: 'Kaus Australis', x: 15, y: 60, brightness: 0.63 },
+      { name: 'Nunki', x: 18, y: 57, brightness: 0.56 }
     ],
     lines: [[0,1], [1,2], [2,3]]
   },
@@ -213,10 +215,10 @@ const constellations = [
     distinctiveName: 'La Doncella Cósmica',
     planet: 'Earth', // Navegación alternativa a la Tierra
     stars: [
-      { name: 'Spica', x: 95, y: 60, brightness: 1.0 },
-      { name: 'Zavijava', x: 92, y: 63, brightness: 0.7 },
-      { name: 'Porrima', x: 90, y: 58, brightness: 0.8 },
-      { name: 'Vindemiatrix', x: 88, y: 65, brightness: 0.6 }
+      { name: 'Spica', x: 98, y: 88, brightness: 0.7 },
+      { name: 'Zavijava', x: 94, y: 92, brightness: 0.49 },
+      { name: 'Porrima', x: 96, y: 86, brightness: 0.56 },
+      { name: 'Vindemiatrix', x: 92, y: 96, brightness: 0.42 }
     ],
     lines: [[0,1], [1,2], [0,3]]
   },
@@ -226,9 +228,9 @@ const constellations = [
     distinctiveName: 'La Balanza Estelar',
     planet: 'Venus', // Navegación alternativa a Venus
     stars: [
-      { name: 'Zubeneschamali', x: 75, y: 75, brightness: 0.8 },
-      { name: 'Zubenelgenubi', x: 78, y: 78, brightness: 0.9 },
-      { name: 'Brachium', x: 72, y: 80, brightness: 0.7 }
+      { name: 'Zubeneschamali', x: 88, y: 92, brightness: 0.56 },
+      { name: 'Zubenelgenubi', x: 92, y: 96, brightness: 0.63 },
+      { name: 'Brachium', x: 84, y: 98, brightness: 0.49 }
     ],
     lines: [[0,1], [1,2]]
   },
@@ -238,10 +240,10 @@ const constellations = [
     distinctiveName: 'La Cabra Marina',
     planet: 'Saturn', // Navegación alternativa a Saturno
     stars: [
-      { name: 'Deneb Algedi', x: 25, y: 78, brightness: 0.8 },
-      { name: 'Dabih', x: 28, y: 75, brightness: 0.9 },
-      { name: 'Nashira', x: 22, y: 82, brightness: 0.7 },
-      { name: 'Algedi', x: 30, y: 80, brightness: 0.6 }
+      { name: 'Deneb Algedi', x: 18, y: 94, brightness: 0.56 },
+      { name: 'Dabih', x: 22, y: 90, brightness: 0.63 },
+      { name: 'Nashira', x: 14, y: 98, brightness: 0.49 },
+      { name: 'Algedi', x: 26, y: 96, brightness: 0.42 }
     ],
     lines: [[0,1], [0,2], [1,3]]
   },
@@ -251,13 +253,13 @@ const constellations = [
     distinctiveName: 'La Estrella Polar',
     planet: 'Neptune', // Navegación alternativa a Neptuno
     stars: [
-      { name: 'Polaris', x: 50, y: 8, brightness: 1.0 },
-      { name: 'Kochab', x: 48, y: 12, brightness: 0.8 },
-      { name: 'Pherkad', x: 52, y: 11, brightness: 0.7 },
-      { name: 'Yildun', x: 49, y: 15, brightness: 0.6 },
-      { name: 'Urodelus', x: 46, y: 10, brightness: 0.5 },
-      { name: 'Ahfa al Farkadain', x: 54, y: 13, brightness: 0.5 },
-      { name: 'Anwar al Farkadain', x: 51, y: 9, brightness: 0.4 }
+      { name: 'Polaris', x: 50, y: 2, brightness: 0.7 },
+      { name: 'Kochab', x: 48, y: 6, brightness: 0.56 },
+      { name: 'Pherkad', x: 52, y: 5, brightness: 0.49 },
+      { name: 'Yildun', x: 49, y: 9, brightness: 0.42 },
+      { name: 'Urodelus', x: 46, y: 4, brightness: 0.35 },
+      { name: 'Ahfa al Farkadain', x: 54, y: 7, brightness: 0.35 },
+      { name: 'Anwar al Farkadain', x: 51, y: 3, brightness: 0.28 }
     ],
     lines: [[0,1], [1,2], [2,5], [5,3], [3,4], [4,1], [0,6]]
   },
@@ -267,13 +269,13 @@ const constellations = [
     distinctiveName: 'La Corona del Norte',
     planet: 'Uranus', // Navegación alternativa a Urano
     stars: [
-      { name: 'Alphecca', x: 67, y: 25, brightness: 0.9 },
-      { name: 'Nusakan', x: 65, y: 28, brightness: 0.7 },
-      { name: 'Theta CrB', x: 69, y: 27, brightness: 0.6 },
-      { name: 'Delta CrB', x: 63, y: 26, brightness: 0.5 },
-      { name: 'Epsilon CrB', x: 71, y: 25, brightness: 0.5 },
-      { name: 'Iota CrB', x: 66, y: 23, brightness: 0.4 },
-      { name: 'Kappa CrB', x: 68, y: 29, brightness: 0.4 }
+      { name: 'Alphecca', x: 88, y: 28, brightness: 0.63 },
+      { name: 'Nusakan', x: 85, y: 32, brightness: 0.49 },
+      { name: 'Theta CrB', x: 92, y: 30, brightness: 0.42 },
+      { name: 'Delta CrB', x: 82, y: 29, brightness: 0.35 },
+      { name: 'Epsilon CrB', x: 95, y: 28, brightness: 0.35 },
+      { name: 'Iota CrB', x: 86, y: 25, brightness: 0.28 },
+      { name: 'Kappa CrB', x: 90, y: 34, brightness: 0.28 }
     ],
     lines: [[3,1], [1,5], [5,0], [0,2], [2,4], [0,6]]
   },
@@ -452,7 +454,7 @@ const constellations = [
       >
         <!-- Líneas de la constelación -->
         <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {constellation.lines.map((line) => (
+          {constellation.lines && constellation.lines.map((line) => (
             <line
               x1={constellation.stars[line[0]].x}
               y1={constellation.stars[line[0]].y}
@@ -493,7 +495,7 @@ const constellations = [
           class="constellation-label"
           style={`
             left: ${constellation.stars.reduce((sum, star) => sum + star.x, 0) / constellation.stars.length}%;
-            top: ${constellation.stars.reduce((sum, star) => sum + star.y, 0) / constellation.stars.length - 3}%;
+            top: ${Math.max(...constellation.stars.map(star => star.y)) + 4}%;
           `}
         >
           <span class="constellation-distinctive-name">{constellation.distinctiveName}</span>
