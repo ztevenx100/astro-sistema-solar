@@ -1,10 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SolarSystem from '../components/SolarSystem.astro';
+import ConstellationSection from '../components/ConstellationSection.astro';
+import NavigationSection from '../components/NavigationSection.astro';
 ---
 
 <Layout title="Sistema Solar Interactivo" currentPlanet="system">
-	<main class="h-screen">
-		<SolarSystem />
+	<main class="scroll-container">
+		<!-- Sección 1: Sistema Solar -->
+		<section id="solar-system-section" class="section-container h-screen">
+			<SolarSystem />
+		</section>
+
+		<!-- Sección 2: Constelaciones -->
+		<section id="constellations-section" class="section-container min-h-screen">
+			<ConstellationSection />
+		</section>
+
+		<!-- Navegación fija entre secciones -->
+		<!-- <NavigationSection /> -->
 	</main>
 </Layout>
+
+<style>
+	.scroll-container {
+		scroll-behavior: smooth;
+		overflow-y: auto;
+		height: 100vh;
+	}
+
+	.section-container {
+		position: relative;
+		width: 100%;
+	}
+
+	#solar-system-section {
+		background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+	}
+
+	#constellations-section {
+		background: linear-gradient(180deg, #0f0f23 0%, #1a0033 50%, #000011 100%);
+		padding: 2rem 0;
+	}
+</style>

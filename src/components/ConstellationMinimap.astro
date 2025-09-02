@@ -102,14 +102,14 @@ const { constellations, currentPlanet } = Astro.props;
   .constellation-minimap {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    right: 20px; /* Cambiado a la derecha para evitar solapamiento */
     width: 280px;
     background: rgba(0, 10, 20, 0.95);
     border: 1px solid rgba(135, 206, 235, 0.3);
     border-radius: 15px;
     backdrop-filter: blur(15px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+    z-index: 700; /* Reducido para estar por debajo de otros paneles */
     transition: all 0.3s ease;
   }
   
@@ -342,7 +342,8 @@ const { constellations, currentPlanet } = Astro.props;
     .constellation-minimap {
       width: 240px;
       bottom: 10px;
-      left: 10px;
+      right: 10px; /* Cambiado de left a right */
+      left: auto;
     }
     
     .minimap-container {
