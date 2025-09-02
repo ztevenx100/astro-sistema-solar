@@ -1,0 +1,163 @@
+---
+export interface Props {
+  activeFilter?: string;
+}
+
+const { activeFilter = 'all' } = Astro.props;
+
+const categories = [
+  { key: 'all', name: 'Todas', icon: '🌌', count: 30 },
+  { key: 'zodiac', name: 'Zodíaco', icon: '♈', count: 12 },
+  { key: 'mythological', name: 'Mitológicas', icon: '⚔️', count: 8 },
+  { key: 'navigation', name: 'Navegación', icon: '🧭', count: 6 },
+  { key: 'modern', name: 'Modernas', icon: '🔭', count: 4 }
+];
+---
+
+<div class="constellation-filters-simple">
+  <h3>Categorías</h3>
+  
+  <div class="filter-grid">
+    {categories.map(category => (
+      <button 
+        class={`filter-btn ${activeFilter === category.key ? 'active' : ''}`}
+        data-filter={category.key}
+      >
+        <span class="filter-icon">{category.icon}</span>
+        <span class="filter-name">{category.name}</span>
+        <span class="filter-count">{category.count}</span>
+      </button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .constellation-filters-simple {
+    position: fixed;
+    top: 400px; /* Subir más arriba para evitar solapamiento */
+    left: 20px;
+    background: rgba(0, 10, 20, 0.9);
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    backdrop-filter: blur(15px);
+    z-index: 750;
+    max-width: 200px;
+    transition: all 0.3s ease;
+  }
+
+  /* Ocultar en la sección del sistema solar */
+  #solar-system-section .constellation-filters-simple {
+    display: none;
+  }
+
+  .constellation-filters-simple h3 {
+    color: #87CEEB;
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .filter-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+  }
+
+  .filter-btn:hover {
+    background: rgba(135, 206, 235, 0.1);
+    border-color: rgba(135, 206, 235, 0.3);
+    color: white;
+  }
+
+  .filter-btn.active {
+    background: rgba(135, 206, 235, 0.2);
+    border-color: #87CEEB;
+    color: #87CEEB;
+  }
+
+  .filter-icon {
+    font-size: 1rem;
+    min-width: 16px;
+  }
+
+  .filter-name {
+    flex: 1;
+    text-align: left;
+  }
+
+  .filter-count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .filter-btn.active .filter-count {
+    background: rgba(135, 206, 235, 0.3);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .constellation-filters-simple {
+      position: fixed;
+      bottom: 260px; /* Más arriba para evitar solapamiento con minimap */
+      left: 10px;
+      right: 10px;
+      max-width: none;
+      top: auto;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+
+    .filter-btn {
+      padding: 6px 8px;
+      font-size: 0.8rem;
+    }
+
+    .filter-name {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        
+        // Actualizar botón activo
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Disparar evento personalizado
+        window.dispatchEvent(new CustomEvent('constellation-filter-change', {
+          detail: { filter }
+        }));
+      });
+    });
+  });
+</script>

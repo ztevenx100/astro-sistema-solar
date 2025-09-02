@@ -63,16 +63,16 @@ const { activeFilter = 'all' } = Astro.props;
 <style>
   .constellation-filters {
     position: fixed;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
+    top: 20%;
+    left: 20px; /* Movido al lado izquierdo para evitar conflicto con navegación */
+    transform: translateY(-20%);
     background: rgba(0, 10, 20, 0.9);
     border: 1px solid rgba(135, 206, 235, 0.3);
     border-radius: 15px;
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+    z-index: 750; /* Reducido para evitar conflictos */
     max-width: 280px;
     transition: all 0.3s ease;
   }
@@ -203,14 +203,22 @@ const { activeFilter = 'all' } = Astro.props;
   /* Responsive */
   @media (max-width: 768px) {
     .constellation-filters {
+      top: auto;
+      bottom: 100px; /* Por encima del minimap */
+      left: 10px;
       right: 10px;
-      max-width: 250px;
+      max-width: none;
+      transform: none;
       padding: 15px;
     }
     
     .filter-btn {
       padding: 10px 12px;
       font-size: 0.85rem;
+    }
+    
+    .filter-text {
+      display: none; /* Ocultar texto en móviles */
     }
     
     .mode-buttons {

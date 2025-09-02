@@ -1,0 +1,217 @@
+---
+import type { Constellation } from '../types/constellation';
+
+export interface Props {
+  constellations: Constellation[];
+}
+
+const { constellations } = Astro.props;
+---
+
+<!-- Minimap simplificado - Solo navegación visual -->
+<div class="constellation-minimap-simple">
+  <div class="minimap-header">
+    <h4>Navegación</h4>
+    <button class="minimap-toggle" id="minimap-toggle-simple">
+      ⚡
+    </button>
+  </div>
+  
+  <div class="minimap-content" id="minimap-content-simple">
+    <div class="minimap-viewport">
+      <!-- Centro del sistema solar -->
+      <div class="solar-center">☀️</div>
+      
+      <!-- Indicadores de constelaciones principales -->
+      {constellations.slice(0, 8).map((constellation, index) => {
+        const angle = (index * 45) * Math.PI / 180;
+        const radius = 30;
+        const x = 50 + radius * Math.cos(angle);
+        const y = 50 + radius * Math.sin(angle);
+        
+        return (
+          <button 
+            class="constellation-point"
+            style={`left: ${x}%; top: ${y}%;`}
+            data-constellation={constellation.id}
+            title={constellation.name}
+          >
+            ⭐
+          </button>
+        );
+      })}
+    </div>
+    
+    <!-- Estadísticas simples -->
+    <div class="minimap-stats">
+      <span>{constellations.length} constelaciones</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .constellation-minimap-simple {
+    position: fixed;
+    bottom: 100px; /* Subir más arriba para dejar espacio para info-panel */
+    right: 20px; /* Volver al borde derecho */
+    width: 200px;
+    background: rgba(0, 10, 20, 0.95);
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(15px);
+    z-index: 600;
+    transition: all 0.3s ease;
+  }
+
+  /* Ocultar en la sección del sistema solar */
+  #solar-system-section .constellation-minimap-simple {
+    display: none;
+  }
+
+  .minimap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+  }
+
+  .minimap-header h4 {
+    color: #87CEEB;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .minimap-toggle {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+  }
+
+  .minimap-toggle:hover {
+    color: #87CEEB;
+    transform: scale(1.1);
+  }
+
+  .minimap-content {
+    padding: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .minimap-content.collapsed {
+    display: none;
+  }
+
+  .minimap-viewport {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    background: radial-gradient(circle at center, rgba(135, 206, 235, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+    margin-bottom: 10px;
+  }
+
+  .solar-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    z-index: 2;
+  }
+
+  .constellation-point {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+  }
+
+  .constellation-point:hover {
+    color: #87CEEB;
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+
+  .constellation-point.active {
+    color: #FFD700;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+
+  .minimap-stats {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .constellation-minimap-simple {
+      width: 160px;
+      bottom: 80px;
+      right: 10px;
+    }
+
+    .minimap-viewport {
+      height: 100px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('minimap-toggle-simple');
+    const content = document.getElementById('minimap-content-simple');
+    const constellationPoints = document.querySelectorAll('.constellation-point');
+    
+    let isCollapsed = false;
+    
+    // Toggle minimap
+    toggle?.addEventListener('click', () => {
+      isCollapsed = !isCollapsed;
+      content?.classList.toggle('collapsed', isCollapsed);
+      
+      if (toggle) {
+        toggle.textContent = isCollapsed ? '📍' : '⚡';
+      }
+    });
+    
+    // Navegación a constelaciones
+    constellationPoints.forEach(point => {
+      point.addEventListener('click', () => {
+        const constellationId = point.getAttribute('data-constellation');
+        
+        // Remover active de todos
+        constellationPoints.forEach(p => p.classList.remove('active'));
+        // Agregar active al clickeado
+        point.classList.add('active');
+        
+        // Disparar evento para navegar
+        window.dispatchEvent(new CustomEvent('minimap-constellation-select', {
+          detail: { constellationId }
+        }));
+      });
+    });
+    
+    // Escuchar cambios de constelación activa
+    window.addEventListener('constellation-active-change', (e: any) => {
+      const { constellationId } = e.detail;
+      
+      constellationPoints.forEach(point => {
+        point.classList.remove('active');
+        if (point.getAttribute('data-constellation') === constellationId) {
+          point.classList.add('active');
+        }
+      });
+    });
+  });
+</script>

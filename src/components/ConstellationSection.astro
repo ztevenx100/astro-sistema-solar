@@ -1,0 +1,425 @@
+---
+import InteractiveStarfield from './InteractiveStarfield.astro';
+import ConstellationSearch from './ConstellationSearch.astro';
+import ConstellationMinimapSimple from './ConstellationMinimapSimple.astro';
+import ConstellationFiltersSimple from './ConstellationFiltersSimple.astro';
+import { constellations, constellationCategories } from '../data/constellations';
+---
+
+<div class="constellation-main-container">
+  <!-- Header de la sección -->
+  <header class="constellation-header">
+    <div class="header-content">
+      <h1 class="section-title">
+        <span class="title-icon">✨</span>
+        Explorador de Constelaciones
+      </h1>
+      <p class="section-description">
+        Descubre las 30 constelaciones más fascinantes del cielo nocturno, organizadas por categorías
+      </p>
+    </div>
+  </header>
+
+  <!-- Componente principal del campo estelar -->
+  <div class="starfield-container">
+    <InteractiveStarfield />
+    
+    <!-- Componentes de UI superpuestos -->
+    <div class="ui-overlay">
+      <ConstellationSearch constellations={constellations} />
+      <ConstellationMinimapSimple constellations={constellations} />
+      <ConstellationFiltersSimple />
+    </div>
+  </div>
+
+  <!-- Estadísticas generales -->
+  <div class="constellation-stats">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🌟</div>
+        <div class="stat-value">{constellations.reduce((total, constellation) => total + constellation.stars.length, 0)}</div>
+        <div class="stat-label">Estrellas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✨</div>
+        <div class="stat-value">{constellations.length}</div>
+        <div class="stat-label">Constelaciones</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🪐</div>
+        <div class="stat-value">8</div>
+        <div class="stat-label">Planetas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🌌</div>
+        <div class="stat-value">4</div>
+        <div class="stat-label">Categorías</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .constellation-main-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Header */
+  .constellation-header {
+    position: relative;
+    z-index: 20;
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(26, 0, 51, 0.9) 0%, rgba(0, 0, 17, 0.7) 100%);
+    backdrop-filter: blur(10px);
+  }
+
+  .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .title-icon {
+    font-size: 2.5rem;
+    animation: sparkle 2s infinite;
+  }
+
+  .section-description {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Filtros de categorías */
+  .category-filters {
+    position: relative;
+    z-index: 20;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .filters-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .category-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(0, 10, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .category-filter:hover {
+    background: rgba(var(--category-color, 135, 206, 235), 0.1);
+    border-color: var(--category-color, #87CEEB);
+    transform: translateY(-2px);
+  }
+
+  .category-filter.active {
+    background: rgba(var(--category-color, 135, 206, 235), 0.2);
+    border-color: var(--category-color, #87CEEB);
+    box-shadow: 0 0 20px rgba(var(--category-color, 135, 206, 235), 0.3);
+  }
+
+  .filter-icon {
+    font-size: 1.2rem;
+  }
+
+  .filter-label {
+    font-family: 'Space Mono', monospace;
+    font-weight: 500;
+  }
+
+  .filter-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /* Tarjetas de información */
+  .category-info-cards {
+    position: relative;
+    z-index: 20;
+    padding: 1rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .category-card {
+    background: rgba(0, 10, 20, 0.8);
+    border: 1px solid rgba(var(--category-color), 0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: none; /* Inicialmente ocultas */
+  }
+
+  .category-card.active {
+    display: block;
+    animation: fadeInUp 0.5s ease;
+  }
+
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(var(--category-color), 0.2);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-icon {
+    font-size: 1.5rem;
+  }
+
+  .card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--category-color);
+  }
+
+  .card-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .card-stats {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--category-color);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Campo estelar */
+  .starfield-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+  }
+
+  .ui-overlay > * {
+    pointer-events: auto;
+  }
+
+  /* Estadísticas */
+  .constellation-stats {
+    position: relative;
+    z-index: 20;
+    padding: 3rem 2rem;
+    background: rgba(0, 0, 17, 0.9);
+    backdrop-filter: blur(15px);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .stat-card {
+    background: rgba(0, 10, 20, 0.8);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(135, 206, 235, 0.2);
+    border-color: #87CEEB;
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #87CEEB;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Animaciones */
+  @keyframes sparkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .constellation-header {
+      padding: 2rem 1rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .section-description {
+      font-size: 1rem;
+    }
+
+    .category-filters {
+      padding: 1rem;
+    }
+
+    .filters-container {
+      gap: 0.5rem;
+    }
+
+    .category-filter {
+      padding: 0.5rem 1rem;
+    }
+
+    .filter-label {
+      display: none;
+    }
+
+    .category-info-cards {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    const categoryCards = document.querySelectorAll('.category-card');
+    
+    // Manejar filtros de categorías
+    categoryFilters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        const category = filter.getAttribute('data-category');
+        
+        // Actualizar filtro activo
+        categoryFilters.forEach(f => f.classList.remove('active'));
+        filter.classList.add('active');
+        
+        // Mostrar/ocultar tarjetas
+        categoryCards.forEach(card => {
+          const cardCategory = card.getAttribute('data-category');
+          if (category === 'all') {
+            card.classList.add('active');
+          } else {
+            card.classList.toggle('active', cardCategory === category);
+          }
+        });
+        
+        // Disparar evento personalizado para el starfield
+        const event = new CustomEvent('constellation-category-change', {
+          detail: { category }
+        });
+        window.dispatchEvent(event);
+      });
+    });
+    
+    // Mostrar todas las categorías inicialmente
+    categoryCards.forEach(card => card.classList.add('active'));
+  });
+</script>
