@@ -607,10 +607,10 @@ const constellations: Constellation[] = [
 
   .constellation-line {
     stroke: #87CEEB;
-    stroke-width: 0.15;
-    opacity: 0.5;
+    stroke-width: 0.1; /* Reducido de 0.15 a 0.1 */
+    opacity: 0.4; /* Ligeramente más transparente */
     transition: opacity 0.3s ease;
-    filter: drop-shadow(0 0 2px #87CEEB);
+    filter: drop-shadow(0 0 1px #87CEEB); /* Sombra más sutil */
   }
 
   .constellation:hover .constellation-line,
@@ -623,14 +623,14 @@ const constellations: Constellation[] = [
   /* Estrellas de constelación - tamaño más pequeño */
   .constellation-star {
     position: absolute;
-    width: 7px;
-    height: 7px;
+    width: 4px; /* Reducido de 7px a 4px */
+    height: 4px; /* Reducido de 7px a 4px */
     background: radial-gradient(circle, #fff, #87CEEB);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
     z-index: 20; /* Por encima de las líneas de constelación */
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(135, 206, 235, 0.3);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(135, 206, 235, 0.3); /* Sombras más pequeñas */
     pointer-events: auto; /* Asegurar que sea interactiva */
     cursor: pointer;
   }
@@ -638,8 +638,8 @@ const constellations: Constellation[] = [
   .constellation:hover .constellation-star,
   .constellation.hover .constellation-star {
     animation: star-glow 1.5s ease-in-out infinite;
-    box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3);
-    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.3); /* Sombras más pequeñas */
+    transform: translate(-50%, -50%) scale(1.2); /* Escala ligeramente mayor para compensar el tamaño */
   }
 
   .star-glow {
@@ -719,38 +719,38 @@ const constellations: Constellation[] = [
   .constellation-distinctive-name {
     display: block;
     color: #87CEEB;
-    font-size: 0.9rem;
+    font-size: 0.7rem; /* Reducido de 0.9rem a 0.7rem */
     font-weight: bold;
     text-shadow: 
-      0 0 10px rgba(135, 206, 235, 1), 
-      0 0 20px rgba(135, 206, 235, 0.8);
-    margin-bottom: 2px;
-    letter-spacing: 0.8px;
+      0 0 8px rgba(135, 206, 235, 1), 
+      0 0 15px rgba(135, 206, 235, 0.8); /* Sombras más pequeñas */
+    margin-bottom: 1px; /* Reducido de 2px a 1px */
+    letter-spacing: 0.5px; /* Reducido de 0.8px a 0.5px */
     background: rgba(0, 0, 0, 0.6);
-    padding: 2px 8px;
-    border-radius: 8px;
+    padding: 1px 6px; /* Reducido de 2px 8px a 1px 6px */
+    border-radius: 6px; /* Reducido de 8px a 6px */
     backdrop-filter: blur(5px);
   }
 
   .constellation-traditional-name {
     display: block;
     color: #B0C4DE;
-    font-size: 0.65rem;
+    font-size: 0.55rem; /* Reducido de 0.65rem a 0.55rem */
     font-style: italic;
-    text-shadow: 0 0 8px rgba(176, 196, 222, 1);
-    margin-bottom: 3px;
+    text-shadow: 0 0 6px rgba(176, 196, 222, 1); /* Sombra más pequeña */
+    margin-bottom: 2px; /* Reducido de 3px a 2px */
     opacity: 0.95;
     background: rgba(0, 0, 0, 0.4);
-    padding: 1px 6px;
-    border-radius: 4px;
+    padding: 1px 4px; /* Reducido de 1px 6px a 1px 4px */
+    border-radius: 3px; /* Reducido de 4px a 3px */
   }
 
   .constellation-planet {
     display: block;
     color: #ffd700;
-    font-size: 0.6rem;
-    margin-top: 2px;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 1), 0 0 10px rgba(255, 215, 0, 0.4);
+    font-size: 0.5rem; /* Reducido de 0.6rem a 0.5rem */
+    margin-top: 1px; /* Reducido de 2px a 1px */
+    text-shadow: 0 0 4px rgba(255, 215, 0, 1), 0 0 8px rgba(255, 215, 0, 0.4); /* Sombras más pequeñas */
   }
 
   /* Estrellas fugaces */

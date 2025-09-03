@@ -14,36 +14,161 @@ const categories = [
 ];
 ---
 
-<div class="constellation-filters-simple">
-  <h3>Categorías</h3>
+<div class="constellation-filters-simple" id="constellation-filters">
+  <!-- Header con botón de minimizar -->
+  <div class="filter-header">
+    <h3>Categorías</h3>
+    <button class="minimize-btn" id="minimize-filters" title="Minimizar panel">
+      <span class="minimize-icon">−</span>
+    </button>
+  </div>
   
-  <div class="filter-grid">
-    {categories.map(category => (
-      <button 
-        class={`filter-btn ${activeFilter === category.key ? 'active' : ''}`}
-        data-filter={category.key}
-      >
-        <span class="filter-icon">{category.icon}</span>
-        <span class="filter-name">{category.name}</span>
-        <span class="filter-count">{category.count}</span>
-      </button>
-    ))}
+  <!-- Contenido minimizable -->
+  <div class="filter-content" id="filter-content">
+    <div class="filter-grid">
+      {categories.map(category => (
+        <button 
+          class={`filter-btn ${activeFilter === category.key ? 'active' : ''}`}
+          data-filter={category.key}
+        >
+          <span class="filter-icon">{category.icon}</span>
+          <span class="filter-name">{category.name}</span>
+          <span class="filter-count">{category.count}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+  
+  <!-- Versión minimizada -->
+  <div class="filter-minimized" id="filter-minimized" style="display: none;">
+    <div class="minimized-categories">
+      {categories.map(category => (
+        <button 
+          class={`mini-filter-btn ${activeFilter === category.key ? 'active' : ''}`}
+          data-filter={category.key}
+          title={category.name}
+        >
+          <span class="filter-icon">{category.icon}</span>
+          <span class="filter-count">{category.count}</span>
+        </button>
+      ))}
+    </div>
+    <button class="expand-btn" id="expand-filters" title="Expandir panel">
+      <span class="expand-icon">+</span>
+    </button>
   </div>
 </div>
 
 <style>
   .constellation-filters-simple {
     position: fixed;
-    top: 400px; /* Subir más arriba para evitar solapamiento */
+    top: 250px; /* Posición más alta */
     left: 20px;
-    background: rgba(0, 10, 20, 0.9);
+    background: rgba(0, 10, 20, 0.95);
     border: 1px solid rgba(135, 206, 235, 0.3);
     border-radius: 12px;
-    padding: 15px;
     backdrop-filter: blur(15px);
     z-index: 750;
-    max-width: 200px;
     transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Header del panel */
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+  }
+
+  .filter-header h3 {
+    color: #87CEEB;
+    font-size: 0.9rem;
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .minimize-btn, .expand-btn {
+    background: rgba(135, 206, 235, 0.1);
+    border: 1px solid rgba(135, 206, 235, 0.3);
+    border-radius: 6px;
+    color: #87CEEB;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .minimize-btn:hover, .expand-btn:hover {
+    background: rgba(135, 206, 235, 0.2);
+    border-color: rgba(135, 206, 235, 0.5);
+    transform: scale(1.1);
+  }
+
+  /* Contenido expandido */
+  .filter-content {
+    max-width: 200px;
+    padding: 5px;
+  }
+
+  /* Versión minimizada */
+  .filter-minimized {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 60px;
+  }
+
+  .minimized-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mini-filter-btn {
+    background: rgba(26, 34, 50, 0.8);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    border-radius: 6px;
+    color: white;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 12px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .mini-filter-btn:hover {
+    background: rgba(26, 34, 50, 1);
+    border-color: rgba(135, 206, 235, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .mini-filter-btn.active {
+    background: rgba(135, 206, 235, 0.2);
+    border-color: #87CEEB;
+    box-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+  }
+
+  .mini-filter-btn .filter-icon {
+    font-size: 16px;
+  }
+
+  .mini-filter-btn .filter-count {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
   }
 
   /* Ocultar en la sección del sistema solar */
@@ -143,15 +268,38 @@ const categories = [
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('.filter-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn, .mini-filter-btn');
+    const minimizeBtn = document.getElementById('minimize-filters');
+    const expandBtn = document.getElementById('expand-filters');
+    const filterContent = document.getElementById('filter-content');
+    const filterMinimized = document.getElementById('filter-minimized');
     
+    // Funcionalidad de minimizar/expandir
+    minimizeBtn?.addEventListener('click', () => {
+      if (filterContent && filterMinimized) {
+        filterContent.style.display = 'none';
+        filterMinimized.style.display = 'block';
+      }
+    });
+    
+    expandBtn?.addEventListener('click', () => {
+      if (filterContent && filterMinimized) {
+        filterContent.style.display = 'block';
+        filterMinimized.style.display = 'none';
+      }
+    });
+    
+    // Funcionalidad de filtros
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
         const filter = button.getAttribute('data-filter');
         
-        // Actualizar botón activo
+        // Actualizar botón activo en ambas versiones
         filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+        
+        // Activar botones correspondientes en ambas versiones
+        const correspondingButtons = document.querySelectorAll(`[data-filter="${filter}"]`);
+        correspondingButtons.forEach(btn => btn.classList.add('active'));
         
         // Disparar evento personalizado
         window.dispatchEvent(new CustomEvent('constellation-filter-change', {
