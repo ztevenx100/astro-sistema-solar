@@ -6,24 +6,24 @@ export interface Props {
 const { activeFilter = 'all' } = Astro.props;
 
 const categories = [
-  { key: 'all', name: 'Todas', icon: '🌌', count: 30 },
-  { key: 'zodiac', name: 'Zodíaco', icon: '♈', count: 12 },
+  { key: 'all', name: 'Todas', icon: '🌌', count: 17 },
+  { key: 'zodiac', name: 'Zodíaco', icon: '♈', count: 3 },
   { key: 'mythological', name: 'Mitológicas', icon: '⚔️', count: 8 },
-  { key: 'navigation', name: 'Navegación', icon: '🧭', count: 6 },
-  { key: 'modern', name: 'Modernas', icon: '🔭', count: 4 }
+  { key: 'navigation', name: 'Navegación', icon: '🧭', count: 4 },
+  { key: 'modern', name: 'Modernas', icon: '🔭', count: 1 }
 ];
 ---
 
 <div class="constellation-filters-simple" id="constellation-filters">
-  <!-- Header con botón de minimizar -->
+  <!-- Header con botón de ocultar -->
   <div class="filter-header">
     <h3>Categorías</h3>
-    <button class="minimize-btn" id="minimize-filters" title="Minimizar panel">
-      <span class="minimize-icon">−</span>
+    <button class="hide-btn" id="hide-filters" title="Ocultar panel">
+      <span class="hide-icon">✕</span>
     </button>
   </div>
   
-  <!-- Contenido minimizable -->
+  <!-- Contenido del panel -->
   <div class="filter-content" id="filter-content">
     <div class="filter-grid">
       {categories.map(category => (
@@ -38,39 +38,37 @@ const categories = [
       ))}
     </div>
   </div>
-  
-  <!-- Versión minimizada -->
-  <div class="filter-minimized" id="filter-minimized" style="display: none;">
-    <div class="minimized-categories">
-      {categories.map(category => (
-        <button 
-          class={`mini-filter-btn ${activeFilter === category.key ? 'active' : ''}`}
-          data-filter={category.key}
-          title={category.name}
-        >
-          <span class="filter-icon">{category.icon}</span>
-          <span class="filter-count">{category.count}</span>
-        </button>
-      ))}
-    </div>
-    <button class="expand-btn" id="expand-filters" title="Expandir panel">
-      <span class="expand-icon">+</span>
-    </button>
-  </div>
 </div>
+
+<!-- Botón flotante para mostrar el panel cuando está oculto -->
+<button class="show-filters-btn" id="show-filters" style="display: none;" title="Mostrar categorías">
+  <span class="show-icon">🏷️</span>
+</button>
 
 <style>
   .constellation-filters-simple {
     position: fixed;
-    top: 250px; /* Posición más alta */
+    top: 250px;
     left: 20px;
-    background: rgba(0, 10, 20, 0.95);
-    border: 1px solid rgba(135, 206, 235, 0.3);
-    border-radius: 12px;
-    backdrop-filter: blur(15px);
+    background: linear-gradient(145deg, rgba(8, 18, 35, 0.95), rgba(15, 25, 45, 0.95));
+    border: 1px solid rgba(135, 206, 235, 0.4);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
     z-index: 750;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 2px 10px rgba(135, 206, 235, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 16px;
+  }
+  
+  .constellation-filters-simple:hover {
+    border-color: rgba(135, 206, 235, 0.6);
+    box-shadow: 
+      0 16px 50px rgba(0, 0, 0, 0.5),
+      0 4px 15px rgba(135, 206, 235, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   /* Header del panel */
@@ -78,97 +76,113 @@ const categories = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+    position: relative;
+  }
+  
+  .filter-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 30%;
+    height: 1px;
+    background: linear-gradient(90deg, #87CEEB, transparent);
+    transition: width 0.3s ease;
+  }
+  
+  .constellation-filters-simple:hover .filter-header::after {
+    width: 100%;
   }
 
   .filter-header h3 {
     color: #87CEEB;
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin: 0;
     font-family: 'Space Mono', monospace;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+    letter-spacing: 0.5px;
   }
 
-  .minimize-btn, .expand-btn {
-    background: rgba(135, 206, 235, 0.1);
-    border: 1px solid rgba(135, 206, 235, 0.3);
-    border-radius: 6px;
-    color: #87CEEB;
-    width: 24px;
-    height: 24px;
+  .hide-btn {
+    background: linear-gradient(145deg, rgba(255, 99, 99, 0.1), rgba(255, 99, 99, 0.05));
+    border: 1px solid rgba(255, 99, 99, 0.4);
+    border-radius: 8px;
+    color: #ff6363;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-size: 14px;
     font-weight: bold;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hide-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(255, 99, 99, 0.2), rgba(255, 99, 99, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  .minimize-btn:hover, .expand-btn:hover {
-    background: rgba(135, 206, 235, 0.2);
-    border-color: rgba(135, 206, 235, 0.5);
-    transform: scale(1.1);
+  .hide-btn:hover {
+    background: linear-gradient(145deg, rgba(255, 99, 99, 0.2), rgba(255, 99, 99, 0.1));
+    border-color: rgba(255, 99, 99, 0.7);
+    transform: scale(1.1) translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 99, 99, 0.3);
+  }
+  
+  .hide-btn:hover::before {
+    opacity: 1;
   }
 
-  /* Contenido expandido */
+  /* Contenido del panel */
   .filter-content {
-    max-width: 200px;
-    padding: 5px;
+    max-width: 220px;
+    padding: 0;
   }
 
-  /* Versión minimizada */
-  .filter-minimized {
-    padding: 8px;
+  /* Botón flotante para mostrar el panel */
+  .show-filters-btn {
+    position: fixed;
+    top: 250px;
+    left: 20px;
+    background: linear-gradient(145deg, rgba(8, 18, 35, 0.95), rgba(15, 25, 45, 0.95));
+    border: 1px solid rgba(135, 206, 235, 0.4);
+    border-radius: 50%;
+    backdrop-filter: blur(20px);
+    z-index: 750;
+    width: 50px;
+    height: 50px;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-width: 60px;
-  }
-
-  .minimized-categories {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .mini-filter-btn {
-    background: rgba(26, 34, 50, 0.8);
-    border: 1px solid rgba(135, 206, 235, 0.2);
-    border-radius: 6px;
-    color: white;
-    padding: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 2px;
-    font-size: 12px;
-    width: 44px;
-    height: 44px;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 2px 10px rgba(135, 206, 235, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: #87CEEB;
+    font-size: 20px;
   }
-
-  .mini-filter-btn:hover {
-    background: rgba(26, 34, 50, 1);
-    border-color: rgba(135, 206, 235, 0.4);
-    transform: translateY(-2px);
-  }
-
-  .mini-filter-btn.active {
-    background: rgba(135, 206, 235, 0.2);
-    border-color: #87CEEB;
-    box-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
-  }
-
-  .mini-filter-btn .filter-icon {
-    font-size: 16px;
-  }
-
-  .mini-filter-btn .filter-count {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.7);
+  
+  .show-filters-btn:hover {
+    border-color: rgba(135, 206, 235, 0.6);
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 
+      0 16px 50px rgba(0, 0, 0, 0.5),
+      0 4px 15px rgba(135, 206, 235, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   /* Ocultar en la sección del sistema solar */
@@ -187,119 +201,277 @@ const categories = [
   .filter-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
 
   .filter-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 0.8);
+    gap: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.85rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .filter-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.1), rgba(135, 206, 235, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   .filter-btn:hover {
-    background: rgba(135, 206, 235, 0.1);
-    border-color: rgba(135, 206, 235, 0.3);
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.15), rgba(135, 206, 235, 0.08));
+    border-color: rgba(135, 206, 235, 0.4);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.15);
+  }
+  
+  .filter-btn:hover::before {
+    opacity: 1;
   }
 
   .filter-btn.active {
-    background: rgba(135, 206, 235, 0.2);
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.25), rgba(135, 206, 235, 0.15));
     border-color: #87CEEB;
     color: #87CEEB;
+    box-shadow: 
+      0 0 20px rgba(135, 206, 235, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
 
   .filter-icon {
-    font-size: 1rem;
-    min-width: 16px;
+    font-size: 1.1rem;
+    min-width: 20px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 8px currentColor;
   }
 
   .filter-name {
     flex: 1;
     text-align: left;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+    letter-spacing: 0.3px;
   }
 
   .filter-count {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: 600;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .filter-btn.active .filter-count {
-    background: rgba(135, 206, 235, 0.3);
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.4), rgba(135, 206, 235, 0.2));
+    border-color: rgba(135, 206, 235, 0.5);
+    color: white;
+    text-shadow: 0 0 8px rgba(135, 206, 235, 0.8);
   }
 
   /* Responsive */
   @media (max-width: 768px) {
     .constellation-filters-simple {
       position: fixed;
-      bottom: 260px; /* Más arriba para evitar solapamiento con minimap */
+      bottom: 280px;
       left: 10px;
       right: 10px;
       max-width: none;
       top: auto;
+      padding: 12px;
     }
 
     .filter-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: 8px;
     }
 
     .filter-btn {
-      padding: 6px 8px;
+      padding: 8px 10px;
       font-size: 0.8rem;
     }
 
     .filter-name {
       display: none;
     }
+    
+    .show-filters-btn {
+      bottom: 300px;
+      left: 20px;
+      top: auto;
+    }
+  }
+  
+  /* Animaciones adicionales */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(135, 206, 235, 0.5);
+    }
+  }
+  
+  .filter-btn.active {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  
+  @keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .constellation-filters-simple.show {
+    animation: slide-in 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  /* Efecto de partículas en hover */
+  .constellation-filters-simple::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(135, 206, 235, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 16px;
+  }
+  
+  .constellation-filters-simple:hover::after {
+    opacity: 1;
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('.filter-btn, .mini-filter-btn');
-    const minimizeBtn = document.getElementById('minimize-filters');
-    const expandBtn = document.getElementById('expand-filters');
-    const filterContent = document.getElementById('filter-content');
-    const filterMinimized = document.getElementById('filter-minimized');
+    const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLElement>;
+    const hideBtn = document.getElementById('hide-filters') as HTMLElement | null;
+    const showBtn = document.getElementById('show-filters') as HTMLElement | null;
+    const filterPanel = document.querySelector('.constellation-filters-simple') as HTMLElement | null;
     
-    // Funcionalidad de minimizar/expandir
-    minimizeBtn?.addEventListener('click', () => {
-      if (filterContent && filterMinimized) {
-        filterContent.style.display = 'none';
-        filterMinimized.style.display = 'block';
+    // Efecto de seguimiento del mouse para el panel
+    if (filterPanel) {
+      filterPanel.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = filterPanel.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        filterPanel.style.setProperty('--mouse-x', `${x}%`);
+        filterPanel.style.setProperty('--mouse-y', `${y}%`);
+      });
+    }
+    
+    // Funcionalidad de ocultar panel
+    hideBtn?.addEventListener('click', () => {
+      if (filterPanel && showBtn) {
+        filterPanel.style.transform = 'translateX(-100%)';
+        filterPanel.style.opacity = '0';
+        
+        setTimeout(() => {
+          filterPanel.style.display = 'none';
+          showBtn.style.display = 'flex';
+          showBtn.style.opacity = '0';
+          showBtn.style.transform = 'scale(0.8)';
+          
+          requestAnimationFrame(() => {
+            showBtn.style.opacity = '1';
+            showBtn.style.transform = 'scale(1)';
+          });
+        }, 300);
       }
     });
     
-    expandBtn?.addEventListener('click', () => {
-      if (filterContent && filterMinimized) {
-        filterContent.style.display = 'block';
-        filterMinimized.style.display = 'none';
+    // Funcionalidad de mostrar panel
+    showBtn?.addEventListener('click', () => {
+      if (filterPanel && showBtn) {
+        showBtn.style.opacity = '0';
+        showBtn.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+          showBtn.style.display = 'none';
+          filterPanel.style.display = 'block';
+          filterPanel.style.transform = 'translateX(-100%)';
+          filterPanel.style.opacity = '0';
+          filterPanel.classList.add('show');
+          
+          requestAnimationFrame(() => {
+            filterPanel.style.transform = 'translateX(0)';
+            filterPanel.style.opacity = '1';
+          });
+        }, 200);
       }
     });
     
-    // Funcionalidad de filtros
+    // Agregar transiciones de CSS
+    if (filterPanel) {
+      filterPanel.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease';
+    }
+    if (showBtn) {
+      showBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    }
+    
+    // Funcionalidad de filtros con efectos visuales
     filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
+      // Efecto de ripple al hacer click
+      button.addEventListener('click', (e: MouseEvent) => {
         const filter = button.getAttribute('data-filter');
         
-        // Actualizar botón activo en ambas versiones
-        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Crear efecto ripple
+        const ripple = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
         
-        // Activar botones correspondientes en ambas versiones
-        const correspondingButtons = document.querySelectorAll(`[data-filter="${filter}"]`);
-        correspondingButtons.forEach(btn => btn.classList.add('active'));
+        ripple.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}px;
+          top: ${y}px;
+          background: rgba(135, 206, 235, 0.3);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          pointer-events: none;
+        `;
+        
+        button.style.position = 'relative';
+        button.style.overflow = 'hidden';
+        button.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+        
+        // Actualizar botón activo
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
         
         // Disparar evento personalizado
         window.dispatchEvent(new CustomEvent('constellation-filter-change', {
@@ -307,5 +479,17 @@ const categories = [
         }));
       });
     });
+    
+    // Agregar estilos de animación ripple
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   });
 </script>
