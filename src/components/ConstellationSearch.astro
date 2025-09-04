@@ -53,21 +53,21 @@ const searchData: SearchItem[] = constellations.flatMap((constellation: Constell
 <style>
   .constellation-search {
     position: fixed;
-    top: 20px;
+    top: 15px; /* Más cerca del borde superior */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 800; /* Reducido para estar por debajo de navegación */
+    z-index: 800;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px; /* Más compacto */
     padding: 0 20px;
   }
   
   .search-container {
     position: relative;
     background: rgba(0, 10, 20, 0.95);
-    border-radius: 15px;
+    border-radius: 10px; /* Bordes menos redondeados */
     backdrop-filter: blur(15px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(135, 206, 235, 0.2);
     overflow: hidden;
   }
@@ -75,13 +75,13 @@ const searchData: SearchItem[] = constellations.flatMap((constellation: Constell
   .search-input-wrapper {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
+    padding: 10px 15px; /* Padding reducido */
   }
   
   .search-icon {
     color: #87CEEB;
-    margin-right: 10px;
-    font-size: 1.2rem;
+    margin-right: 8px;
+    font-size: 1rem; /* Icono más pequeño */
   }
   
   #search-input {
@@ -90,12 +90,13 @@ const searchData: SearchItem[] = constellations.flatMap((constellation: Constell
     border: none;
     outline: none;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Texto más pequeño */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
   #search-input::placeholder {
     color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem; /* Placeholder más pequeño */
   }
   
   .clear-search {

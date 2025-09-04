@@ -52,15 +52,16 @@ const { constellations } = Astro.props;
 <style>
   .constellation-minimap-simple {
     position: fixed;
-    bottom: 100px; /* Subir más arriba para dejar espacio para info-panel */
-    right: 20px; /* Volver al borde derecho */
-    width: 200px;
+    bottom: 120px; /* Más espacio desde abajo */
+    right: 20px;
+    width: 160px; /* Más compacto */
     background: rgba(0, 10, 20, 0.95);
     border: 1px solid rgba(135, 206, 235, 0.3);
-    border-radius: 12px;
+    border-radius: 10px;
     backdrop-filter: blur(15px);
     z-index: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
   /* Ocultar en la sección del sistema solar */
