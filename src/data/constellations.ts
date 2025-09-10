@@ -63,18 +63,18 @@ export const constellations: Constellation[] = [
     lines: [[0,1], [1,2], [2,3], [3,4]]
   },
 
-  // REGIÓN ESTE
+  // REGIÓN ESTE - Reorganizada con mejor espaciado
   {
     id: 'cygnus',
     name: 'Cisne',
     distinctiveName: 'El Cisne Volador',
     planet: 'Venus',
     stars: [
-      { name: 'Deneb', x: 85, y: 35, brightness: 0.65 },
-      { name: 'Sadr', x: 88, y: 38, brightness: 0.55 },
-      { name: 'Gienah', x: 91, y: 35, brightness: 0.48 },
-      { name: 'Delta Cyg', x: 86, y: 41, brightness: 0.42 },
-      { name: 'Albireo', x: 90, y: 44, brightness: 0.51 }
+      { name: 'Deneb', x: 90, y: 35, brightness: 0.65 },
+      { name: 'Sadr', x: 87, y: 39, brightness: 0.55 },
+      { name: 'Gienah', x: 84, y: 42, brightness: 0.48 },
+      { name: 'Delta Cyg', x: 92, y: 42, brightness: 0.42 },
+      { name: 'Albireo', x: 89, y: 46, brightness: 0.51 }
     ],
     lines: [[0,1], [1,2], [1,3], [1,4]]
   },
@@ -84,10 +84,10 @@ export const constellations: Constellation[] = [
     distinctiveName: 'La Lira Celeste',
     planet: 'Mercury',
     stars: [
-      { name: 'Vega', x: 75, y: 35, brightness: 0.7 },
-      { name: 'Sheliak', x: 77, y: 38, brightness: 0.45 },
-      { name: 'Sulafat', x: 73, y: 37, brightness: 0.52 },
-      { name: 'Delta Lyr', x: 75, y: 40, brightness: 0.38 }
+      { name: 'Vega', x: 75, y: 42, brightness: 0.7 },
+      { name: 'Sheliak', x: 77, y: 45, brightness: 0.45 },
+      { name: 'Sulafat', x: 73, y: 44, brightness: 0.52 },
+      { name: 'Delta Lyr', x: 75, y: 47, brightness: 0.38 }
     ],
     lines: [[0,1], [0,2], [1,3], [2,3]]
   },
@@ -97,10 +97,10 @@ export const constellations: Constellation[] = [
     distinctiveName: 'El Héroe Inmortal',
     planet: 'Jupiter',
     stars: [
-      { name: 'Kornephoros', x: 80, y: 50, brightness: 0.55 },
-      { name: 'Zeta Her', x: 83, y: 52, brightness: 0.48 },
-      { name: 'Pi Her', x: 78, y: 54, brightness: 0.42 },
-      { name: 'Eta Her', x: 81, y: 48, brightness: 0.45 }
+      { name: 'Kornephoros', x: 85, y: 55, brightness: 0.55 },
+      { name: 'Zeta Her', x: 88, y: 57, brightness: 0.48 },
+      { name: 'Pi Her', x: 83, y: 59, brightness: 0.42 },
+      { name: 'Eta Her', x: 86, y: 53, brightness: 0.45 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,0]]
   },
@@ -110,10 +110,10 @@ export const constellations: Constellation[] = [
     distinctiveName: 'La Corona del Norte',
     planet: 'Mars',
     stars: [
-      { name: 'Alphecca', x: 65, y: 35, brightness: 0.6 },
-      { name: 'Nusakan', x: 67, y: 37, brightness: 0.45 },
-      { name: 'Gamma CrB', x: 63, y: 38, brightness: 0.42 },
-      { name: 'Delta CrB', x: 61, y: 36, brightness: 0.38 }
+      { name: 'Alphecca', x: 60, y: 45, brightness: 0.6 },
+      { name: 'Nusakan', x: 62, y: 47, brightness: 0.45 },
+      { name: 'Gamma CrB', x: 58, y: 48, brightness: 0.42 },
+      { name: 'Delta CrB', x: 56, y: 46, brightness: 0.38 }
     ],
     lines: [[0,1], [1,2], [2,3], [3,0]]
   },
@@ -154,8 +154,8 @@ export const constellations: Constellation[] = [
     distinctiveName: 'El Perro Pequeño',
     planet: 'Procyon',
     stars: [
-      { name: 'Procyon', x: 35, y: 80, brightness: 0.65 },
-      { name: 'Gomeisa', x: 37, y: 78, brightness: 0.4 }
+      { name: 'Procyon', x: 35, y: 75, brightness: 0.65 },
+      { name: 'Gomeisa', x: 37, y: 73, brightness: 0.4 }
     ],
     lines: [[0,1]]
   },
@@ -165,10 +165,10 @@ export const constellations: Constellation[] = [
     distinctiveName: 'Los Hermanos Estelares',
     planet: 'Pollux',
     stars: [
-      { name: 'Castor', x: 55, y: 75, brightness: 0.6 },
-      { name: 'Pollux', x: 58, y: 77, brightness: 0.65 },
-      { name: 'Alhena', x: 60, y: 85, brightness: 0.5 },
-      { name: 'Wasat', x: 56, y: 80, brightness: 0.45 }
+      { name: 'Castor', x: 65, y: 75, brightness: 0.6 },
+      { name: 'Pollux', x: 68, y: 77, brightness: 0.65 },
+      { name: 'Alhena', x: 70, y: 82, brightness: 0.5 },
+      { name: 'Wasat', x: 66, y: 80, brightness: 0.45 }
     ],
     lines: [[0,1], [1,3], [3,2], [0,3]]
   },
@@ -221,10 +221,10 @@ export const constellations: Constellation[] = [
     distinctiveName: 'El Ave Celestial',
     planet: 'Altair',
     stars: [
-      { name: 'Altair', x: 50, y: 45, brightness: 0.7 },
-      { name: 'Tarazed', x: 48, y: 42, brightness: 0.5 },
-      { name: 'Alshain', x: 52, y: 42, brightness: 0.48 },
-      { name: 'Bezek', x: 51, y: 48, brightness: 0.45 }
+      { name: 'Altair', x: 45, y: 55, brightness: 0.7 },
+      { name: 'Tarazed', x: 43, y: 52, brightness: 0.5 },
+      { name: 'Alshain', x: 47, y: 52, brightness: 0.48 },
+      { name: 'Bezek', x: 46, y: 58, brightness: 0.45 }
     ],
     lines: [[1,0], [0,2], [0,3]]
   }

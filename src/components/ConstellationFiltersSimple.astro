@@ -12,6 +12,294 @@ const categories = [
   { key: 'navigation', name: 'Navegación', icon: '🧭', count: 4 },
   { key: 'modern', name: 'Modernas', icon: '🔭', count: 1 }
 ];
+
+export const constellations = [
+  // REGIÓN NORTE - Fila superior (y: 15-30)
+  {
+    id: 'ursa-major',
+    name: 'El Gran Carro',
+    latinName: 'Osa Mayor',
+    category: 'navigation',
+    description: 'La constelación más reconocible del hemisferio norte',
+    brightestStar: 'Dublhe',
+    stars: [
+      { name: 'Merak', x: 15, y: 20, brightness: 0.8 },
+      { name: 'Dublhe', x: 20, y: 22, brightness: 1.0 },
+      { name: 'Phecda', x: 25, y: 21, brightness: 0.7 },
+      { name: 'Megrez', x: 30, y: 22, brightness: 0.6 },
+      { name: 'Alioth', x: 35, y: 20, brightness: 0.9 },
+      { name: 'Mizar', x: 40, y: 19, brightness: 0.8 },
+      { name: 'Alkaid', x: 45, y: 17, brightness: 0.9 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6]]
+  },
+  
+  {
+    id: 'ursa-minor',
+    name: 'La Estrella Polar',
+    latinName: 'Osa Menor',
+    category: 'navigation',
+    description: 'Contiene la estrella polar, guía de navegantes',
+    brightestStar: 'Polaris',
+    stars: [
+      { name: 'Polaris', x: 75, y: 18, brightness: 1.0 },
+      { name: 'Yildun', x: 70, y: 22, brightness: 0.6 },
+      { name: 'Epsilon', x: 65, y: 25, brightness: 0.5 },
+      { name: 'Zeta', x: 62, y: 28, brightness: 0.5 },
+      { name: 'Eta', x: 65, y: 30, brightness: 0.6 },
+      { name: 'Gamma', x: 70, y: 28, brightness: 0.7 },
+      { name: 'Beta', x: 73, y: 25, brightness: 0.8 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6], [6,0]]
+  },
+
+  // REGIÓN NORESTE (y: 25-40)
+  {
+    id: 'draco',
+    name: 'El Dragón Guardián',
+    latinName: 'Dragón',
+    category: 'mythological',
+    description: 'El dragón que custodia las estrellas del norte',
+    brightestStar: 'Gamma Draconis',
+    stars: [
+      { name: 'Thuban', x: 55, y: 30, brightness: 0.7 },
+      { name: 'Edasich', x: 50, y: 35, brightness: 0.6 },
+      { name: 'Aldhibah', x: 48, y: 40, brightness: 0.6 },
+      { name: 'Altais', x: 52, y: 42, brightness: 0.7 },
+      { name: 'Rastaban', x: 58, y: 38, brightness: 0.8 },
+      { name: 'Eltanin', x: 62, y: 35, brightness: 0.9 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5]]
+  },
+
+  {
+    id: 'cassiopeia',
+    name: 'La Reina Celestial',
+    latinName: 'Casiopea',
+    category: 'mythological',
+    description: 'La reina vanidosa convertida en constelación',
+    brightestStar: 'Shedar',
+    stars: [
+      { name: 'Shedar', x: 85, y: 25, brightness: 0.9 },
+      { name: 'Caph', x: 88, y: 30, brightness: 0.8 },
+      { name: 'Gamma Cas', x: 90, y: 35, brightness: 0.7 },
+      { name: 'Ruchbah', x: 88, y: 40, brightness: 0.6 },
+      { name: 'Segin', x: 85, y: 42, brightness: 0.5 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4]]
+  },
+
+  // REGIÓN CENTRO-NORTE (y: 35-50)
+  {
+    id: 'lyra',
+    name: 'La Lira Celeste',
+    latinName: 'Lira',
+    category: 'mythological',
+    description: 'El instrumento musical de Orfeo en el cielo',
+    brightestStar: 'Vega',
+    stars: [
+      { name: 'Vega', x: 70, y: 40, brightness: 1.0 },
+      { name: 'Epsilon', x: 68, y: 45, brightness: 0.6 },
+      { name: 'Zeta', x: 72, y: 47, brightness: 0.5 },
+      { name: 'Delta', x: 75, y: 45, brightness: 0.6 },
+      { name: 'Gamma', x: 73, y: 42, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
+  },
+
+  {
+    id: 'hercules',
+    name: 'El Héroe Inmortal',
+    latinName: 'Hércules',
+    category: 'mythological',
+    description: 'El héroe de los doce trabajos',
+    brightestStar: 'Kornephoros',
+    stars: [
+      { name: 'Kornephoros', x: 40, y: 45, brightness: 0.8 },
+      { name: 'Zeta Her', x: 35, y: 40, brightness: 0.7 },
+      { name: 'Pi Her', x: 32, y: 45, brightness: 0.6 },
+      { name: 'Eta Her', x: 38, y: 50, brightness: 0.7 },
+      { name: 'Delta Her', x: 45, y: 48, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [3,4], [4,0]]
+  },
+
+  // REGIÓN CENTRO (y: 45-60)
+  {
+    id: 'corona-borealis',
+    name: 'La Corona del Norte',
+    latinName: 'Corona Boreal',
+    category: 'modern',
+    description: 'La corona de Ariadna brillando en el cielo',
+    brightestStar: 'Alphecca',
+    stars: [
+      { name: 'Alphecca', x: 20, y: 50, brightness: 0.9 },
+      { name: 'Nusakan', x: 18, y: 55, brightness: 0.6 },
+      { name: 'Theta CrB', x: 22, y: 58, brightness: 0.5 },
+      { name: 'Beta CrB', x: 25, y: 55, brightness: 0.6 },
+      { name: 'Gamma CrB', x: 23, y: 52, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
+  },
+
+  {
+    id: 'aquila',
+    name: 'El Ave Celestial',
+    latinName: 'Águila',
+    category: 'mythological',
+    description: 'El águila de Zeus surcando los cielos',
+    brightestStar: 'Altair',
+    stars: [
+      { name: 'Altair', x: 50, y: 55, brightness: 1.0 },
+      { name: 'Alshain', x: 48, y: 50, brightness: 0.7 },
+      { name: 'Tarazed', x: 52, y: 48, brightness: 0.8 },
+      { name: 'Zeta Aql', x: 45, y: 55, brightness: 0.6 },
+      { name: 'Epsilon Aql', x: 55, y: 58, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [0,4]]
+  },
+
+  // REGIÓN CENTRO-SUR (y: 55-70)
+  {
+    id: 'leo',
+    name: 'El León Dorado',
+    latinName: 'Leo',
+    category: 'zodiac',
+    description: 'El león de Nemea, vencido por Hércules',
+    brightestStar: 'Regulus',
+    stars: [
+      { name: 'Regulus', x: 15, y: 60, brightness: 1.0 },
+      { name: 'Algieba', x: 20, y: 65, brightness: 0.8 },
+      { name: 'Adhafera', x: 25, y: 62, brightness: 0.7 },
+      { name: 'Zosma', x: 30, y: 68, brightness: 0.6 },
+      { name: 'Chertan', x: 35, y: 65, brightness: 0.6 },
+      { name: 'Denebola', x: 40, y: 62, brightness: 0.8 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5]]
+  },
+
+  {
+    id: 'virgo',
+    name: 'La Doncella Cósmica',
+    latinName: 'Virgo',
+    category: 'zodiac',
+    description: 'La diosa de la justicia y la pureza',
+    brightestStar: 'Spica',
+    stars: [
+      { name: 'Spica', x: 75, y: 65, brightness: 1.0 },
+      { name: 'Gamma Vir', x: 70, y: 60, brightness: 0.7 },
+      { name: 'Epsilon Vir', x: 68, y: 65, brightness: 0.6 },
+      { name: 'Delta Vir', x: 72, y: 70, brightness: 0.6 },
+      { name: 'Beta Vir', x: 78, y: 68, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [3,4]]
+  },
+
+  // REGIÓN SUR (y: 65-80)
+  {
+    id: 'orion',
+    name: 'El Cazador Guerrero',
+    latinName: 'Orión',
+    category: 'mythological',
+    description: 'El gran cazador de la mitología griega',
+    brightestStar: 'Rigel',
+    stars: [
+      { name: 'Betelgeuse', x: 25, y: 70, brightness: 1.0 },
+      { name: 'Bellatrix', x: 20, y: 72, brightness: 0.8 },
+      { name: 'Alnitak', x: 28, y: 78, brightness: 0.7 },
+      { name: 'Alnilam', x: 30, y: 80, brightness: 0.8 },
+      { name: 'Mintaka', x: 32, y: 82, brightness: 0.7 },
+      { name: 'Rigel', x: 35, y: 85, brightness: 1.0 },
+      { name: 'Saiph', x: 22, y: 85, brightness: 0.8 }
+    ],
+    lines: [[0,1], [2,3], [3,4], [0,2], [1,6], [5,6], [5,4]]
+  },
+
+  {
+    id: 'canis-major',
+    name: 'El Perro Gigante',
+    latinName: 'Can Mayor',
+    category: 'mythological',
+    description: 'El perro de caza de Orión',
+    brightestStar: 'Sirius',
+    stars: [
+      { name: 'Sirius', x: 45, y: 75, brightness: 1.0 },
+      { name: 'Adhara', x: 50, y: 80, brightness: 0.8 },
+      { name: 'Wezen', x: 48, y: 85, brightness: 0.7 },
+      { name: 'Mirzam', x: 42, y: 78, brightness: 0.6 },
+      { name: 'Aludra', x: 52, y: 88, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [1,4]]
+  },
+
+  {
+    id: 'canis-minor',
+    name: 'El Perro Pequeño',
+    latinName: 'Can Menor',
+    category: 'mythological',
+    description: 'El compañero menor de Orión',
+    brightestStar: 'Procyon',
+    stars: [
+      { name: 'Procyon', x: 65, y: 78, brightness: 1.0 },
+      { name: 'Gomeisa', x: 68, y: 82, brightness: 0.6 },
+      { name: 'Epsilon CMi', x: 62, y: 80, brightness: 0.5 }
+    ],
+    lines: [[0,1], [0,2]]
+  },
+
+  {
+    id: 'gemini',
+    name: 'Los Hermanos Estelares',
+    latinName: 'Géminis',
+    category: 'zodiac',
+    description: 'Los gemelos Cástor y Pólux',
+    brightestStar: 'Pollux',
+    stars: [
+      { name: 'Castor', x: 80, y: 75, brightness: 0.9 },
+      { name: 'Pollux', x: 85, y: 78, brightness: 1.0 },
+      { name: 'Alhena', x: 88, y: 85, brightness: 0.7 },
+      { name: 'Wasat', x: 82, y: 82, brightness: 0.6 },
+      { name: 'Mebsuta', x: 78, y: 80, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [1,3], [0,4]]
+  },
+
+  // REGIÓN OESTE (y: 60-75)
+  {
+    id: 'bootes',
+    name: 'El Boyero Celestial',
+    latinName: 'Boyero',
+    category: 'navigation',
+    description: 'El pastor que guía a las osas en el cielo',
+    brightestStar: 'Arcturus',
+    stars: [
+      { name: 'Arcturus', x: 10, y: 70, brightness: 1.0 },
+      { name: 'Nekkar', x: 8, y: 65, brightness: 0.7 },
+      { name: 'Seginus', x: 12, y: 68, brightness: 0.6 },
+      { name: 'Izar', x: 15, y: 72, brightness: 0.8 },
+      { name: 'Muphrid', x: 13, y: 75, brightness: 0.6 }
+    ],
+    lines: [[0,1], [0,2], [0,3], [0,4]]
+  },
+
+  // REGIÓN SURESTE (y: 75-90)
+  {
+    id: 'cygnus',
+    name: 'El Cisne Volador',
+    latinName: 'Cisne',
+    category: 'mythological',
+    description: 'El cisne que vuela a través de la Vía Láctea',
+    brightestStar: 'Deneb',
+    stars: [
+      { name: 'Deneb', x: 90, y: 88, brightness: 1.0 },
+      { name: 'Sadr', x: 85, y: 85, brightness: 0.8 },
+      { name: 'Gienah', x: 80, y: 88, brightness: 0.7 },
+      { name: 'Delta Cyg', x: 88, y: 82, brightness: 0.6 },
+      { name: 'Albireo', x: 82, y: 90, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [1,3], [1,4]]
+  }
+];
 ---
 
 <div class="constellation-filters-simple" id="constellation-filters">
