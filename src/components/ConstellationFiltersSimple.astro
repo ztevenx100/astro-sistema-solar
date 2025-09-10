@@ -6,44 +6,471 @@ export interface Props {
 const { activeFilter = 'all' } = Astro.props;
 
 const categories = [
-  { key: 'all', name: 'Todas', icon: '🌌', count: 30 },
-  { key: 'zodiac', name: 'Zodíaco', icon: '♈', count: 12 },
+  { key: 'all', name: 'Todas', icon: '🌌', count: 17 },
+  { key: 'zodiac', name: 'Zodíaco', icon: '♈', count: 3 },
   { key: 'mythological', name: 'Mitológicas', icon: '⚔️', count: 8 },
-  { key: 'navigation', name: 'Navegación', icon: '🧭', count: 6 },
-  { key: 'modern', name: 'Modernas', icon: '🔭', count: 4 }
+  { key: 'navigation', name: 'Navegación', icon: '🧭', count: 4 },
+  { key: 'modern', name: 'Modernas', icon: '🔭', count: 1 }
+];
+
+export const constellations = [
+  // REGIÓN NORTE - Fila superior (y: 15-30)
+  {
+    id: 'ursa-major',
+    name: 'El Gran Carro',
+    latinName: 'Osa Mayor',
+    category: 'navigation',
+    description: 'La constelación más reconocible del hemisferio norte',
+    brightestStar: 'Dublhe',
+    stars: [
+      { name: 'Merak', x: 15, y: 20, brightness: 0.8 },
+      { name: 'Dublhe', x: 20, y: 22, brightness: 1.0 },
+      { name: 'Phecda', x: 25, y: 21, brightness: 0.7 },
+      { name: 'Megrez', x: 30, y: 22, brightness: 0.6 },
+      { name: 'Alioth', x: 35, y: 20, brightness: 0.9 },
+      { name: 'Mizar', x: 40, y: 19, brightness: 0.8 },
+      { name: 'Alkaid', x: 45, y: 17, brightness: 0.9 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6]]
+  },
+  
+  {
+    id: 'ursa-minor',
+    name: 'La Estrella Polar',
+    latinName: 'Osa Menor',
+    category: 'navigation',
+    description: 'Contiene la estrella polar, guía de navegantes',
+    brightestStar: 'Polaris',
+    stars: [
+      { name: 'Polaris', x: 75, y: 18, brightness: 1.0 },
+      { name: 'Yildun', x: 70, y: 22, brightness: 0.6 },
+      { name: 'Epsilon', x: 65, y: 25, brightness: 0.5 },
+      { name: 'Zeta', x: 62, y: 28, brightness: 0.5 },
+      { name: 'Eta', x: 65, y: 30, brightness: 0.6 },
+      { name: 'Gamma', x: 70, y: 28, brightness: 0.7 },
+      { name: 'Beta', x: 73, y: 25, brightness: 0.8 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6], [6,0]]
+  },
+
+  // REGIÓN NORESTE (y: 25-40)
+  {
+    id: 'draco',
+    name: 'El Dragón Guardián',
+    latinName: 'Dragón',
+    category: 'mythological',
+    description: 'El dragón que custodia las estrellas del norte',
+    brightestStar: 'Gamma Draconis',
+    stars: [
+      { name: 'Thuban', x: 55, y: 30, brightness: 0.7 },
+      { name: 'Edasich', x: 50, y: 35, brightness: 0.6 },
+      { name: 'Aldhibah', x: 48, y: 40, brightness: 0.6 },
+      { name: 'Altais', x: 52, y: 42, brightness: 0.7 },
+      { name: 'Rastaban', x: 58, y: 38, brightness: 0.8 },
+      { name: 'Eltanin', x: 62, y: 35, brightness: 0.9 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5]]
+  },
+
+  {
+    id: 'cassiopeia',
+    name: 'La Reina Celestial',
+    latinName: 'Casiopea',
+    category: 'mythological',
+    description: 'La reina vanidosa convertida en constelación',
+    brightestStar: 'Shedar',
+    stars: [
+      { name: 'Shedar', x: 85, y: 25, brightness: 0.9 },
+      { name: 'Caph', x: 88, y: 30, brightness: 0.8 },
+      { name: 'Gamma Cas', x: 90, y: 35, brightness: 0.7 },
+      { name: 'Ruchbah', x: 88, y: 40, brightness: 0.6 },
+      { name: 'Segin', x: 85, y: 42, brightness: 0.5 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4]]
+  },
+
+  // REGIÓN CENTRO-NORTE (y: 35-50)
+  {
+    id: 'lyra',
+    name: 'La Lira Celeste',
+    latinName: 'Lira',
+    category: 'mythological',
+    description: 'El instrumento musical de Orfeo en el cielo',
+    brightestStar: 'Vega',
+    stars: [
+      { name: 'Vega', x: 70, y: 40, brightness: 1.0 },
+      { name: 'Epsilon', x: 68, y: 45, brightness: 0.6 },
+      { name: 'Zeta', x: 72, y: 47, brightness: 0.5 },
+      { name: 'Delta', x: 75, y: 45, brightness: 0.6 },
+      { name: 'Gamma', x: 73, y: 42, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
+  },
+
+  {
+    id: 'hercules',
+    name: 'El Héroe Inmortal',
+    latinName: 'Hércules',
+    category: 'mythological',
+    description: 'El héroe de los doce trabajos',
+    brightestStar: 'Kornephoros',
+    stars: [
+      { name: 'Kornephoros', x: 40, y: 45, brightness: 0.8 },
+      { name: 'Zeta Her', x: 35, y: 40, brightness: 0.7 },
+      { name: 'Pi Her', x: 32, y: 45, brightness: 0.6 },
+      { name: 'Eta Her', x: 38, y: 50, brightness: 0.7 },
+      { name: 'Delta Her', x: 45, y: 48, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [3,4], [4,0]]
+  },
+
+  // REGIÓN CENTRO (y: 45-60)
+  {
+    id: 'corona-borealis',
+    name: 'La Corona del Norte',
+    latinName: 'Corona Boreal',
+    category: 'modern',
+    description: 'La corona de Ariadna brillando en el cielo',
+    brightestStar: 'Alphecca',
+    stars: [
+      { name: 'Alphecca', x: 20, y: 50, brightness: 0.9 },
+      { name: 'Nusakan', x: 18, y: 55, brightness: 0.6 },
+      { name: 'Theta CrB', x: 22, y: 58, brightness: 0.5 },
+      { name: 'Beta CrB', x: 25, y: 55, brightness: 0.6 },
+      { name: 'Gamma CrB', x: 23, y: 52, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,0]]
+  },
+
+  {
+    id: 'aquila',
+    name: 'El Ave Celestial',
+    latinName: 'Águila',
+    category: 'mythological',
+    description: 'El águila de Zeus surcando los cielos',
+    brightestStar: 'Altair',
+    stars: [
+      { name: 'Altair', x: 50, y: 55, brightness: 1.0 },
+      { name: 'Alshain', x: 48, y: 50, brightness: 0.7 },
+      { name: 'Tarazed', x: 52, y: 48, brightness: 0.8 },
+      { name: 'Zeta Aql', x: 45, y: 55, brightness: 0.6 },
+      { name: 'Epsilon Aql', x: 55, y: 58, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [0,4]]
+  },
+
+  // REGIÓN CENTRO-SUR (y: 55-70)
+  {
+    id: 'leo',
+    name: 'El León Dorado',
+    latinName: 'Leo',
+    category: 'zodiac',
+    description: 'El león de Nemea, vencido por Hércules',
+    brightestStar: 'Regulus',
+    stars: [
+      { name: 'Regulus', x: 15, y: 60, brightness: 1.0 },
+      { name: 'Algieba', x: 20, y: 65, brightness: 0.8 },
+      { name: 'Adhafera', x: 25, y: 62, brightness: 0.7 },
+      { name: 'Zosma', x: 30, y: 68, brightness: 0.6 },
+      { name: 'Chertan', x: 35, y: 65, brightness: 0.6 },
+      { name: 'Denebola', x: 40, y: 62, brightness: 0.8 }
+    ],
+    lines: [[0,1], [1,2], [2,3], [3,4], [4,5]]
+  },
+
+  {
+    id: 'virgo',
+    name: 'La Doncella Cósmica',
+    latinName: 'Virgo',
+    category: 'zodiac',
+    description: 'La diosa de la justicia y la pureza',
+    brightestStar: 'Spica',
+    stars: [
+      { name: 'Spica', x: 75, y: 65, brightness: 1.0 },
+      { name: 'Gamma Vir', x: 70, y: 60, brightness: 0.7 },
+      { name: 'Epsilon Vir', x: 68, y: 65, brightness: 0.6 },
+      { name: 'Delta Vir', x: 72, y: 70, brightness: 0.6 },
+      { name: 'Beta Vir', x: 78, y: 68, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [3,4]]
+  },
+
+  // REGIÓN SUR (y: 65-80)
+  {
+    id: 'orion',
+    name: 'El Cazador Guerrero',
+    latinName: 'Orión',
+    category: 'mythological',
+    description: 'El gran cazador de la mitología griega',
+    brightestStar: 'Rigel',
+    stars: [
+      { name: 'Betelgeuse', x: 25, y: 70, brightness: 1.0 },
+      { name: 'Bellatrix', x: 20, y: 72, brightness: 0.8 },
+      { name: 'Alnitak', x: 28, y: 78, brightness: 0.7 },
+      { name: 'Alnilam', x: 30, y: 80, brightness: 0.8 },
+      { name: 'Mintaka', x: 32, y: 82, brightness: 0.7 },
+      { name: 'Rigel', x: 35, y: 85, brightness: 1.0 },
+      { name: 'Saiph', x: 22, y: 85, brightness: 0.8 }
+    ],
+    lines: [[0,1], [2,3], [3,4], [0,2], [1,6], [5,6], [5,4]]
+  },
+
+  {
+    id: 'canis-major',
+    name: 'El Perro Gigante',
+    latinName: 'Can Mayor',
+    category: 'mythological',
+    description: 'El perro de caza de Orión',
+    brightestStar: 'Sirius',
+    stars: [
+      { name: 'Sirius', x: 45, y: 75, brightness: 1.0 },
+      { name: 'Adhara', x: 50, y: 80, brightness: 0.8 },
+      { name: 'Wezen', x: 48, y: 85, brightness: 0.7 },
+      { name: 'Mirzam', x: 42, y: 78, brightness: 0.6 },
+      { name: 'Aludra', x: 52, y: 88, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [0,3], [1,4]]
+  },
+
+  {
+    id: 'canis-minor',
+    name: 'El Perro Pequeño',
+    latinName: 'Can Menor',
+    category: 'mythological',
+    description: 'El compañero menor de Orión',
+    brightestStar: 'Procyon',
+    stars: [
+      { name: 'Procyon', x: 65, y: 78, brightness: 1.0 },
+      { name: 'Gomeisa', x: 68, y: 82, brightness: 0.6 },
+      { name: 'Epsilon CMi', x: 62, y: 80, brightness: 0.5 }
+    ],
+    lines: [[0,1], [0,2]]
+  },
+
+  {
+    id: 'gemini',
+    name: 'Los Hermanos Estelares',
+    latinName: 'Géminis',
+    category: 'zodiac',
+    description: 'Los gemelos Cástor y Pólux',
+    brightestStar: 'Pollux',
+    stars: [
+      { name: 'Castor', x: 80, y: 75, brightness: 0.9 },
+      { name: 'Pollux', x: 85, y: 78, brightness: 1.0 },
+      { name: 'Alhena', x: 88, y: 85, brightness: 0.7 },
+      { name: 'Wasat', x: 82, y: 82, brightness: 0.6 },
+      { name: 'Mebsuta', x: 78, y: 80, brightness: 0.6 }
+    ],
+    lines: [[0,1], [1,2], [1,3], [0,4]]
+  },
+
+  // REGIÓN OESTE (y: 60-75)
+  {
+    id: 'bootes',
+    name: 'El Boyero Celestial',
+    latinName: 'Boyero',
+    category: 'navigation',
+    description: 'El pastor que guía a las osas en el cielo',
+    brightestStar: 'Arcturus',
+    stars: [
+      { name: 'Arcturus', x: 10, y: 70, brightness: 1.0 },
+      { name: 'Nekkar', x: 8, y: 65, brightness: 0.7 },
+      { name: 'Seginus', x: 12, y: 68, brightness: 0.6 },
+      { name: 'Izar', x: 15, y: 72, brightness: 0.8 },
+      { name: 'Muphrid', x: 13, y: 75, brightness: 0.6 }
+    ],
+    lines: [[0,1], [0,2], [0,3], [0,4]]
+  },
+
+  // REGIÓN SURESTE (y: 75-90)
+  {
+    id: 'cygnus',
+    name: 'El Cisne Volador',
+    latinName: 'Cisne',
+    category: 'mythological',
+    description: 'El cisne que vuela a través de la Vía Láctea',
+    brightestStar: 'Deneb',
+    stars: [
+      { name: 'Deneb', x: 90, y: 88, brightness: 1.0 },
+      { name: 'Sadr', x: 85, y: 85, brightness: 0.8 },
+      { name: 'Gienah', x: 80, y: 88, brightness: 0.7 },
+      { name: 'Delta Cyg', x: 88, y: 82, brightness: 0.6 },
+      { name: 'Albireo', x: 82, y: 90, brightness: 0.7 }
+    ],
+    lines: [[0,1], [1,2], [1,3], [1,4]]
+  }
 ];
 ---
 
-<div class="constellation-filters-simple">
-  <h3>Categorías</h3>
+<div class="constellation-filters-simple" id="constellation-filters">
+  <!-- Header con botón de ocultar -->
+  <div class="filter-header">
+    <h3>Categorías</h3>
+    <button class="hide-btn" id="hide-filters" title="Ocultar panel">
+      <span class="hide-icon">✕</span>
+    </button>
+  </div>
   
-  <div class="filter-grid">
-    {categories.map(category => (
-      <button 
-        class={`filter-btn ${activeFilter === category.key ? 'active' : ''}`}
-        data-filter={category.key}
-      >
-        <span class="filter-icon">{category.icon}</span>
-        <span class="filter-name">{category.name}</span>
-        <span class="filter-count">{category.count}</span>
-      </button>
-    ))}
+  <!-- Contenido del panel -->
+  <div class="filter-content" id="filter-content">
+    <div class="filter-grid">
+      {categories.map(category => (
+        <button 
+          class={`filter-btn ${activeFilter === category.key ? 'active' : ''}`}
+          data-filter={category.key}
+        >
+          <span class="filter-icon">{category.icon}</span>
+          <span class="filter-name">{category.name}</span>
+          <span class="filter-count">{category.count}</span>
+        </button>
+      ))}
+    </div>
   </div>
 </div>
+
+<!-- Botón flotante para mostrar el panel cuando está oculto -->
+<button class="show-filters-btn" id="show-filters" style="display: none;" title="Mostrar categorías">
+  <span class="show-icon">🏷️</span>
+</button>
 
 <style>
   .constellation-filters-simple {
     position: fixed;
-    top: 400px; /* Subir más arriba para evitar solapamiento */
+    top: 250px;
     left: 20px;
-    background: rgba(0, 10, 20, 0.9);
-    border: 1px solid rgba(135, 206, 235, 0.3);
-    border-radius: 12px;
-    padding: 15px;
-    backdrop-filter: blur(15px);
+    background: linear-gradient(145deg, rgba(8, 18, 35, 0.95), rgba(15, 25, 45, 0.95));
+    border: 1px solid rgba(135, 206, 235, 0.4);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
     z-index: 750;
-    max-width: 200px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 2px 10px rgba(135, 206, 235, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 16px;
+  }
+  
+  .constellation-filters-simple:hover {
+    border-color: rgba(135, 206, 235, 0.6);
+    box-shadow: 
+      0 16px 50px rgba(0, 0, 0, 0.5),
+      0 4px 15px rgba(135, 206, 235, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* Header del panel */
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+    position: relative;
+  }
+  
+  .filter-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 30%;
+    height: 1px;
+    background: linear-gradient(90deg, #87CEEB, transparent);
+    transition: width 0.3s ease;
+  }
+  
+  .constellation-filters-simple:hover .filter-header::after {
+    width: 100%;
+  }
+
+  .filter-header h3 {
+    color: #87CEEB;
+    font-size: 1rem;
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+    letter-spacing: 0.5px;
+  }
+
+  .hide-btn {
+    background: linear-gradient(145deg, rgba(255, 99, 99, 0.1), rgba(255, 99, 99, 0.05));
+    border: 1px solid rgba(255, 99, 99, 0.4);
+    border-radius: 8px;
+    color: #ff6363;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hide-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(255, 99, 99, 0.2), rgba(255, 99, 99, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .hide-btn:hover {
+    background: linear-gradient(145deg, rgba(255, 99, 99, 0.2), rgba(255, 99, 99, 0.1));
+    border-color: rgba(255, 99, 99, 0.7);
+    transform: scale(1.1) translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 99, 99, 0.3);
+  }
+  
+  .hide-btn:hover::before {
+    opacity: 1;
+  }
+
+  /* Contenido del panel */
+  .filter-content {
+    max-width: 220px;
+    padding: 0;
+  }
+
+  /* Botón flotante para mostrar el panel */
+  .show-filters-btn {
+    position: fixed;
+    top: 250px;
+    left: 20px;
+    background: linear-gradient(145deg, rgba(8, 18, 35, 0.95), rgba(15, 25, 45, 0.95));
+    border: 1px solid rgba(135, 206, 235, 0.4);
+    border-radius: 50%;
+    backdrop-filter: blur(20px);
+    z-index: 750;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 2px 10px rgba(135, 206, 235, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: #87CEEB;
+    font-size: 20px;
+  }
+  
+  .show-filters-btn:hover {
+    border-color: rgba(135, 206, 235, 0.6);
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 
+      0 16px 50px rgba(0, 0, 0, 0.5),
+      0 4px 15px rgba(135, 206, 235, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   /* Ocultar en la sección del sistema solar */
@@ -62,92 +489,273 @@ const categories = [
   .filter-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
 
   .filter-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 0.8);
+    gap: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.85rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .filter-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.1), rgba(135, 206, 235, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   .filter-btn:hover {
-    background: rgba(135, 206, 235, 0.1);
-    border-color: rgba(135, 206, 235, 0.3);
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.15), rgba(135, 206, 235, 0.08));
+    border-color: rgba(135, 206, 235, 0.4);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.15);
+  }
+  
+  .filter-btn:hover::before {
+    opacity: 1;
   }
 
   .filter-btn.active {
-    background: rgba(135, 206, 235, 0.2);
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.25), rgba(135, 206, 235, 0.15));
     border-color: #87CEEB;
     color: #87CEEB;
+    box-shadow: 
+      0 0 20px rgba(135, 206, 235, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
 
   .filter-icon {
-    font-size: 1rem;
-    min-width: 16px;
+    font-size: 1.1rem;
+    min-width: 20px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 8px currentColor;
   }
 
   .filter-name {
     flex: 1;
     text-align: left;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+    letter-spacing: 0.3px;
   }
 
   .filter-count {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: 600;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .filter-btn.active .filter-count {
-    background: rgba(135, 206, 235, 0.3);
+    background: linear-gradient(145deg, rgba(135, 206, 235, 0.4), rgba(135, 206, 235, 0.2));
+    border-color: rgba(135, 206, 235, 0.5);
+    color: white;
+    text-shadow: 0 0 8px rgba(135, 206, 235, 0.8);
   }
 
   /* Responsive */
   @media (max-width: 768px) {
     .constellation-filters-simple {
       position: fixed;
-      bottom: 260px; /* Más arriba para evitar solapamiento con minimap */
+      bottom: 280px;
       left: 10px;
       right: 10px;
       max-width: none;
       top: auto;
+      padding: 12px;
     }
 
     .filter-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: 8px;
     }
 
     .filter-btn {
-      padding: 6px 8px;
+      padding: 8px 10px;
       font-size: 0.8rem;
     }
 
     .filter-name {
       display: none;
     }
+    
+    .show-filters-btn {
+      bottom: 300px;
+      left: 20px;
+      top: auto;
+    }
+  }
+  
+  /* Animaciones adicionales */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(135, 206, 235, 0.5);
+    }
+  }
+  
+  .filter-btn.active {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  
+  @keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .constellation-filters-simple.show {
+    animation: slide-in 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  /* Efecto de partículas en hover */
+  .constellation-filters-simple::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(135, 206, 235, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 16px;
+  }
+  
+  .constellation-filters-simple:hover::after {
+    opacity: 1;
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('.filter-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLElement>;
+    const hideBtn = document.getElementById('hide-filters') as HTMLElement | null;
+    const showBtn = document.getElementById('show-filters') as HTMLElement | null;
+    const filterPanel = document.querySelector('.constellation-filters-simple') as HTMLElement | null;
     
+    // Efecto de seguimiento del mouse para el panel
+    if (filterPanel) {
+      filterPanel.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = filterPanel.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        filterPanel.style.setProperty('--mouse-x', `${x}%`);
+        filterPanel.style.setProperty('--mouse-y', `${y}%`);
+      });
+    }
+    
+    // Funcionalidad de ocultar panel
+    hideBtn?.addEventListener('click', () => {
+      if (filterPanel && showBtn) {
+        filterPanel.style.transform = 'translateX(-100%)';
+        filterPanel.style.opacity = '0';
+        
+        setTimeout(() => {
+          filterPanel.style.display = 'none';
+          showBtn.style.display = 'flex';
+          showBtn.style.opacity = '0';
+          showBtn.style.transform = 'scale(0.8)';
+          
+          requestAnimationFrame(() => {
+            showBtn.style.opacity = '1';
+            showBtn.style.transform = 'scale(1)';
+          });
+        }, 300);
+      }
+    });
+    
+    // Funcionalidad de mostrar panel
+    showBtn?.addEventListener('click', () => {
+      if (filterPanel && showBtn) {
+        showBtn.style.opacity = '0';
+        showBtn.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+          showBtn.style.display = 'none';
+          filterPanel.style.display = 'block';
+          filterPanel.style.transform = 'translateX(-100%)';
+          filterPanel.style.opacity = '0';
+          filterPanel.classList.add('show');
+          
+          requestAnimationFrame(() => {
+            filterPanel.style.transform = 'translateX(0)';
+            filterPanel.style.opacity = '1';
+          });
+        }, 200);
+      }
+    });
+    
+    // Agregar transiciones de CSS
+    if (filterPanel) {
+      filterPanel.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease';
+    }
+    if (showBtn) {
+      showBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    }
+    
+    // Funcionalidad de filtros con efectos visuales
     filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
+      // Efecto de ripple al hacer click
+      button.addEventListener('click', (e: MouseEvent) => {
         const filter = button.getAttribute('data-filter');
+        
+        // Crear efecto ripple
+        const ripple = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}px;
+          top: ${y}px;
+          background: rgba(135, 206, 235, 0.3);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          pointer-events: none;
+        `;
+        
+        button.style.position = 'relative';
+        button.style.overflow = 'hidden';
+        button.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
         
         // Actualizar botón activo
         filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -159,5 +767,17 @@ const categories = [
         }));
       });
     });
+    
+    // Agregar estilos de animación ripple
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   });
 </script>
