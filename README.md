@@ -1013,26 +1013,6 @@ Este proyecto fue inspirado por:
 
 ---
 
-<div align="center">
-
-## 🌟 **¿Te Gustó el Proyecto?**
-
-### **¡Ayúdanos a llegar más lejos!**
-
-[![Star](https://img.shields.io/badge/⭐-Dar%20Estrella-yellow?style=for-the-badge)](https://github.com/tu-usuario/astro-sistema-solar)
-[![Fork](https://img.shields.io/badge/🍴-Fork%20Proyecto-blue?style=for-the-badge)](https://github.com/tu-usuario/astro-sistema-solar/fork)
-[![Share](https://img.shields.io/badge/📢-Compartir-green?style=for-the-badge)](https://twitter.com/intent/tweet?text=¡Increíble%20simulador%20del%20sistema%20solar!%20🌌&url=https://github.com/tu-usuario/astro-sistema-solar)
-
-### **📬 Contacto**
-
-¿Preguntas? ¿Sugerencias? ¿Colaboraciones?
-
-[![Email](https://img.shields.io/badge/📧-Email-red?style=for-the-badge)](mailto:tu-email@example.com)
-[![Twitter](https://img.shields.io/badge/🐦-Twitter-1DA1F2?style=for-the-badge)](https://twitter.com/tu-usuario)
-[![LinkedIn](https://img.shields.io/badge/💼-LinkedIn-0077B5?style=for-the-badge)](https://linkedin.com/in/tu-usuario)
-
----
-
 ### **🚀 ¡Explora el cosmos desde tu navegador!**
 
 *Desarrollado con ❤️, precisión científica y mucha curiosidad cósmica*
