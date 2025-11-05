@@ -11,67 +11,80 @@ const delayAnimation = index * 0.5; // Stagger animation
 const startAngle = index * 45; // Diferentes ángulos iniciales para cada planeta
 ---
 
-<!-- Planet orbit container -->
-<div 
-  class="planet-orbit-container absolute"
-  style={`
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(${startAngle}deg);
-  `}
->
-  <!-- Planet on orbit using transform-origin -->
+<!-- Planet wrapper container -->
+<div class="planet-wrapper" data-planet-id={planet.id} data-planet-name={planet.name}>
+  <!-- Planet orbit container -->
   <div 
-    class="planet-on-orbit orbit group cursor-pointer"
+    class="planet-orbit-container absolute"
     style={`
-      position: absolute;
-      width: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
-      height: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%) translateX(${planet.orbitRadius}px);
-      transform-origin: -${planet.orbitRadius}px 0;
-      --orbit-radius: ${planet.orbitRadius}px;
-      --orbit-duration: ${planet.orbitSpeed}s;
-      animation-delay: ${delayAnimation}s;
+      transform: translate(-50%, -50%) rotate(${startAngle}deg);
     `}
   >
-    <a href={`/planets/${planet.id}`} class="block w-full h-full">
-      <div 
-        class={`planet relative rounded-full transition-all duration-300 hover:scale-125 planet-spin w-full h-full ${planet.color === '#FDB813' ? 'glow-yellow' : planet.color === '#6B93D6' ? 'glow-blue' : planet.color === '#CD5C5C' ? 'glow-red' : 'glow-purple'}`}
-        style={`
-          background: linear-gradient(135deg, ${planet.color}dd 0%, ${planet.color} 50%, ${planet.color}aa 100%);
-          --spin-duration: ${planet.rotationPeriod > 0 ? Math.abs(planet.rotationPeriod) / 100 : 10}s;
-          animation-direction: ${planet.rotationPeriod < 0 ? 'reverse' : 'normal'};
-          box-shadow: 0 0 15px ${planet.color}66;
-        `}
-      >
-        <!-- Planet surface details -->
-        <div class="absolute inset-0 rounded-full opacity-40">
-          <div class="w-full h-full rounded-full bg-gradient-to-br from-white via-transparent to-transparent"></div>
+    <!-- Planet on orbit using transform-origin -->
+    <div 
+      class="planet-on-orbit orbit group cursor-pointer"
+      style={`
+        position: absolute;
+        width: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
+        height: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) translateX(${planet.orbitRadius}px);
+        transform-origin: ${-planet.orbitRadius}px 0;
+        --orbit-radius: ${planet.orbitRadius}px;
+        --orbit-duration: ${planet.orbitSpeed}s;
+        animation-delay: ${delayAnimation}s;
+      `}
+    >
+      <a href={`/planets/${planet.id}`} class="block w-full h-full">
+        <div 
+          class={`planet relative rounded-full transition-all duration-300 hover:scale-125 planet-spin w-full h-full ${planet.color === '#FDB813' ? 'glow-yellow' : planet.color === '#6B93D6' ? 'glow-blue' : planet.color === '#CD5C5C' ? 'glow-red' : 'glow-purple'}`}
+          style={`
+            background: linear-gradient(135deg, ${planet.color}dd 0%, ${planet.color} 50%, ${planet.color}aa 100%);
+            --spin-duration: ${planet.rotationPeriod > 0 ? Math.abs(planet.rotationPeriod) / 100 : 10}s;
+            animation-direction: ${planet.rotationPeriod < 0 ? 'reverse' : 'normal'};
+            box-shadow: 0 0 15px ${planet.color}66;
+          `}
+        >
+          <!-- Planet surface details -->
+          <div class="absolute inset-0 rounded-full opacity-40">
+            <div class="w-full h-full rounded-full bg-gradient-to-br from-white via-transparent to-transparent"></div>
+          </div>
+          
+          <!-- Planet shadow -->
+          <div class="absolute inset-0 rounded-full">
+            <div class="w-full h-full rounded-full bg-gradient-to-l from-black via-transparent to-transparent opacity-20"></div>
+          </div>
         </div>
-        
-        <!-- Planet shadow -->
-        <div class="absolute inset-0 rounded-full">
-          <div class="w-full h-full rounded-full bg-gradient-to-l from-black via-transparent to-transparent opacity-20"></div>
-        </div>
-      </div>
-      
-      <!-- Planet info tooltip -->
-      <div class="planet-info absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 glass-effect rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 z-30 pointer-events-none">
-        <h3 class="font-space font-bold text-star text-sm mb-1">{planet.name}</h3>
-        <div class="text-xs space-y-1">
-          <p class="text-gray-300">Distancia: {planet.distanceFromSun.toLocaleString()} millones km</p>
-          <p class="text-gray-400">Lunas: {planet.moons}</p>
-          <p class="text-gray-400">Año: {planet.orbitalPeriod} días terrestres</p>
-        </div>
-        <div class="text-xs text-blue-300 mt-2 font-medium">Clic para explorar →</div>
-      </div>
-    </a>
+      </a>
+    </div>
+  </div>
+
+  <!-- Planet info tooltip - INDEPENDIENTE, fuera de rotaciones -->
+  <div 
+    class="planet-info planet-tooltip glass-effect rounded-lg p-3 opacity-0 transition-all duration-300 z-30 pointer-events-none"
+    data-planet-tooltip={planet.id}
+  >
+    <h3 class="font-space font-bold text-star text-sm mb-1">{planet.name}</h3>
+    <div class="text-xs space-y-1">
+      <p class="text-gray-300">Distancia: {planet.distanceFromSun.toLocaleString()} millones km</p>
+      <p class="text-gray-400">Lunas: {planet.moons}</p>
+      <p class="text-gray-400">Año: {planet.orbitalPeriod} días terrestres</p>
+    </div>
+    <div class="text-xs text-blue-300 mt-2 font-medium">Clic para explorar →</div>
+    <!-- Flecha del tooltip -->
+    <div class="tooltip-arrow"></div>
   </div>
 </div>
 
 <style>
+  .planet-wrapper {
+    position: static;
+    pointer-events: none;
+  }
+  
   .planet-orbit-container {
     pointer-events: none;
   }
@@ -81,11 +94,41 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
   }
   
   .planet-info {
-    min-width: 180px;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    border: 2px solid #4299e1;
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    min-width: 160px;
+    max-width: 220px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+    /* Posicionamiento dinámico con JavaScript - SIN rotación */
+  }
+
+  /* Flecha del tooltip */
+  .tooltip-arrow {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #4299e1;
+  }
+
+  /* Mostrar tooltip en hover */
+  .planet-on-orbit:hover .planet-tooltip {
+    opacity: 1 !important;
   }
   
   .planet:hover {
@@ -117,6 +160,7 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
     
     .planet-info {
       min-width: 150px;
+      max-width: 200px;
       font-size: 0.7rem;
     }
   }
@@ -128,7 +172,72 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
     
     .planet-info {
       min-width: 120px;
+      max-width: 180px;
       font-size: 0.65rem;
+    }
+    
+    .planet-info p,
+    .planet-info div {
+      white-space: normal;
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const planetWrappers = document.querySelectorAll('.planet-wrapper');
+    
+    planetWrappers.forEach((wrapper) => {
+      const planetElement = wrapper.querySelector('.planet') as HTMLElement;
+      const tooltip = wrapper.querySelector('.planet-tooltip') as HTMLElement;
+      const planetContainer = wrapper.querySelector('.planet-on-orbit') as HTMLElement;
+      
+      if (planetElement && tooltip && planetContainer) {
+        
+        // Función para posicionar el tooltip
+        const positionTooltip = () => {
+          // Use the planet's visual element for coordinates
+          const planetRect = planetElement.getBoundingClientRect();
+          const planetName = wrapper.getAttribute('data-planet-name');
+          console.log(`Planet: ${planetName}, Rect:`, planetRect); // Debugging line
+
+          // Position the tooltip: centered horizontally, 10px above the planet
+          const tooltipX = planetRect.left-600;
+          const tooltipY = planetRect.top-100;
+          
+          // Apply position
+          tooltip.style.left = `${tooltipX}px`;
+          tooltip.style.top = `${tooltipY}px`;
+          tooltip.style.transform = 'translate(50%, 50%)';
+        };
+        
+        // Mostrar tooltip en hover
+        planetContainer.addEventListener('mouseenter', () => {
+          tooltip.style.opacity = '1';
+          positionTooltip();
+          
+          // Actualizar posición continuamente mientras esté visible usando requestAnimationFrame
+          const updatePosition = () => {
+            if (tooltip.style.opacity === '1') {
+              positionTooltip();
+              requestAnimationFrame(updatePosition);
+            }
+          };
+          requestAnimationFrame(updatePosition);
+        });
+        
+        // Ocultar tooltip
+        planetContainer.addEventListener('mouseleave', () => {
+          tooltip.style.opacity = '0';
+        });
+        
+        // Reposicionar en resize
+        window.addEventListener('resize', () => {
+          if (tooltip.style.opacity === '1') {
+            positionTooltip();
+          }
+        });
+      }
+    });
+  });
+</script>
