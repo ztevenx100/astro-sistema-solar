@@ -36,12 +36,12 @@
 /* Animations */
 @keyframes orbit {
   from {
-    transform: translate(-50%, -50%) translateX(var(--orbit-radius)) rotate(0deg);
-    transform-origin: calc(-1 * var(--orbit-radius)) 0;
+    transform: rotate(0deg);
+    transform-origin: 0 0;
   }
   to {
-    transform: translate(-50%, -50%) translateX(var(--orbit-radius)) rotate(360deg);
-    transform-origin: calc(-1 * var(--orbit-radius)) 0;
+    transform: rotate(360deg);
+    transform-origin: 0 0;
   }
 }
 

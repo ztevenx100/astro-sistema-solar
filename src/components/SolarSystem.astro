@@ -10,7 +10,6 @@ import SimulationControls from './SimulationControls.astro';
   <!-- Solar System -->
   <div class="solar-system relative" style="width: 1000px; height: 1000px;">
     
-    <!-- Orbit lines (visible guides) -->
     {planetsData.map((planet) => (
       <div 
         class="orbit-line absolute rounded-full border border-gray-500 border-opacity-20"
@@ -30,7 +29,6 @@ import SimulationControls from './SimulationControls.astro';
       <Sun />
     </div>
     
-    <!-- Planets with orbits -->
     {planetsData.map((planet, index) => (
       <Planet planet={planet} index={index} />
     ))}
@@ -43,7 +41,6 @@ import SimulationControls from './SimulationControls.astro';
     <div class="flex items-center justify-between mb-3">
       <h2 class="font-space font-bold text-star text-lg">Sistema Solar</h2>
       <div class="flex space-x-1">
-        <!-- Botón minimizar -->
         <button 
           id="minimize-nav-panel" 
           class="w-6 h-6 rounded-full bg-yellow-500 bg-opacity-20 hover:bg-opacity-40 text-yellow-400 hover:text-yellow-300 transition-all duration-200 flex items-center justify-center text-xs font-bold"
@@ -51,7 +48,6 @@ import SimulationControls from './SimulationControls.astro';
         >
           −
         </button>
-        <!-- Botón cerrar -->
         <button 
           id="close-nav-panel" 
           class="w-6 h-6 rounded-full bg-red-500 bg-opacity-20 hover:bg-opacity-40 text-red-400 hover:text-red-300 transition-all duration-200 flex items-center justify-center text-sm font-bold"
@@ -200,7 +196,6 @@ import SimulationControls from './SimulationControls.astro';
 </div>
 
 <script>
-  // Mobile menu toggle
   const toggleButton = document.getElementById('planetListToggle');
   const mobileList = document.getElementById('mobilePlanetList');
   

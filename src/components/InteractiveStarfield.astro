@@ -154,14 +154,35 @@ const { currentPlanet = '' } = Astro.props;
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.9;
-    transition: all 0.5s ease;
+    opacity: 0.7;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .constellation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(135, 206, 235, 0.15), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .constellation:hover::before,
+  .constellation.hover::before {
+    opacity: 1;
   }
 
   .constellation:hover,
   .constellation.hover {
     opacity: 1;
     z-index: 10;
+    filter: brightness(1.6) contrast(1.2) drop-shadow(0 0 25px rgba(135, 206, 235, 0.8));
+    transform: scale(1.05);
   }
 
   .constellation.active {
@@ -191,14 +212,21 @@ const { currentPlanet = '' } = Astro.props;
 
   .constellation-line {
     stroke: #87CEEB;
-    stroke-width: 0.1; /* Reducido de 0.15 a 0.1 */
-    opacity: 0.4; /* Ligeramente más transparente */
-    transition: opacity 0.3s ease;
-    filter: drop-shadow(0 0 1px #87CEEB); /* Sombra más sutil */
+    stroke-width: 0.1;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 1px #87CEEB);
   }
 
   .constellation:hover .constellation-line,
-  .constellation.hover .constellation-line,
+  .constellation.hover .constellation-line {
+    opacity: 1;
+    stroke-width: 0.25;
+    stroke: #FFD700;
+    filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 10px rgba(255, 215, 0, 0.7)) drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+    animation: line-pulse 1.5s ease-in-out infinite;
+  }
+
   .constellation.active .constellation-line {
     opacity: 0.8;
     animation: line-pulse 2s ease-in-out infinite;
@@ -221,9 +249,20 @@ const { currentPlanet = '' } = Astro.props;
 
   .constellation:hover .constellation-star,
   .constellation.hover .constellation-star {
-    animation: star-glow 1.5s ease-in-out infinite;
-    box-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.3); /* Sombras más pequeñas */
-    transform: translate(-50%, -50%) scale(1.2); /* Escala ligeramente mayor para compensar el tamaño */
+    animation: star-glow 1s ease-in-out infinite;
+    box-shadow: 0 0 20px #ffd700, 0 0 40px rgba(255, 215, 0, 0.7), 0 0 60px rgba(255, 215, 0, 0.4);
+    transform: translate(-50%, -50%) scale(2);
+    background: radial-gradient(circle, #fff, #FFD700);
+    width: 6px;
+    height: 6px;
+  }
+
+  .constellation-star:hover {
+    transform: translate(-50%, -50%) scale(2.5) !important;
+    box-shadow: 0 0 30px #fff, 0 0 50px #ffd700, 0 0 70px rgba(255, 215, 0, 0.8) !important;
+    z-index: 30 !important;
+    width: 8px !important;
+    height: 8px !important;
   }
 
   .star-glow {
@@ -302,7 +341,27 @@ const { currentPlanet = '' } = Astro.props;
   .constellation:hover .constellation-label,
   .constellation.hover .constellation-label {
     opacity: 1;
+    transform: scale(1.15);
     animation: label-glow 2s ease-in-out infinite;
+  }
+
+  .constellation:hover .constellation-distinctive-name,
+  .constellation.hover .constellation-distinctive-name {
+    color: #FFD700;
+    font-size: 0.85rem;
+    text-shadow: 
+      0 0 10px rgba(255, 215, 0, 1), 
+      0 0 20px rgba(255, 215, 0, 0.9),
+      0 0 30px rgba(255, 215, 0, 0.6),
+      0 0 40px rgba(255, 215, 0, 0.3);
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid rgba(255, 215, 0, 0.7);
+    padding: 3px 10px;
+  }
+
+  .constellation:hover .constellation-planet,
+  .constellation.hover .constellation-planet {
+    animation: planet-indicator-pulse 1.5s ease-in-out infinite;
   }
 
   .constellation-distinctive-name {
@@ -447,6 +506,17 @@ const { currentPlanet = '' } = Astro.props;
   @keyframes ripple-effect {
     0% { transform: scale(0); opacity: 1; }
     100% { transform: scale(4); opacity: 0; }
+  }
+
+  @keyframes planet-indicator-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.1);
+    }
   }
 
   @keyframes label-glow {
