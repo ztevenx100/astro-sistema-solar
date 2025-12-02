@@ -15,25 +15,24 @@ const startAngle = index * 45;
 <div class="planet-wrapper" data-planet-id={planet.id} data-planet-name={planet.name}>
   <!-- Planet orbit container -->
   <div 
-    class="planet-orbit-container absolute"
+    class="planet-orbit-container orbit absolute"
     style={`
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) rotate(${startAngle}deg);
+      --orbit-duration: ${planet.orbitSpeed}s;
+      animation-delay: ${delayAnimation}s;
     `}
   >
     <div 
-      class="planet-on-orbit orbit group cursor-pointer"
+      class="planet-on-orbit group cursor-pointer"
       style={`
         position: absolute;
         width: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
         height: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
         left: ${planet.orbitRadius}px;
         top: 0;
-        transform: translate(-50%, -50%) rotate(${startAngle}deg);
-        transform-origin: ${-planet.orbitRadius}px 0px;
-        --orbit-duration: ${planet.orbitSpeed}s;
-        animation-delay: ${delayAnimation}s;
+        transform: translate(-50%, -50%);
       `}
     >
       <a href={`/planets/${planet.id}`} class="block w-full h-full">
