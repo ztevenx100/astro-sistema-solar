@@ -35,10 +35,10 @@
 
 /* Animations */
 @keyframes orbit {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
+  from {
+    transform: translate(-50%, -50%);
   }
-  100% {
+  to {
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
