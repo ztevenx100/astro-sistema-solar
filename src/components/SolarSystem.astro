@@ -10,7 +10,6 @@ import SimulationControls from './SimulationControls.astro';
   <!-- Solar System -->
   <div class="solar-system relative" style="width: 1000px; height: 1000px;">
     
-    <!-- Orbit lines (visible guides) -->
     {planetsData.map((planet) => (
       <div 
         class="orbit-line absolute rounded-full border border-gray-500 border-opacity-20"
@@ -30,7 +29,6 @@ import SimulationControls from './SimulationControls.astro';
       <Sun />
     </div>
     
-    <!-- Planets with orbits -->
     {planetsData.map((planet, index) => (
       <Planet planet={planet} index={index} />
     ))}
@@ -38,23 +36,21 @@ import SimulationControls from './SimulationControls.astro';
   </div>
   
   <!-- Navigation Panel Mejorado - Se oculta en sección de constelaciones -->
-  <div id="navigation-panel" class="navigation-panel fixed top-6 left-6 glass-effect rounded-xl p-4 z-40 transition-all duration-300 solar-system-only">
+  <div id="navigation-panel" class="navigation-panel fixed top-4 left-4 glass-effect rounded-lg p-2 z-40 transition-all duration-300 solar-system-only">
     <!-- Botón de minimizar/cerrar -->
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="font-space font-bold text-star text-lg">Sistema Solar</h2>
-      <div class="flex space-x-1">
-        <!-- Botón minimizar -->
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="font-space font-bold text-star text-sm">Sistema Solar</h2>
+      <div class="flex space-x-0.5">
         <button 
           id="minimize-nav-panel" 
-          class="w-6 h-6 rounded-full bg-yellow-500 bg-opacity-20 hover:bg-opacity-40 text-yellow-400 hover:text-yellow-300 transition-all duration-200 flex items-center justify-center text-xs font-bold"
+          class="w-5 h-5 rounded-full bg-yellow-500 bg-opacity-20 hover:bg-opacity-40 text-yellow-400 hover:text-yellow-300 transition-all duration-200 flex items-center justify-center text-xs font-bold"
           title="Minimizar panel"
         >
           −
         </button>
-        <!-- Botón cerrar -->
         <button 
           id="close-nav-panel" 
-          class="w-6 h-6 rounded-full bg-red-500 bg-opacity-20 hover:bg-opacity-40 text-red-400 hover:text-red-300 transition-all duration-200 flex items-center justify-center text-sm font-bold"
+          class="w-5 h-5 rounded-full bg-red-500 bg-opacity-20 hover:bg-opacity-40 text-red-400 hover:text-red-300 transition-all duration-200 flex items-center justify-center text-xs font-bold"
           title="Cerrar panel"
         >
           ×
@@ -63,13 +59,13 @@ import SimulationControls from './SimulationControls.astro';
     </div>
     
     <!-- Contenido del panel (navegación) -->
-    <div id="nav-panel-content" class="nav-content space-y-2">
+    <div id="nav-panel-content" class="nav-content space-y-0.5">
       {planetsData.map((planet) => (
         <a 
           href={`/planets/${planet.id}`}
-          class="block text-sm text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white hover:bg-opacity-10 rounded px-2 py-1"
+          class="block text-xs text-gray-300 hover:text-white transition-colors duration-200 hover:bg-white hover:bg-opacity-10 rounded px-1.5 py-0.5"
         >
-          <span class="inline-block w-3 h-3 rounded-full mr-2" style={`background: ${planet.color};`}></span>
+          <span class="inline-block w-2 h-2 rounded-full mr-1.5" style={`background: ${planet.color};`}></span>
           {planet.name}
         </a>
       ))}
@@ -79,10 +75,10 @@ import SimulationControls from './SimulationControls.astro';
   <!-- Botón para mostrar el panel cuando está oculto -->
   <button 
     id="show-nav-panel" 
-    class="nav-toggle-btn fixed top-6 left-6 glass-effect rounded-full p-3 z-40 transition-all duration-300 hidden hover:scale-110"
+    class="nav-toggle-btn fixed top-4 left-4 glass-effect rounded-full p-2 z-40 transition-all duration-300 hidden hover:scale-110"
     title="Mostrar navegación"
   >
-    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
     </svg>
   </button>
@@ -90,12 +86,12 @@ import SimulationControls from './SimulationControls.astro';
   <!-- Botón flotante cuando está minimizado -->
   <div 
     id="nav-panel-minimized" 
-    class="navigation-panel-minimized fixed top-6 left-6 glass-effect rounded-xl p-3 z-40 transition-all duration-300 hidden cursor-pointer hover:scale-105"
+    class="navigation-panel-minimized fixed top-4 left-4 glass-effect rounded-lg p-2 z-40 transition-all duration-300 hidden cursor-pointer hover:scale-105"
     title="Expandir navegación"
   >
-    <div class="flex items-center space-x-2">
-      <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
-      <span class="font-space font-bold text-star text-sm">Sistema Solar</span>
+    <div class="flex items-center space-x-1.5">
+      <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+      <span class="font-space font-bold text-star text-xs">Sistema Solar</span>
       <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
       </svg>
@@ -200,7 +196,6 @@ import SimulationControls from './SimulationControls.astro';
 </div>
 
 <script>
-  // Mobile menu toggle
   const toggleButton = document.getElementById('planetListToggle');
   const mobileList = document.getElementById('mobilePlanetList');
   

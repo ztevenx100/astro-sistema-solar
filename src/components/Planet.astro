@@ -7,40 +7,37 @@ export interface Props {
 }
 
 const { planet, index } = Astro.props;
-const delayAnimation = index * 0.5; // Stagger animation
-const startAngle = index * 45; // Diferentes ángulos iniciales para cada planeta
+const delayAnimation = index * 0.5;
+const startAngle = index * 45;
 ---
 
 <!-- Planet wrapper container -->
 <div class="planet-wrapper" data-planet-id={planet.id} data-planet-name={planet.name}>
   <!-- Planet orbit container -->
   <div 
-    class="planet-orbit-container absolute"
+    class="planet-orbit-container orbit absolute"
     style={`
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%) rotate(${startAngle}deg);
+      --orbit-duration: ${planet.orbitSpeed}s;
+      animation-delay: ${delayAnimation}s;
     `}
   >
-    <!-- Planet on orbit using transform-origin -->
     <div 
-      class="planet-on-orbit orbit group cursor-pointer"
+      class="planet-on-orbit group cursor-pointer"
       style={`
         position: absolute;
         width: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
         height: ${Math.max(15, Math.min(30, planet.diameter / 5000))}px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) translateX(${planet.orbitRadius}px);
-        transform-origin: ${-planet.orbitRadius}px 0;
-        --orbit-radius: ${planet.orbitRadius}px;
-        --orbit-duration: ${planet.orbitSpeed}s;
-        animation-delay: ${delayAnimation}s;
+        left: ${planet.orbitRadius}px;
+        top: 0;
+        transform: translate(-50%, -50%);
       `}
     >
       <a href={`/planets/${planet.id}`} class="block w-full h-full">
         <div 
-          class={`planet relative rounded-full transition-all duration-300 hover:scale-125 planet-spin w-full h-full ${planet.color === '#FDB813' ? 'glow-yellow' : planet.color === '#6B93D6' ? 'glow-blue' : planet.color === '#CD5C5C' ? 'glow-red' : 'glow-purple'}`}
+          class={`planet relative rounded-full planet-spin w-full h-full ${planet.color === '#FDB813' ? 'glow-yellow' : planet.color === '#6B93D6' ? 'glow-blue' : planet.color === '#CD5C5C' ? 'glow-red' : 'glow-purple'}`}
           style={`
             background: linear-gradient(135deg, ${planet.color}dd 0%, ${planet.color} 50%, ${planet.color}aa 100%);
             --spin-duration: ${planet.rotationPeriod > 0 ? Math.abs(planet.rotationPeriod) / 100 : 10}s;
@@ -48,12 +45,10 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
             box-shadow: 0 0 15px ${planet.color}66;
           `}
         >
-          <!-- Planet surface details -->
           <div class="absolute inset-0 rounded-full opacity-40">
             <div class="w-full h-full rounded-full bg-gradient-to-br from-white via-transparent to-transparent"></div>
           </div>
           
-          <!-- Planet shadow -->
           <div class="absolute inset-0 rounded-full">
             <div class="w-full h-full rounded-full bg-gradient-to-l from-black via-transparent to-transparent opacity-20"></div>
           </div>
@@ -62,7 +57,6 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
     </div>
   </div>
 
-  <!-- Planet info tooltip - INDEPENDIENTE, fuera de rotaciones -->
   <div 
     class="planet-info planet-tooltip glass-effect rounded-lg p-3 opacity-0 transition-all duration-300 z-30 pointer-events-none"
     data-planet-tooltip={planet.id}
@@ -73,8 +67,7 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
       <p class="text-gray-400">Lunas: {planet.moons}</p>
       <p class="text-gray-400">Año: {planet.orbitalPeriod} días terrestres</p>
     </div>
-    <div class="text-xs text-blue-300 mt-2 font-medium">Clic para explorar →</div>
-    <!-- Flecha del tooltip -->
+    <div class="text-xs text-blue-300 mt-2 font-medium">Clic para explorar</div>
     <div class="tooltip-arrow"></div>
   </div>
 </div>
@@ -110,7 +103,6 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
     max-width: 220px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
     white-space: nowrap;
-    /* Posicionamiento dinámico con JavaScript - SIN rotación */
   }
 
   /* Flecha del tooltip */
@@ -196,27 +188,22 @@ const startAngle = index * 45; // Diferentes ángulos iniciales para cada planet
         
         // Función para posicionar el tooltip
         const positionTooltip = () => {
-          // Use the planet's visual element for coordinates
           const planetRect = planetElement.getBoundingClientRect();
           const planetName = wrapper.getAttribute('data-planet-name');
-          console.log(`Planet: ${planetName}, Rect:`, planetRect); // Debugging line
+          console.log(`Planet: ${planetName}, Rect:`, planetRect);
 
-          // Position the tooltip: centered horizontally, 10px above the planet
-          const tooltipX = planetRect.left-600;
+          const tooltipX = planetRect.left-570;
           const tooltipY = planetRect.top-100;
           
-          // Apply position
           tooltip.style.left = `${tooltipX}px`;
           tooltip.style.top = `${tooltipY}px`;
-          tooltip.style.transform = 'translate(50%, 50%)';
+          tooltip.style.transform = 'translate(150%, 150%)';
         };
         
-        // Mostrar tooltip en hover
         planetContainer.addEventListener('mouseenter', () => {
           tooltip.style.opacity = '1';
           positionTooltip();
           
-          // Actualizar posición continuamente mientras esté visible usando requestAnimationFrame
           const updatePosition = () => {
             if (tooltip.style.opacity === '1') {
               positionTooltip();

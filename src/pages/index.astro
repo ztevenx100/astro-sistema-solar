@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import SolarSystem from '../components/SolarSystem.astro';
 import ConstellationSection from '../components/ConstellationSection.astro';
 import NavigationSection from '../components/NavigationSection.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Sistema Solar Interactivo" currentPlanet="system">
@@ -16,6 +17,9 @@ import NavigationSection from '../components/NavigationSection.astro';
 		<section id="constellations-section" class="section-container min-h-screen">
 			<ConstellationSection />
 		</section>
+
+		<!-- Footer -->
+		<Footer />
 
 		<!-- Navegación fija entre secciones -->
 		<NavigationSection />

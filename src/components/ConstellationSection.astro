@@ -46,10 +46,6 @@ import { constellations, constellationCategories } from '../data/constellations'
         <ConstellationSearch constellations={constellations} />
       </div>
       
-      <!-- Controles laterales organizados -->
-      <div class="side-controls">
-        <!-- <ConstellationMinimapSimple constellations={constellations} /> -->
-      </div>
     </div>
   </div>
 </div>
@@ -66,7 +62,7 @@ import { constellations, constellationCategories } from '../data/constellations'
   .constellation-header {
     position: relative;
     z-index: 20;
-    padding: 2rem 2rem 1rem; /* Menos padding vertical */
+    padding: 1rem 1.5rem 0.5rem;
     text-align: center;
     background: linear-gradient(180deg, rgba(26, 0, 51, 0.95) 0%, rgba(0, 0, 17, 0.8) 100%);
     backdrop-filter: blur(15px);
@@ -80,35 +76,35 @@ import { constellations, constellationCategories } from '../data/constellations'
 
   .section-title {
     font-family: 'Space Mono', monospace;
-    font-size: 2rem; /* Más pequeño */
+    font-size: 1.5rem;
     font-weight: 700;
     color: white;
-    margin-bottom: 0.5rem; /* Menos margen */
+    margin-bottom: 0.25rem;
     text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
   }
 
   .title-icon {
-    font-size: 1.5rem; /* Icono más pequeño */
+    font-size: 1.2rem;
     animation: sparkle 2s infinite;
   }
 
   .section-description {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.85);
-    line-height: 1.6;
-    margin-bottom: 2rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
   }
 
   /* Estadísticas integradas en el header */
   .header-stats {
     display: flex;
     justify-content: center;
-    gap: 3rem;
-    margin-top: 1.5rem;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
   }
 
   .header-stat {
@@ -279,6 +275,7 @@ import { constellations, constellationCategories } from '../data/constellations'
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    z-index: 1;
   }
 
   /* UI reorganizada */
@@ -289,7 +286,7 @@ import { constellations, constellationCategories } from '../data/constellations'
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 30;
+    z-index: 20;
   }
 
   .ui-overlay > * {
