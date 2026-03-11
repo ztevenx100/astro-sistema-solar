@@ -62,6 +62,22 @@ export const constellations: Constellation[] = [
     ],
     lines: [[0,1], [1,2], [2,3], [3,4]]
   },
+  {
+    id: 'pleyades',
+    name: 'Pléyades (昴 - Subaru)',
+    distinctiveName: 'Las Siete Hermanas',
+    planet: 'Venus',
+    stars: [
+      { name: 'Alcyone', x: 56, y: 66, brightness: 0.72 },
+      { name: 'Maia', x: 52, y: 63, brightness: 0.58 },
+      { name: 'Merope', x: 53, y: 70, brightness: 0.54 },
+      { name: 'Electra', x: 60, y: 63, brightness: 0.56 },
+      { name: 'Taygeta', x: 63, y: 68, brightness: 0.52 },
+      { name: 'Celaeno', x: 49, y: 68, brightness: 0.47 },
+      { name: 'Sterope', x: 66, y: 65, brightness: 0.5 }
+    ],
+    lines: [[0,1], [0,2], [0,3], [0,4], [1,5], [3,6]]
+  },
 
   // REGIÓN ESTE - Reorganizada con mejor espaciado
   {
@@ -243,7 +259,7 @@ export const constellationCategories = {
     description: 'Constelaciones basadas en mitología griega y romana',
     icon: '🏛️',
     color: '#87CEEB',
-    constellations: ['orion', 'cassiopeia', 'hercules', 'cygnus', 'lyra', 'canis-major', 'canis-minor', 'aquila']
+    constellations: ['orion', 'cassiopeia', 'hercules', 'cygnus', 'lyra', 'canis-major', 'canis-minor', 'aquila', 'pleyades']
   },
   navigation: {
     title: 'Navegación',
