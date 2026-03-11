@@ -19,7 +19,7 @@ export const constellationCategories = {
     position: { sector: 'north', ring: 2 },
     constellations: [
       'orion', 'cassiopeia', 'andromeda', 'perseus',
-      'hercules', 'pegasus', 'cygnus', 'aquila'
+      'hercules', 'pegasus', 'cygnus', 'aquila', 'pleyades'
     ]
   },
   
@@ -61,7 +61,10 @@ export const spatialConfig = {
   }
 };
 
-export const getConstellationPosition = (category: string, index: number) => {
+export const getConstellationPosition = (
+  category: keyof typeof constellationCategories,
+  index: number
+) => {
   const cat = constellationCategories[category];
   const ring = spatialConfig.rings[cat.position.ring === 1 ? 'inner' : 
                                   cat.position.ring === 2 ? 'middle' : 'outer'];
